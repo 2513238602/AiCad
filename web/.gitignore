@@ -1,0 +1,5 @@
+node_modules/
+dist/
+*.local
+src/auto-imports.d.ts
+src/components.d.ts

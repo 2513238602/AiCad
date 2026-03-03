@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+
+# Virtual environments
+.venv/
+.conda/
+
+# Test & build artifacts
+artifacts/
+*.stl
+*.step
+test_output.txt
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+.DS_Store
+nul
+
+# Pytest
+.pytest_cache/
+
+# Node (web/)
+web/node_modules/
+web/dist/
+web/tsconfig.tsbuildinfo
+
+# Claude Code
+.claude/
+
+# Backup files
+*.bak
