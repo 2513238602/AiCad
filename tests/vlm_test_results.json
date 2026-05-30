@@ -1,0 +1,656 @@
+[
+  {
+    "id": "T1_cylindrical_standard",
+    "desc": "标准圆柱形唇釉瓶，黑色盖透明瓶身",
+    "url": "https://cdn.globalso.com/bmeipackaging/DSC_3559_%E5%89%AF%E6%9C%AC1.jpg",
+    "local_path": "tests/img_cache\\DSC_3559_副本1.jpg",
+    "vlm_time_s": 7.38,
+    "extracted_params": {
+      "height_mm": 80.0,
+      "body_od_mm": 25.0,
+      "neck_od_mm": 18.0,
+      "neck_height_mm": 10.0,
+      "shape": "cyl",
+      "taper_deg": 0.0,
+      "shoulder_style": "round",
+      "shoulder_fillet_mm": 5.0,
+      "bottom_style": "flat",
+      "profile_mode": "classic",
+      "profile_points": [],
+      "lip_thickness_mm": 1.5,
+      "wall_thickness_mm": 1.0,
+      "confidence": 0.8,
+      "shape_description": "圆柱形瓶身，圆弧肩部，平底设计"
+    },
+    "validation": {
+      "fixed_params": {
+        "height_mm": 80.0,
+        "body_od_mm": 25.0,
+        "neck_od_mm": 18.0,
+        "neck_height_mm": 10.0,
+        "lip_thickness_mm": 1.5,
+        "shoulder_height_mm": 10.0,
+        "wall_thickness_mm": 1.0,
+        "bottom_thickness_mm": 2.0,
+        "shoulder_fillet_mm": 5.0,
+        "taper_deg": 0.0,
+        "shape": "cyl",
+        "shoulder_style": "round",
+        "profile_mode": "classic",
+        "bottom_style": "flat",
+        "_estimated_capacity_ml": 31.16,
+        "profile_points_json": "[]"
+      },
+      "issues": [],
+      "warnings": [
+        "shoulder_height_mm: 未提取到，使用默认值 10.0",
+        "bottom_thickness_mm: 未提取到，使用默认值 2.0"
+      ],
+      "is_valid": true
+    },
+    "assembly": {
+      "checks": [
+        {
+          "item": "瓶盖配合",
+          "desc": "瓶盖外径=25.0, 内径=23.4",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "刷杆配合",
+          "desc": "刷杆外径=22.5 (盖内径23.4-0.9)",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "刷杆杆径",
+          "desc": "杆径≈4.5mm",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "刮片配合",
+          "desc": "刮片外径=18.0, 孔径=4.8",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "内腔容量",
+          "desc": "≈31.2ml (内径23.0, 深75.0)",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "螺纹空间",
+          "desc": "颈高=10.0, 螺纹需≥7.4",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "肩部过渡",
+          "desc": "半径差=3.5, 肩高=10.0",
+          "pass": true,
+          "note": "OK"
+        }
+      ],
+      "pass_count": 7,
+      "total": 7,
+      "all_pass": true,
+      "score": 1.0
+    },
+    "similarity": {
+      "shape_match": 1.0,
+      "height_score": 1.0,
+      "od_score": 1.0,
+      "ratio_score": 1.0,
+      "vlm_confidence": 0.8,
+      "overall": 0.96
+    },
+    "status": "OK"
+  },
+  {
+    "id": "T2_cute_round",
+    "desc": "可爱粉色圆润造型唇釉瓶",
+    "url": "https://cdn.globalso.com/bmeipackaging/cute-lip-loss-tube-1.jpg",
+    "local_path": "tests/img_cache\\cute-lip-loss-tube-1.jpg",
+    "vlm_time_s": 11.31,
+    "extracted_params": {
+      "height_mm": 80.0,
+      "body_od_mm": 22.0,
+      "neck_od_mm": 16.0,
+      "neck_height_mm": 10.0,
+      "shape": "cyl",
+      "taper_deg": 0.0,
+      "shoulder_style": "round",
+      "shoulder_fillet_mm": 5.0,
+      "bottom_style": "flat",
+      "profile_mode": "classic",
+      "profile_points": [],
+      "lip_thickness_mm": 1.0,
+      "wall_thickness_mm": 1.5,
+      "confidence": 0.8,
+      "shape_description": "圆柱形瓶身，圆弧肩部，平底设计"
+    },
+    "validation": {
+      "fixed_params": {
+        "height_mm": 80.0,
+        "body_od_mm": 22.0,
+        "neck_od_mm": 16.0,
+        "neck_height_mm": 10.0,
+        "lip_thickness_mm": 1.0,
+        "shoulder_height_mm": 10.0,
+        "wall_thickness_mm": 1.5,
+        "bottom_thickness_mm": 2.0,
+        "shoulder_fillet_mm": 5.0,
+        "taper_deg": 0.0,
+        "shape": "cyl",
+        "shoulder_style": "round",
+        "profile_mode": "classic",
+        "bottom_style": "flat",
+        "_estimated_capacity_ml": 21.26,
+        "profile_points_json": "[]"
+      },
+      "issues": [],
+      "warnings": [
+        "shoulder_height_mm: 未提取到，使用默认值 10.0",
+        "bottom_thickness_mm: 未提取到，使用默认值 2.0"
+      ],
+      "is_valid": true
+    },
+    "assembly": {
+      "checks": [
+        {
+          "item": "瓶盖配合",
+          "desc": "瓶盖外径=22.0, 内径=20.4",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "刷杆配合",
+          "desc": "刷杆外径=19.5 (盖内径20.4-0.9)",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "刷杆杆径",
+          "desc": "杆径≈3.9mm",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "刮片配合",
+          "desc": "刮片外径=16.0, 孔径=4.2",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "内腔容量",
+          "desc": "≈21.3ml (内径19.0, 深75.0)",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "螺纹空间",
+          "desc": "颈高=10.0, 螺纹需≥7.4",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "肩部过渡",
+          "desc": "半径差=3.0, 肩高=10.0",
+          "pass": true,
+          "note": "OK"
+        }
+      ],
+      "pass_count": 7,
+      "total": 7,
+      "all_pass": true,
+      "score": 1.0
+    },
+    "similarity": {
+      "shape_match": 1.0,
+      "height_score": 0.6666666666666667,
+      "od_score": 1.0,
+      "ratio_score": 1.0,
+      "vlm_confidence": 0.8,
+      "overall": 0.877
+    },
+    "status": "OK"
+  },
+  {
+    "id": "T3_mini_chubby",
+    "desc": "迷你胖瓶身 2ml 试用装唇釉",
+    "url": "https://cdn.globalso.com/bmeipackaging/5062-2.jpg",
+    "local_path": "tests/img_cache\\5062-2.jpg",
+    "vlm_time_s": 9.99,
+    "extracted_params": {
+      "height_mm": 80.0,
+      "body_od_mm": 25.0,
+      "neck_od_mm": 18.0,
+      "neck_height_mm": 10.0,
+      "shape": "cyl",
+      "taper_deg": 0.0,
+      "shoulder_style": "round",
+      "shoulder_fillet_mm": 5.0,
+      "bottom_style": "flat",
+      "profile_mode": "classic",
+      "profile_points": [],
+      "lip_thickness_mm": 1.0,
+      "wall_thickness_mm": 1.5,
+      "confidence": 0.8,
+      "shape_description": "圆柱形瓶身，圆弧肩部，平底设计"
+    },
+    "validation": {
+      "fixed_params": {
+        "height_mm": 80.0,
+        "body_od_mm": 25.0,
+        "neck_od_mm": 18.0,
+        "neck_height_mm": 10.0,
+        "lip_thickness_mm": 1.0,
+        "shoulder_height_mm": 10.0,
+        "wall_thickness_mm": 1.5,
+        "bottom_thickness_mm": 2.0,
+        "shoulder_fillet_mm": 5.0,
+        "taper_deg": 0.0,
+        "shape": "cyl",
+        "shoulder_style": "round",
+        "profile_mode": "classic",
+        "bottom_style": "flat",
+        "_estimated_capacity_ml": 28.51,
+        "profile_points_json": "[]"
+      },
+      "issues": [],
+      "warnings": [
+        "shoulder_height_mm: 未提取到，使用默认值 10.0",
+        "bottom_thickness_mm: 未提取到，使用默认值 2.0"
+      ],
+      "is_valid": true
+    },
+    "assembly": {
+      "checks": [
+        {
+          "item": "瓶盖配合",
+          "desc": "瓶盖外径=25.0, 内径=23.4",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "刷杆配合",
+          "desc": "刷杆外径=22.5 (盖内径23.4-0.9)",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "刷杆杆径",
+          "desc": "杆径≈4.5mm",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "刮片配合",
+          "desc": "刮片外径=18.0, 孔径=4.8",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "内腔容量",
+          "desc": "≈28.5ml (内径22.0, 深75.0)",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "螺纹空间",
+          "desc": "颈高=10.0, 螺纹需≥7.4",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "肩部过渡",
+          "desc": "半径差=3.5, 肩高=10.0",
+          "pass": true,
+          "note": "OK"
+        }
+      ],
+      "pass_count": 7,
+      "total": 7,
+      "all_pass": true,
+      "score": 1.0
+    },
+    "similarity": {
+      "shape_match": 1.0,
+      "height_score": 0.33333333333333337,
+      "od_score": 1.0,
+      "ratio_score": 1.0,
+      "vlm_confidence": 0.8,
+      "overall": 0.793
+    },
+    "status": "OK"
+  },
+  {
+    "id": "T4_bowling_shape",
+    "desc": "保龄球造型异形唇釉瓶，透明3.5ml",
+    "url": "https://cdn.globalso.com/bmeipackaging/5105B-07.png",
+    "local_path": "tests/img_cache\\5105B-07.png",
+    "vlm_time_s": 12.46,
+    "extracted_params": {
+      "height_mm": 80.0,
+      "body_od_mm": 25.0,
+      "neck_od_mm": 18.0,
+      "neck_height_mm": 10.0,
+      "shape": "cyl",
+      "taper_deg": 0.0,
+      "shoulder_style": "round",
+      "shoulder_fillet_mm": 5.0,
+      "bottom_style": "flat",
+      "profile_mode": "classic",
+      "profile_points": [],
+      "lip_thickness_mm": 1.5,
+      "wall_thickness_mm": 1.0,
+      "confidence": 0.8,
+      "shape_description": "圆柱形瓶身，圆弧肩部，平底设计"
+    },
+    "validation": {
+      "fixed_params": {
+        "height_mm": 80.0,
+        "body_od_mm": 25.0,
+        "neck_od_mm": 18.0,
+        "neck_height_mm": 10.0,
+        "lip_thickness_mm": 1.5,
+        "shoulder_height_mm": 10.0,
+        "wall_thickness_mm": 1.0,
+        "bottom_thickness_mm": 2.0,
+        "shoulder_fillet_mm": 5.0,
+        "taper_deg": 0.0,
+        "shape": "cyl",
+        "shoulder_style": "round",
+        "profile_mode": "classic",
+        "bottom_style": "flat",
+        "_estimated_capacity_ml": 31.16,
+        "profile_points_json": "[]"
+      },
+      "issues": [],
+      "warnings": [
+        "shoulder_height_mm: 未提取到，使用默认值 10.0",
+        "bottom_thickness_mm: 未提取到，使用默认值 2.0"
+      ],
+      "is_valid": true
+    },
+    "assembly": {
+      "checks": [
+        {
+          "item": "瓶盖配合",
+          "desc": "瓶盖外径=25.0, 内径=23.4",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "刷杆配合",
+          "desc": "刷杆外径=22.5 (盖内径23.4-0.9)",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "刷杆杆径",
+          "desc": "杆径≈4.5mm",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "刮片配合",
+          "desc": "刮片外径=18.0, 孔径=4.8",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "内腔容量",
+          "desc": "≈31.2ml (内径23.0, 深75.0)",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "螺纹空间",
+          "desc": "颈高=10.0, 螺纹需≥7.4",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "肩部过渡",
+          "desc": "半径差=3.5, 肩高=10.0",
+          "pass": true,
+          "note": "OK"
+        }
+      ],
+      "pass_count": 7,
+      "total": 7,
+      "all_pass": true,
+      "score": 1.0
+    },
+    "similarity": {
+      "shape_match": 1.0,
+      "height_score": 1.0,
+      "od_score": 1.0,
+      "ratio_score": 1.0,
+      "vlm_confidence": 0.8,
+      "overall": 0.96
+    },
+    "status": "OK"
+  },
+  {
+    "id": "T5_square_double",
+    "desc": "方形双色注塑唇釉瓶",
+    "url": "https://cdn.globalso.com/bmeipackaging/1600X1000%E9%AB%98-1_%E5%89%AF%E6%9C%AC.jpg",
+    "local_path": "tests/img_cache\\1600X1000高-1_副本.jpg",
+    "vlm_time_s": 10.21,
+    "extracted_params": {
+      "height_mm": 80.0,
+      "body_od_mm": 25.0,
+      "neck_od_mm": 18.0,
+      "neck_height_mm": 10.0,
+      "shape": "cyl",
+      "taper_deg": 0.0,
+      "shoulder_style": "round",
+      "shoulder_fillet_mm": 5.0,
+      "bottom_style": "flat",
+      "profile_mode": "classic",
+      "profile_points": [],
+      "lip_thickness_mm": 1.5,
+      "wall_thickness_mm": 1.0,
+      "confidence": 0.8,
+      "shape_description": "圆柱形瓶身，圆弧肩部，平底设计"
+    },
+    "validation": {
+      "fixed_params": {
+        "height_mm": 80.0,
+        "body_od_mm": 25.0,
+        "neck_od_mm": 18.0,
+        "neck_height_mm": 10.0,
+        "lip_thickness_mm": 1.5,
+        "shoulder_height_mm": 10.0,
+        "wall_thickness_mm": 1.0,
+        "bottom_thickness_mm": 2.0,
+        "shoulder_fillet_mm": 5.0,
+        "taper_deg": 0.0,
+        "shape": "cyl",
+        "shoulder_style": "round",
+        "profile_mode": "classic",
+        "bottom_style": "flat",
+        "_estimated_capacity_ml": 31.16,
+        "profile_points_json": "[]"
+      },
+      "issues": [],
+      "warnings": [
+        "shoulder_height_mm: 未提取到，使用默认值 10.0",
+        "bottom_thickness_mm: 未提取到，使用默认值 2.0"
+      ],
+      "is_valid": true
+    },
+    "assembly": {
+      "checks": [
+        {
+          "item": "瓶盖配合",
+          "desc": "瓶盖外径=25.0, 内径=23.4",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "刷杆配合",
+          "desc": "刷杆外径=22.5 (盖内径23.4-0.9)",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "刷杆杆径",
+          "desc": "杆径≈4.5mm",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "刮片配合",
+          "desc": "刮片外径=18.0, 孔径=4.8",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "内腔容量",
+          "desc": "≈31.2ml (内径23.0, 深75.0)",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "螺纹空间",
+          "desc": "颈高=10.0, 螺纹需≥7.4",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "肩部过渡",
+          "desc": "半径差=3.5, 肩高=10.0",
+          "pass": true,
+          "note": "OK"
+        }
+      ],
+      "pass_count": 7,
+      "total": 7,
+      "all_pass": true,
+      "score": 1.0
+    },
+    "similarity": {
+      "shape_match": 1.0,
+      "height_score": 1.0,
+      "od_score": 1.0,
+      "ratio_score": 1.0,
+      "vlm_confidence": 0.8,
+      "overall": 0.96
+    },
+    "status": "OK"
+  },
+  {
+    "id": "T6_frosted_slim",
+    "desc": "磨砂质感细长型唇釉管",
+    "url": "https://ijrorwxhnlqrln5p.ldycdn.com/cloud/lpBpqKkrlkSRjljprrmoio/BM51-640-640.jpg?v=1",
+    "local_path": "tests/img_cache\\BM51-640-640.jpg",
+    "vlm_time_s": 12.42,
+    "extracted_params": {
+      "height_mm": 80.0,
+      "body_od_mm": 22.0,
+      "neck_od_mm": 16.0,
+      "neck_height_mm": 10.0,
+      "shape": "cyl",
+      "taper_deg": 0.0,
+      "shoulder_style": "round",
+      "shoulder_fillet_mm": 3.0,
+      "bottom_style": "flat",
+      "profile_mode": "classic",
+      "profile_points": [],
+      "lip_thickness_mm": 1.0,
+      "wall_thickness_mm": 1.5,
+      "confidence": 0.8,
+      "shape_description": "圆柱形瓶身，圆弧肩部，平底设计"
+    },
+    "validation": {
+      "fixed_params": {
+        "height_mm": 80.0,
+        "body_od_mm": 22.0,
+        "neck_od_mm": 16.0,
+        "neck_height_mm": 10.0,
+        "lip_thickness_mm": 1.0,
+        "shoulder_height_mm": 10.0,
+        "wall_thickness_mm": 1.5,
+        "bottom_thickness_mm": 2.0,
+        "shoulder_fillet_mm": 3.0,
+        "taper_deg": 0.0,
+        "shape": "cyl",
+        "shoulder_style": "round",
+        "profile_mode": "classic",
+        "bottom_style": "flat",
+        "_estimated_capacity_ml": 21.26,
+        "profile_points_json": "[]"
+      },
+      "issues": [],
+      "warnings": [
+        "shoulder_height_mm: 未提取到，使用默认值 10.0",
+        "bottom_thickness_mm: 未提取到，使用默认值 2.0"
+      ],
+      "is_valid": true
+    },
+    "assembly": {
+      "checks": [
+        {
+          "item": "瓶盖配合",
+          "desc": "瓶盖外径=22.0, 内径=20.4",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "刷杆配合",
+          "desc": "刷杆外径=19.5 (盖内径20.4-0.9)",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "刷杆杆径",
+          "desc": "杆径≈3.9mm",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "刮片配合",
+          "desc": "刮片外径=16.0, 孔径=4.2",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "内腔容量",
+          "desc": "≈21.3ml (内径19.0, 深75.0)",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "螺纹空间",
+          "desc": "颈高=10.0, 螺纹需≥7.4",
+          "pass": true,
+          "note": "OK"
+        },
+        {
+          "item": "肩部过渡",
+          "desc": "半径差=3.0, 肩高=10.0",
+          "pass": true,
+          "note": "OK"
+        }
+      ],
+      "pass_count": 7,
+      "total": 7,
+      "all_pass": true,
+      "score": 1.0
+    },
+    "similarity": {
+      "shape_match": 1.0,
+      "height_score": 1.0,
+      "od_score": 1.0,
+      "ratio_score": 1.0,
+      "vlm_confidence": 0.8,
+      "overall": 0.96
+    },
+    "status": "OK"
+  }
+]

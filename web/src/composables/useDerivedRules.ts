@@ -90,9 +90,30 @@ export const DERIVED_RULES: DerivedRulesMap = {
   wand: {
     'seal_ring.od_mm': {
       master: 'outer_od_mm',
-      computeDefault: (od) => od - 5.5,
-      computeRange: (od) => [10.0, od - 3.0],
-      desc: '气密环外径 = 外径 - 5.5mm',
+      computeDefault: (od, p) => {
+        let basic = od - 5.5
+        // 确保气密环不超过螺牙底径 + 1.0（为 seal_fit 留余量）
+        const threadEnabled = getNested(p, 'thread.enabled', true)
+        if (threadEnabled !== false) {
+          const crest = Number(getNested(p, 'thread.crest_dia_mm', od - 5.0))
+          const depth = Number(getNested(p, 'thread.depth_mm', 0.5))
+          const root = crest - 2 * depth
+          basic = Math.min(basic, root + 1.0)
+        }
+        return Math.max(8.0, basic)
+      },
+      computeRange: (od, p) => {
+        let maxOd = od - 3.0
+        const threadEnabled = getNested(p, 'thread.enabled', true)
+        if (threadEnabled !== false) {
+          const crest = Number(getNested(p, 'thread.crest_dia_mm', od - 5.0))
+          const depth = Number(getNested(p, 'thread.depth_mm', 0.5))
+          const root = crest - 2 * depth
+          maxOd = Math.min(maxOd, root + 1.5)
+        }
+        return [10.0, maxOd]
+      },
+      desc: '气密环外径 = min(外径 - 5.5, 螺牙底径 + 1.0)',
     },
     cavity_depth_mm: {
       master: 'cap_height_mm',
@@ -222,6 +243,28 @@ export function updateDerivedParams(
       if (newDefault !== null) {
         setParam(derivedKey, newDefault)
       }
+    }
+  }
+}
+
+/**
+ * Recalculate ALL derived parameters for a component.
+ * Used after cross-component constraints may have modified core params.
+ * Skips params that are locked by cross-component constraints.
+ */
+export function recalcAllDerivedParams(
+  componentId: string,
+  params: Record<string, any>,
+  setParam: (key: string, val: any) => void,
+  lockedKeys?: Set<string>,
+) {
+  const rules = DERIVED_RULES[componentId]
+  if (!rules) return
+  for (const [derivedKey, rule] of Object.entries(rules)) {
+    if (lockedKeys && lockedKeys.has(derivedKey)) continue // respect constraint locks
+    const newVal = computeDerivedDefault(componentId, derivedKey, params)
+    if (newVal !== null) {
+      setParam(derivedKey, Math.round(newVal * 100) / 100)
     }
   }
 }

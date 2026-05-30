@@ -44,7 +44,9 @@ export function groupOf(k: string): GroupKey {
     k === 'neck_od_mm' ||
     k === 'neck_height_mm' ||
     k === 'total_height_mm' ||
-    k === 'cap_height_mm'
+    k === 'cap_height_mm' ||
+    k === 'profile_mode' ||
+    k === 'profile_points_json'
   )
     return 'outer'
 

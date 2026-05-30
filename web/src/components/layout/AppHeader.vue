@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useWizardStore } from '@/stores/wizard'
 import * as api from '@/api/client'
 
 const { t, locale } = useI18n()
+const wizard = useWizardStore()
 const rebuilding = ref(false)
 
 function toggleLanguage() {
@@ -43,6 +45,34 @@ async function onRebuild() {
     </div>
     <div class="header-right">
       <span class="header-hint">{{ t('ui.outputFormat') }}</span>
+      <button
+        class="mode-nav-btn"
+        :class="{ active: wizard.appMode === 'wizard' }"
+        @click="wizard.setMode('wizard')"
+      >
+        {{ t('ui.wizardMode') }}
+      </button>
+      <button
+        class="mode-nav-btn"
+        :class="{ active: wizard.appMode === 'classic' }"
+        @click="wizard.setMode('classic')"
+      >
+        {{ t('ui.classicMode') }}
+      </button>
+      <button
+        class="mode-nav-btn"
+        :class="{ active: wizard.appMode === 'gallery' }"
+        @click="wizard.setMode('gallery')"
+      >
+        {{ t('gallery.btnGallery') }}
+      </button>
+      <button
+        class="mode-nav-btn showroom"
+        :class="{ active: wizard.appMode === 'showroom' }"
+        @click="wizard.setMode('showroom')"
+      >
+        {{ t('showroom.btnShowroom') }}
+      </button>
       <button class="rebuild-btn" @click="onRebuild" :disabled="rebuilding">
         {{ rebuilding ? t('ui.rebuilding') : t('ui.btnRebuild') }}
       </button>
@@ -125,6 +155,33 @@ async function onRebuild() {
   background: var(--color-bg-hover, #f8fafc);
   border-color: var(--color-accent, #2563eb);
   color: var(--color-accent, #2563eb);
+}
+
+.mode-nav-btn {
+  background: var(--color-bg-card, #fff);
+  color: var(--color-text-secondary, #475569);
+  border: 1px solid var(--color-border, #e2e8f0);
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+  transition: all 0.15s;
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(0,0,0,0.05));
+}
+
+.mode-nav-btn:hover,
+.mode-nav-btn.active {
+  background: #eef2ff;
+  border-color: #4f46e5;
+  color: #4f46e5;
+}
+
+.mode-nav-btn.showroom.active,
+.mode-nav-btn.showroom:hover {
+  background: #ecfeff;
+  border-color: #0891b2;
+  color: #0e7490;
 }
 
 .rebuild-btn {

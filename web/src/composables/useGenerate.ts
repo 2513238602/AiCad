@@ -6,6 +6,7 @@ import * as api from '@/api/client'
 import { flattenNested, setNested, deleteNested } from '@/utils/nested'
 import type { GenerateResponse } from '@/api/types'
 import { dlog } from '@/utils/debugLog'
+import { recalcAllDerivedParams } from '@/composables/useDerivedRules'
 
 let autoTimer: ReturnType<typeof setTimeout> | null = null
 
@@ -49,6 +50,15 @@ export function useGenerate() {
       dlog.warn('autoFix 修正了违规参数', warns)
     }
 
+    // Recalculate derived params after constraints may have modified core params
+    // Skip params that are locked by cross-component constraints
+    const lockedKeys = new Set<string>()
+    for (const [k, c] of Object.entries(paramsStore.crossConstraints)) {
+      if (c.locked) lockedKeys.add(k)
+    }
+    recalcAllDerivedParams(appStore.componentId!, paramsStore.values, paramsStore.setParam, lockedKeys)
+    dlog.generate('约束后重算派生参数', { lockedKeys: [...lockedKeys], params: JSON.parse(JSON.stringify(paramsStore.values)) })
+
     // Build send params
     const sendParams = JSON.parse(JSON.stringify(paramsStore.values))
     dlog.generate('约束应用后的参数', JSON.parse(JSON.stringify(sendParams)))
@@ -67,11 +77,11 @@ export function useGenerate() {
       dlog.generate('过滤掉非schema参数', removed)
     }
 
-    // Safety clamp: enforce schema static ranges
+    // Safety clamp: enforce schema static ranges (skip derived params — their ranges are dynamic)
     const flatSend2 = flattenNested(sendParams)
     const clamped: string[] = []
     for (const pd of comp.params || []) {
-      if ((pd.type === 'float' || pd.type === 'int') && pd.k in flatSend2) {
+      if ((pd.type === 'float' || pd.type === 'int') && pd.k in flatSend2 && pd.is_core !== false) {
         let v = Number(flatSend2[pd.k])
         if (!isNaN(v)) {
           const orig = v
@@ -89,6 +99,12 @@ export function useGenerate() {
     if (clamped.length > 0) {
       dlog.warn('schema范围夹紧', clamped)
     }
+
+    // 模式隔离：如果上一次是展览馆/VLM，先清空旧模型
+    if (viewerStore.sessionSource && viewerStore.sessionSource !== 'workflow') {
+      viewerStore.clearAll()
+    }
+    viewerStore.sessionSource = 'workflow'
 
     const payload = {
       product: appStore.productId!,
@@ -117,7 +133,7 @@ export function useGenerate() {
 
       appStore.setLastResponse(res)
 
-      if (res.ok === false) {
+      if (!res.ok) {
         dlog.warn(`生成失败: ${res.error}`, { qc: (res as any).qc })
         appStore.setGenMessage(res.error || 'Generation failed', true)
       } else {

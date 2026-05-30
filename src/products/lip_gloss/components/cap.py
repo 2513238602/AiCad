@@ -126,7 +126,26 @@ class CapComponent:
             ),
             ParamDef(
                 k="top_shape", name="顶面形态", type="enum",
-                default="flat", choices=["flat", "dome"],
+                default="flat", choices=["flat", "dome", "pointed"],
+                is_core=True, group="外形"
+            ),
+            ParamDef(
+                k="profile_mode", name="外轮廓模式", type="enum",
+                default="classic", choices=["classic", "spline"],
+                is_core=True, group="外形"
+            ),
+            ParamDef(
+                k="profile_points_json", name="轮廓控制点 (JSON)", type="str",
+                default="[]", is_core=True, group="外形"
+            ),
+            ParamDef(
+                k="cross_section", name="截面形状", type="enum",
+                default="round", choices=["round", "square", "triangle", "hexagon", "octagon"],
+                is_core=True, group="外形"
+            ),
+            ParamDef(
+                k="corner_radius_mm", name="方形圆角", unit="mm", type="float",
+                default=3.0, min=0.5, max=10.0, step=0.5,
                 is_core=True, group="外形"
             ),
 
@@ -157,7 +176,7 @@ class CapComponent:
             # ═══════════════════════════════════════════════════════════════
             ParamDef(
                 k="grip.style", name="防滑纹样式", type="enum",
-                default="ribs", choices=["none", "ribs", "knurl"],
+                default="ribs", choices=["none", "ribs", "knurl", "horizontal_grooves", "stripe"],
                 is_core=True, group="防滑纹"
             ),
             ParamDef(
@@ -177,6 +196,115 @@ class CapComponent:
             ParamDef(
                 k="finish", name="口部规格（标注）", type="str",
                 default="18-415", is_core=True, group="配合"
+            ),
+
+            # ═══════════════════════════════════════════════════════════════
+            # F. 内置杆子（可选，代替独立 wand 组件）
+            # ═══════════════════════════════════════════════════════════════
+            ParamDef(
+                k="stem.enabled", name="内置杆子", type="bool",
+                default=False, is_core=True, group="杆子"
+            ),
+            ParamDef(
+                k="stem.diameter_mm", name="杆径", type="float",
+                default=4.5, min=2.0, max=10.0, step=0.25,
+                is_core=True, group="杆子"
+            ),
+            ParamDef(
+                k="stem.length_mm", name="杆长", type="float",
+                default=50.0, min=20.0, max=150.0, step=1.0,
+                is_core=False, group="杆子"
+            ),
+            ParamDef(
+                k="stem.profile", name="杆身轮廓", type="str",
+                default="round", is_core=True, group="杆子"
+            ),
+            ParamDef(
+                k="stem.taper_ratio", name="杆锥度比", type="float",
+                default=1.0, min=0.6, max=1.0, step=0.05,
+                is_core=True, group="杆子"
+            ),
+            ParamDef(
+                k="stem.wall_mm", name="杆壁厚", type="float",
+                default=0.8, min=0.0, max=3.0, step=0.1,
+                is_core=True, group="杆子"
+            ),
+
+            # ---- 内螺纹（stem 启用时使用） ----
+            ParamDef(
+                k="thread.enabled", name="内螺纹", type="bool",
+                default=False, is_core=True, group="螺纹"
+            ),
+            ParamDef(
+                k="thread.crest_dia_mm", name="螺牙峰径", type="float",
+                default=18.0, min=10.0, max=28.0, step=0.5,
+                is_core=False, group="螺纹"
+            ),
+            ParamDef(
+                k="thread.pitch_mm", name="螺距", type="float",
+                default=2.7, min=1.5, max=4.0, step=0.1,
+                is_core=True, group="螺纹"
+            ),
+            ParamDef(
+                k="thread.turns", name="圈数", type="int",
+                default=2, min=1, max=5,
+                is_core=True, group="螺纹"
+            ),
+            ParamDef(
+                k="thread.depth_mm", name="牙深", type="float",
+                default=0.75, min=0.2, max=1.5, step=0.05,
+                is_core=True, group="螺纹"
+            ),
+            ParamDef(
+                k="thread.lead_angle_deg", name="导程角", type="float",
+                default=3.0, min=0.0, max=15.0, step=0.5,
+                is_core=True, group="螺纹"
+            ),
+            ParamDef(
+                k="thread.segmented", name="分段螺纹", type="bool",
+                default=False, is_core=True, group="螺纹"
+            ),
+            ParamDef(
+                k="thread.gap_angle_deg", name="分段间隔角", type="float",
+                default=20.0, min=5.0, max=60.0, step=5.0,
+                is_core=True, group="螺纹"
+            ),
+
+            # ---- 气密环 ----
+            ParamDef(
+                k="seal_ring.od_mm", name="气密环外径", type="float",
+                default=12.0, min=8.0, max=25.0, step=0.5,
+                is_core=False, group="气密环"
+            ),
+            ParamDef(
+                k="seal_ring.height_mm", name="气密环高", type="float",
+                default=2.0, min=1.0, max=8.0, step=0.5,
+                is_core=True, group="气密环"
+            ),
+            ParamDef(
+                k="seal_ring.style", name="气密环形态", type="str",
+                default="flat", is_core=True, group="气密环"
+            ),
+
+            # ---- 刷头 ----
+            ParamDef(
+                k="brush.type", name="刷头类型", type="str",
+                default="doe_foot", is_core=True, group="刷头"
+            ),
+            ParamDef(
+                k="brush.length_mm", name="刷长", type="float",
+                default=12.0, min=5.0, max=25.0, step=0.5,
+                is_core=True, group="刷头"
+            ),
+            ParamDef(
+                k="brush.width_mm", name="刷宽", type="float",
+                default=8.0, min=4.0, max=18.0, step=0.5,
+                is_core=True, group="刷头"
+            ),
+            ParamDef(
+                k="brush.thickness_mm", name="刷厚", type="float",
+                default=3.0, min=2.0, max=10.0, step=0.5,
+                is_core=True, group="刷头"
             ),
 
         ]
@@ -230,6 +358,58 @@ class CapComponent:
                     "grip.depth_mm": 0.2,
                 },
             },
+            {
+                "id": "cap_spline_arc",
+                "name": "弧形瓶盖",
+                "desc": "spline 曲线外形，柔和弧线造型，无防滑纹",
+                "params": {
+                    "outer_od_mm": 24.0,
+                    "height_mm": 28.0,
+                    "taper_deg": 1.0,
+                    "top_shape": "flat",
+                    "profile_mode": "spline",
+                    "profile_points_json": json.dumps([
+                        [12.0, 0.0],
+                        [12.2, 8.0],
+                        [12.1, 18.0],
+                        [11.5, 28.0],
+                    ]),
+
+                    "inner_id_mm": 22.4,
+                    "cavity_depth_mm": 26.0,
+                    "edge_fillet_mm": 0.5,
+
+                    "grip.style": "none",
+                    "grip.count": 0,
+                    "grip.depth_mm": 0.0,
+                },
+            },
+            {
+                "id": "cap_spline_taper",
+                "name": "锥形设计感瓶盖",
+                "desc": "spline 曲线外形，底宽顶窄的锥形设计，无防滑纹",
+                "params": {
+                    "outer_od_mm": 24.0,
+                    "height_mm": 30.0,
+                    "taper_deg": 3.0,
+                    "top_shape": "dome",
+                    "profile_mode": "spline",
+                    "profile_points_json": json.dumps([
+                        [12.0, 0.0],
+                        [11.8, 10.0],
+                        [11.0, 20.0],
+                        [10.2, 30.0],
+                    ]),
+
+                    "inner_id_mm": 22.4,
+                    "cavity_depth_mm": 28.0,
+                    "edge_fillet_mm": 0.5,
+
+                    "grip.style": "none",
+                    "grip.count": 0,
+                    "grip.depth_mm": 0.0,
+                },
+            },
         ]
 
     # ---------------- rules (hard fail) ----------------
@@ -242,9 +422,11 @@ class CapComponent:
             """外径必须大于内径（确保有壁厚）"""
             od = float(p["outer_od_mm"])
             id_ = float(p["inner_id_mm"])
-            wall = (od - id_) / 2.0
-            # 壁厚至少 0.8mm
-            return wall >= 0.8
+            wall = round((od - id_) / 2.0, 4)
+            # 锥形cap(body_top模式)允许薄壁0.3mm(需容纳body_top+螺纹)
+            taper = float(p.get("taper_deg", 0))
+            min_wall = 0.3 if taper > 0.5 else 0.8
+            return wall >= min_wall
 
         def _cavity_in_height(p: Dict[str, Any]) -> bool:
             """内腔深度不能超过总高"""
@@ -262,13 +444,29 @@ class CapComponent:
             # 计算壁厚
             od = float(p["outer_od_mm"])
             id_ = float(p["inner_id_mm"])
-            wall = (od - id_) / 2.0
+            wall = round((od - id_) / 2.0, 4)
             # 纹理深度不能超过壁厚的 50%
             return depth <= wall * 0.5
 
+        def _thread_safe(p: Dict[str, Any]) -> bool:
+            """内螺纹安全性：峰径必须小于内腔直径，且不能击穿外壁"""
+            thr = p.get("thread", {}) or {}
+            if not bool(thr.get("enabled", False)):
+                return True
+            crest = float(thr.get("crest_dia_mm", 18.0))
+            id_ = float(p["inner_id_mm"])
+            od = float(p["outer_od_mm"])
+            # 螺纹峰径必须小于内腔直径（否则螺纹朝外长）
+            if crest >= id_:
+                return False
+            # 螺纹峰径必须在外壁以内（含最小壁厚余量）
+            if crest >= od - 1.0:
+                return False
+            return True
+
         return [
             Rule("od_greater_than_id", "hard",
-                 "外径必须大于内径：要求壁厚 (OD-ID)/2 >= 0.8mm",
+                 "外径必须大于内径：要求壁厚 (OD-ID)/2 >= 0.4mm(锥形)/0.8mm(直筒)",
                  _od_greater_than_id),
             Rule("cavity_in_height", "hard",
                  "内腔深度超过总高：要求 0 < cavity < height",
@@ -276,6 +474,9 @@ class CapComponent:
             Rule("grip_safe", "hard",
                  "纹理深度过大：不能超过壁厚的 50%",
                  _grip_safe),
+            Rule("thread_safe", "hard",
+                 "螺纹穿壁：峰径必须小于内腔直径且不击穿外壁",
+                 _thread_safe),
         ]
 
     # ---------------- generate ----------------
@@ -329,18 +530,21 @@ class CapComponent:
         }
 
         if not qc["ok"]:
-            out["error"] = "参数不满足硬约束（strict），已阻止导出。"
+            _fails = [c["msg"] for c in qc.get("checks", []) if not c["ok"] and c.get("severity") == "hard"]
+            out["error"] = "硬约束失败：" + "；".join(_fails) if _fails else "参数不满足硬约束（strict），已阻止导出。"
             return out
 
         modeler = Modeler()
         meta: Dict[str, Any] = {}
         try:
             solid = modeler.build("cap", p_norm, meta=meta)
+            out["solid"] = solid
             modeler.export_step(solid, str(step_path))
             out["step"] = str(step_path)
             try:
                 import cadquery as cq
-                cq.exporters.export(solid, str(stl_path), exportType="STL")
+                cq.exporters.export(solid, str(stl_path), exportType="STL",
+                                    tolerance=0.01, angularTolerance=0.05)
                 out["stl"] = str(stl_path)
             except Exception:
                 out["stl"] = None
@@ -351,7 +555,7 @@ class CapComponent:
             return out
 
         try:
-            export_cap_sheet(p_norm, svg_path)
+            export_cap_sheet(p_norm, svg_path, solid=solid)
             out["svg"] = str(svg_path)
         except Exception as e:
             out["ok"] = False

@@ -83,6 +83,8 @@ class Interpreter:
         # unknown keys
         if not allow_unknown_keys:
             for k in user_flat.keys():
+                if k.startswith("_render_"):
+                    continue  # 渲染元数据，非 CAD 参数，跳过校验
                 if k not in defs_by_k:
                     add("unknown_param:" + k, False, "hard", "未知参数（前端/调用方传了 schema 不支持的字段）", {"k": k})
 
@@ -135,7 +137,9 @@ class Interpreter:
                     continue
 
             # range check（不 clamp，只报错）
-            if typ in ("float", "int") and isinstance(v, (int, float)):
+            # 派生参数（有 derived_from 标记）跳过静态范围检查，
+            # 其合理性由 cross-field rules 保证（如 cavity_in_height）
+            if typ in ("float", "int") and isinstance(v, (int, float)) and "derived_from" not in d:
                 if "min" in d and v < float(d["min"]):
                     add("min:" + k, False, "hard", "小于最小值", {"k": k, "v": v, "min": d["min"]})
                 if "max" in d and v > float(d["max"]):
@@ -161,6 +165,12 @@ class Interpreter:
                     data = {}
 
             add(r.id, ok, r.severity, r.msg, data)
+
+        # 透传 _render_* 渲染元数据到输出（不参与 CAD 校验，但需传给前端）
+        for k, v in user_flat.items():
+            if k.startswith("_render_"):
+                flat_out[k] = v
+                nested_out[k] = v
 
         ok_all = all(c["ok"] for c in checks if c["severity"] == "hard")
         qc = {"ok": ok_all, "checks": checks, "params": nested_out, "flat": flat_out}

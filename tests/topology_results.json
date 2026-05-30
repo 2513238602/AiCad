@@ -1,0 +1,2699 @@
+{
+  "pass": 56,
+  "total": 56,
+  "rate": 1.0,
+  "details": {
+    "A1_round_flat/bottle": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 6142.33,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 23.97,
+          "depth": 23.97,
+          "height": 70.0
+        },
+        "face_types": {
+          "cone": 9,
+          "torus": 3,
+          "plane": 7,
+          "bspline": 2,
+          "cylinder": 1
+        },
+        "total_faces": 22,
+        "total_edges": 44,
+        "checks": [
+          {
+            "name": "bottle 高度",
+            "expected": 70.0,
+            "actual": 70.0,
+            "tolerance": 2.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望70.0, 实际70.0mm (±2.0)"
+          },
+          {
+            "name": "bottle 外径",
+            "expected": 24.0,
+            "actual": 24.0,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "body_od: 期望24.0, 实际24.0mm (±1.5)"
+          },
+          {
+            "name": "bottle 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=1; {'cone': 9, 'torus': 3, 'plane': 7, 'bspline': 2, 'cylinder': 1}"
+          },
+          {
+            "name": "bottle 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "A1_round_flat/cap": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 2178.62,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 23.99,
+          "depth": 23.99,
+          "height": 39.88
+        },
+        "face_types": {
+          "torus": 2,
+          "bspline": 145,
+          "cone": 2,
+          "plane": 98,
+          "cylinder": 1
+        },
+        "total_faces": 248,
+        "total_edges": 592,
+        "checks": [
+          {
+            "name": "cap 高度",
+            "expected": 40.1,
+            "actual": 39.9,
+            "tolerance": 3.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望40.1, 实际39.9mm (±3.0, flat)"
+          },
+          {
+            "name": "cap 外径",
+            "expected": 24.0,
+            "actual": 24.0,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望24.0, 实际24.0mm (±1.5)"
+          },
+          {
+            "name": "cap 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=1; {'torus': 2, 'bspline': 145, 'cone': 2, 'plane': 98, 'cylinder': 1}"
+          }
+        ]
+      }
+    },
+    "A1_round_flat/wand": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 3307.29,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "wand_pre_stem: 清理 1 个螺纹碎片"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 21.5,
+          "depth": 21.5,
+          "height": 63.5
+        },
+        "face_types": {
+          "bspline": 2,
+          "cylinder": 6,
+          "plane": 9,
+          "cone": 1,
+          "torus": 1
+        },
+        "total_faces": 19,
+        "total_edges": 27,
+        "checks": [
+          {
+            "name": "wand 物理高度",
+            "expected": 63.0,
+            "actual": 63.5,
+            "tolerance": 5.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "physical_height: 期望63.0, 实际63.5mm (±5.0)"
+          },
+          {
+            "name": "wand 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=6; {'bspline': 2, 'cylinder': 6, 'plane': 9, 'cone': 1, 'torus': 1}"
+          },
+          {
+            "name": "wand 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "A1_round_flat/wiper": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 391.95,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 15.8,
+          "depth": 15.8,
+          "height": 6.4
+        },
+        "face_types": {
+          "cone": 3,
+          "torus": 2,
+          "plane": 4,
+          "cylinder": 3
+        },
+        "total_faces": 12,
+        "total_edges": 20,
+        "checks": [
+          {
+            "name": "wiper 外径",
+            "expected": 15.7,
+            "actual": 15.8,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望15.7, 实际15.8mm (±1.5)"
+          }
+        ]
+      }
+    },
+    "A2_round_dome/bottle": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 5269.26,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 21.97,
+          "depth": 21.97,
+          "height": 70.0
+        },
+        "face_types": {
+          "cone": 9,
+          "torus": 3,
+          "plane": 7,
+          "bspline": 2,
+          "cylinder": 1
+        },
+        "total_faces": 22,
+        "total_edges": 44,
+        "checks": [
+          {
+            "name": "bottle 高度",
+            "expected": 70.0,
+            "actual": 70.0,
+            "tolerance": 2.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望70.0, 实际70.0mm (±2.0)"
+          },
+          {
+            "name": "bottle 外径",
+            "expected": 22.0,
+            "actual": 22.0,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "body_od: 期望22.0, 实际22.0mm (±1.5)"
+          },
+          {
+            "name": "bottle 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=1; {'cone': 9, 'torus': 3, 'plane': 7, 'bspline': 2, 'cylinder': 1}"
+          },
+          {
+            "name": "bottle 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "A2_round_dome/cap": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 2026.01,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 21.99,
+          "depth": 21.99,
+          "height": 39.88
+        },
+        "face_types": {
+          "torus": 2,
+          "bspline": 1,
+          "cone": 2,
+          "cylinder": 1,
+          "plane": 2
+        },
+        "total_faces": 8,
+        "total_edges": 15,
+        "checks": [
+          {
+            "name": "cap 高度",
+            "expected": 40.1,
+            "actual": 39.9,
+            "tolerance": 8.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望40.1, 实际39.9mm (±8.0, dome)"
+          },
+          {
+            "name": "cap 外径",
+            "expected": 22.0,
+            "actual": 22.0,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望22.0, 实际22.0mm (±1.5)"
+          },
+          {
+            "name": "cap 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=1; {'torus': 2, 'bspline': 1, 'cone': 2, 'cylinder': 1, 'plane': 2}"
+          }
+        ]
+      }
+    },
+    "A2_round_dome/wand": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 3283.81,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "wand_pre_stem: 清理 1 个螺纹碎片"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 22.0,
+          "depth": 22.0,
+          "height": 63.5
+        },
+        "face_types": {
+          "bspline": 2,
+          "cylinder": 6,
+          "plane": 9,
+          "cone": 1,
+          "torus": 1
+        },
+        "total_faces": 19,
+        "total_edges": 27,
+        "checks": [
+          {
+            "name": "wand 物理高度",
+            "expected": 63.0,
+            "actual": 63.5,
+            "tolerance": 5.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "physical_height: 期望63.0, 实际63.5mm (±5.0)"
+          },
+          {
+            "name": "wand 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=6; {'bspline': 2, 'cylinder': 6, 'plane': 9, 'cone': 1, 'torus': 1}"
+          },
+          {
+            "name": "wand 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "A2_round_dome/wiper": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 391.95,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 15.8,
+          "depth": 15.8,
+          "height": 6.4
+        },
+        "face_types": {
+          "cone": 3,
+          "torus": 2,
+          "plane": 4,
+          "cylinder": 3
+        },
+        "total_faces": 12,
+        "total_edges": 20,
+        "checks": [
+          {
+            "name": "wiper 外径",
+            "expected": 15.7,
+            "actual": 15.8,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望15.7, 实际15.8mm (±1.5)"
+          }
+        ]
+      }
+    },
+    "A3_round_pointed/bottle": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 3279.9,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "bottle: 过滤 1 个碎片 (最大保留)"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 21.73,
+          "depth": 21.73,
+          "height": 50.83
+        },
+        "face_types": {
+          "bspline": 72,
+          "plane": 4,
+          "sphere": 32
+        },
+        "total_faces": 108,
+        "total_edges": 232,
+        "checks": [
+          {
+            "name": "bottle 高度",
+            "expected": 65.0,
+            "actual": 50.8,
+            "tolerance": 16.2,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望65.0, 实际50.8mm (±16.2)"
+          },
+          {
+            "name": "bottle 外径",
+            "expected": 22.0,
+            "actual": 21.7,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "body_od: 期望22.0, 实际21.7mm (±1.5)"
+          },
+          {
+            "name": "bottle 截面(octagon)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "octagon(n=8): plane=4, bspline=72, cyl=0; {'bspline': 72, 'plane': 4, 'sphere': 32}"
+          },
+          {
+            "name": "bottle 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "A3_round_pointed/cap": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 1729.51,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 18.95,
+          "depth": 18.95,
+          "height": 44.79
+        },
+        "face_types": {
+          "sphere": 32,
+          "bspline": 104,
+          "plane": 2
+        },
+        "total_faces": 138,
+        "total_edges": 304,
+        "checks": [
+          {
+            "name": "cap 高度",
+            "expected": 35.0,
+            "actual": 44.8,
+            "tolerance": 12.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望35.0, 实际44.8mm (±12.0, pointed)"
+          },
+          {
+            "name": "cap 外径",
+            "expected": 19.3,
+            "actual": 19.0,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望19.3, 实际19.0mm (±1.5)"
+          },
+          {
+            "name": "cap 截面(octagon)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "octagon(n=8): plane=2, bspline=104, cyl=0; {'sphere': 32, 'bspline': 104, 'plane': 2}"
+          }
+        ]
+      }
+    },
+    "A3_round_pointed/wand": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 1447.94,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "wand_pre_stem: 清理 1 个螺纹碎片"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 20.65,
+          "depth": 20.65,
+          "height": 58.98
+        },
+        "face_types": {
+          "bspline": 34,
+          "cylinder": 6,
+          "plane": 16,
+          "cone": 1,
+          "sphere": 16
+        },
+        "total_faces": 73,
+        "total_edges": 177,
+        "checks": [
+          {
+            "name": "wand 物理高度",
+            "expected": 58.0,
+            "actual": 59.0,
+            "tolerance": 5.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "physical_height: 期望58.0, 实际59.0mm (±5.0)"
+          },
+          {
+            "name": "wand 截面(octagon)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "octagon(n=8): plane=16, bspline=34, cyl=6; {'bspline': 34, 'cylinder': 6, 'plane': 16, 'cone': 1, 'sphere': 16}"
+          },
+          {
+            "name": "wand 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "A3_round_pointed/wiper": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 340.22,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 14.8,
+          "depth": 14.8,
+          "height": 6.0
+        },
+        "face_types": {
+          "cone": 3,
+          "torus": 2,
+          "plane": 4,
+          "cylinder": 3
+        },
+        "total_faces": 12,
+        "total_edges": 20,
+        "checks": [
+          {
+            "name": "wiper 外径",
+            "expected": 14.7,
+            "actual": 14.8,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望14.7, 实际14.8mm (±1.5)"
+          }
+        ]
+      }
+    },
+    "B1_tapered/bottle": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 5311.38,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 23.84,
+          "depth": 23.84,
+          "height": 75.0
+        },
+        "face_types": {
+          "cone": 8,
+          "torus": 3,
+          "plane": 6,
+          "bspline": 2,
+          "cylinder": 1
+        },
+        "total_faces": 20,
+        "total_edges": 41,
+        "checks": [
+          {
+            "name": "bottle 高度",
+            "expected": 75.0,
+            "actual": 75.0,
+            "tolerance": 2.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望75.0, 实际75.0mm (±2.0)"
+          },
+          {
+            "name": "bottle 外径",
+            "expected": 24.0,
+            "actual": 23.8,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "body_od: 期望24.0, 实际23.8mm (±1.5)"
+          },
+          {
+            "name": "bottle 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=1; {'cone': 8, 'torus': 3, 'plane': 6, 'bspline': 2, 'cylinder': 1}"
+          },
+          {
+            "name": "bottle 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "B1_tapered/cap": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 2269.15,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 23.99,
+          "depth": 23.99,
+          "height": 42.78
+        },
+        "face_types": {
+          "torus": 2,
+          "bspline": 145,
+          "cone": 2,
+          "plane": 98,
+          "cylinder": 1
+        },
+        "total_faces": 248,
+        "total_edges": 592,
+        "checks": [
+          {
+            "name": "cap 高度",
+            "expected": 43.0,
+            "actual": 42.8,
+            "tolerance": 3.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望43.0, 实际42.8mm (±3.0, flat)"
+          },
+          {
+            "name": "cap 外径",
+            "expected": 24.0,
+            "actual": 24.0,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望24.0, 实际24.0mm (±1.5)"
+          },
+          {
+            "name": "cap 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=1; {'torus': 2, 'bspline': 145, 'cone': 2, 'plane': 98, 'cylinder': 1}"
+          }
+        ]
+      }
+    },
+    "B1_tapered/wand": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 3495.2,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "wand_pre_stem: 清理 1 个螺纹碎片"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 21.5,
+          "depth": 21.5,
+          "height": 68.5
+        },
+        "face_types": {
+          "bspline": 2,
+          "cylinder": 6,
+          "plane": 9,
+          "cone": 1,
+          "torus": 1
+        },
+        "total_faces": 19,
+        "total_edges": 27,
+        "checks": [
+          {
+            "name": "wand 物理高度",
+            "expected": 68.0,
+            "actual": 68.5,
+            "tolerance": 5.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "physical_height: 期望68.0, 实际68.5mm (±5.0)"
+          },
+          {
+            "name": "wand 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=6; {'bspline': 2, 'cylinder': 6, 'plane': 9, 'cone': 1, 'torus': 1}"
+          },
+          {
+            "name": "wand 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "B1_tapered/wiper": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 391.95,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 15.8,
+          "depth": 15.8,
+          "height": 6.4
+        },
+        "face_types": {
+          "cone": 3,
+          "torus": 2,
+          "plane": 4,
+          "cylinder": 3
+        },
+        "total_faces": 12,
+        "total_edges": 20,
+        "checks": [
+          {
+            "name": "wiper 外径",
+            "expected": 15.7,
+            "actual": 15.8,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望15.7, 实际15.8mm (±1.5)"
+          }
+        ]
+      }
+    },
+    "B2_barrel/bottle": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 6229.93,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "bottle: 过滤 2 个碎片 (最大保留)"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 27.63,
+          "depth": 27.63,
+          "height": 49.03
+        },
+        "face_types": {
+          "bspline": 1,
+          "cylinder": 1,
+          "plane": 3,
+          "cone": 2
+        },
+        "total_faces": 7,
+        "total_edges": 10,
+        "checks": [
+          {
+            "name": "bottle 高度",
+            "expected": 55.0,
+            "actual": 49.0,
+            "tolerance": 22.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望55.0, 实际49.0mm (±22.0)"
+          },
+          {
+            "name": "bottle 外径",
+            "expected": 26.0,
+            "actual": 27.6,
+            "tolerance": 8.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "body_od: 期望26.0, 实际27.6mm (±8.0)"
+          },
+          {
+            "name": "bottle 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=1; {'bspline': 1, 'cylinder': 1, 'plane': 3, 'cone': 2}"
+          },
+          {
+            "name": "bottle 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "B2_barrel/cap": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 9368.88,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 26.0,
+          "depth": 26.0,
+          "height": 31.5
+        },
+        "face_types": {
+          "plane": 3,
+          "cone": 1,
+          "bspline": 3,
+          "cylinder": 1
+        },
+        "total_faces": 8,
+        "total_edges": 12,
+        "checks": [
+          {
+            "name": "cap 高度",
+            "expected": 31.5,
+            "actual": 31.5,
+            "tolerance": 3.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望31.5, 实际31.5mm (±3.0, flat)"
+          },
+          {
+            "name": "cap 外径",
+            "expected": 26.0,
+            "actual": 26.0,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望26.0, 实际26.0mm (±1.5)"
+          },
+          {
+            "name": "cap 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=1; {'plane': 3, 'cone': 1, 'bspline': 3, 'cylinder': 1}"
+          }
+        ]
+      }
+    },
+    "B2_barrel/wand": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 4147.59,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "wand_pre_stem: 清理 1 个螺纹碎片"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 23.5,
+          "depth": 23.5,
+          "height": 48.5
+        },
+        "face_types": {
+          "bspline": 2,
+          "cylinder": 6,
+          "plane": 9,
+          "cone": 1,
+          "torus": 1
+        },
+        "total_faces": 19,
+        "total_edges": 27,
+        "checks": [
+          {
+            "name": "wand 物理高度",
+            "expected": 48.0,
+            "actual": 48.5,
+            "tolerance": 5.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "physical_height: 期望48.0, 实际48.5mm (±5.0)"
+          },
+          {
+            "name": "wand 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=6; {'bspline': 2, 'cylinder': 6, 'plane': 9, 'cone': 1, 'torus': 1}"
+          },
+          {
+            "name": "wand 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "B2_barrel/wiper": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 391.95,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 15.8,
+          "depth": 15.8,
+          "height": 6.4
+        },
+        "face_types": {
+          "cone": 3,
+          "torus": 2,
+          "plane": 4,
+          "cylinder": 3
+        },
+        "total_faces": 12,
+        "total_edges": 20,
+        "checks": [
+          {
+            "name": "wiper 外径",
+            "expected": 15.7,
+            "actual": 15.8,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望15.7, 实际15.8mm (±1.5)"
+          }
+        ]
+      }
+    },
+    "B3_teardrop/bottle": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 28.82,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 16.7,
+          "depth": 16.7,
+          "height": 1.34
+        },
+        "face_types": {
+          "bspline": 2,
+          "cylinder": 1,
+          "plane": 1,
+          "cone": 1
+        },
+        "total_faces": 5,
+        "total_edges": 9,
+        "checks": [
+          {
+            "name": "bottle 高度",
+            "expected": 65.0,
+            "actual": 1.3,
+            "tolerance": 26.0,
+            "pass": false,
+            "severity": "hard",
+            "msg": "height: 期望65.0, 实际1.3mm (±26.0)"
+          },
+          {
+            "name": "bottle 外径",
+            "expected": 24.0,
+            "actual": 16.7,
+            "tolerance": 8.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "body_od: 期望24.0, 实际16.7mm (±8.0)"
+          },
+          {
+            "name": "bottle 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=1; {'bspline': 2, 'cylinder': 1, 'plane': 1, 'cone': 1}"
+          },
+          {
+            "name": "bottle 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "B3_teardrop/cap": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 7693.52,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 24.0,
+          "depth": 24.0,
+          "height": 30.1
+        },
+        "face_types": {
+          "plane": 3,
+          "cone": 1,
+          "bspline": 3,
+          "cylinder": 1
+        },
+        "total_faces": 8,
+        "total_edges": 14,
+        "checks": [
+          {
+            "name": "cap 高度",
+            "expected": 30.1,
+            "actual": 30.1,
+            "tolerance": 8.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望30.1, 实际30.1mm (±8.0, dome)"
+          },
+          {
+            "name": "cap 外径",
+            "expected": 24.0,
+            "actual": 24.0,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望24.0, 实际24.0mm (±1.5)"
+          },
+          {
+            "name": "cap 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=1; {'plane': 3, 'cone': 1, 'bspline': 3, 'cylinder': 1}"
+          }
+        ]
+      }
+    },
+    "B3_teardrop/wand": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 3100.53,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "wand_pre_stem: 清理 1 个螺纹碎片"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 21.5,
+          "depth": 21.5,
+          "height": 58.5
+        },
+        "face_types": {
+          "bspline": 2,
+          "cylinder": 6,
+          "plane": 9,
+          "cone": 1,
+          "torus": 1
+        },
+        "total_faces": 19,
+        "total_edges": 27,
+        "checks": [
+          {
+            "name": "wand 物理高度",
+            "expected": 58.0,
+            "actual": 58.5,
+            "tolerance": 5.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "physical_height: 期望58.0, 实际58.5mm (±5.0)"
+          },
+          {
+            "name": "wand 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=6; {'bspline': 2, 'cylinder': 6, 'plane': 9, 'cone': 1, 'torus': 1}"
+          },
+          {
+            "name": "wand 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "B3_teardrop/wiper": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 340.22,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 14.8,
+          "depth": 14.8,
+          "height": 6.0
+        },
+        "face_types": {
+          "cone": 3,
+          "torus": 2,
+          "plane": 4,
+          "cylinder": 3
+        },
+        "total_faces": 12,
+        "total_edges": 20,
+        "checks": [
+          {
+            "name": "wiper 外径",
+            "expected": 14.7,
+            "actual": 14.8,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望14.7, 实际14.8mm (±1.5)"
+          }
+        ]
+      }
+    },
+    "B4_scurve/bottle": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 7977.4,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "bottle: 过滤 3 个碎片 (最大保留)"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 28.64,
+          "depth": 28.64,
+          "height": 49.36
+        },
+        "face_types": {
+          "bspline": 1,
+          "cone": 2,
+          "cylinder": 1,
+          "plane": 1
+        },
+        "total_faces": 5,
+        "total_edges": 9,
+        "checks": [
+          {
+            "name": "bottle 高度",
+            "expected": 70.0,
+            "actual": 49.4,
+            "tolerance": 28.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望70.0, 实际49.4mm (±28.0)"
+          },
+          {
+            "name": "bottle 外径",
+            "expected": 24.0,
+            "actual": 28.6,
+            "tolerance": 8.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "body_od: 期望24.0, 实际28.6mm (±8.0)"
+          },
+          {
+            "name": "bottle 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=1; {'bspline': 1, 'cone': 2, 'cylinder': 1, 'plane': 1}"
+          },
+          {
+            "name": "bottle 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "B4_scurve/cap": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 10152.78,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 24.0,
+          "depth": 24.0,
+          "height": 40.1
+        },
+        "face_types": {
+          "plane": 3,
+          "cone": 2,
+          "bspline": 3
+        },
+        "total_faces": 8,
+        "total_edges": 12,
+        "checks": [
+          {
+            "name": "cap 高度",
+            "expected": 40.1,
+            "actual": 40.1,
+            "tolerance": 3.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望40.1, 实际40.1mm (±3.0, flat)"
+          },
+          {
+            "name": "cap 外径",
+            "expected": 24.0,
+            "actual": 24.0,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望24.0, 实际24.0mm (±1.5)"
+          },
+          {
+            "name": "cap 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=0; {'plane': 3, 'cone': 2, 'bspline': 3}"
+          }
+        ]
+      }
+    },
+    "B4_scurve/wand": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 3307.29,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "wand_pre_stem: 清理 1 个螺纹碎片"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 21.5,
+          "depth": 21.5,
+          "height": 63.5
+        },
+        "face_types": {
+          "bspline": 2,
+          "cylinder": 6,
+          "plane": 9,
+          "cone": 1,
+          "torus": 1
+        },
+        "total_faces": 19,
+        "total_edges": 27,
+        "checks": [
+          {
+            "name": "wand 物理高度",
+            "expected": 63.0,
+            "actual": 63.5,
+            "tolerance": 5.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "physical_height: 期望63.0, 实际63.5mm (±5.0)"
+          },
+          {
+            "name": "wand 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=6; {'bspline': 2, 'cylinder': 6, 'plane': 9, 'cone': 1, 'torus': 1}"
+          },
+          {
+            "name": "wand 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "B4_scurve/wiper": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 391.95,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 15.8,
+          "depth": 15.8,
+          "height": 6.4
+        },
+        "face_types": {
+          "cone": 3,
+          "torus": 2,
+          "plane": 4,
+          "cylinder": 3
+        },
+        "total_faces": 12,
+        "total_edges": 20,
+        "checks": [
+          {
+            "name": "wiper 外径",
+            "expected": 15.7,
+            "actual": 15.8,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望15.7, 实际15.8mm (±1.5)"
+          }
+        ]
+      }
+    },
+    "C1_square_straight/bottle": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 6004.08,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 21.95,
+          "depth": 21.95,
+          "height": 70.0
+        },
+        "face_types": {
+          "cone": 5,
+          "bspline": 44,
+          "plane": 7,
+          "sphere": 16,
+          "cylinder": 1
+        },
+        "total_faces": 73,
+        "total_edges": 160,
+        "checks": [
+          {
+            "name": "bottle 高度",
+            "expected": 70.0,
+            "actual": 70.0,
+            "tolerance": 2.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望70.0, 实际70.0mm (±2.0)"
+          },
+          {
+            "name": "bottle 外径",
+            "expected": 22.0,
+            "actual": 21.9,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "body_od: 期望22.0, 实际21.9mm (±1.5)"
+          },
+          {
+            "name": "bottle 截面(square)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "square 需 plane≥4, 实际 plane=7; {'cone': 5, 'bspline': 44, 'plane': 7, 'sphere': 16, 'cylinder': 1}"
+          },
+          {
+            "name": "bottle 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "C1_square_straight/cap": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 1795.33,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "cap: 保留最大实体 (vol=1795mm³, 79%)，丢弃 1 个较小实体"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 21.95,
+          "depth": 21.95,
+          "height": 37.64
+        },
+        "face_types": {
+          "bspline": 32,
+          "sphere": 8,
+          "plane": 4,
+          "cylinder": 4
+        },
+        "total_faces": 48,
+        "total_edges": 112,
+        "checks": [
+          {
+            "name": "cap 高度",
+            "expected": 40.1,
+            "actual": 37.6,
+            "tolerance": 3.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望40.1, 实际37.6mm (±3.0, flat)"
+          },
+          {
+            "name": "cap 外径",
+            "expected": 22.0,
+            "actual": 21.9,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望22.0, 实际21.9mm (±1.5)"
+          },
+          {
+            "name": "cap 截面(square)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "square 需 plane≥4, 实际 plane=4; {'bspline': 32, 'sphere': 8, 'plane': 4, 'cylinder': 4}"
+          }
+        ]
+      }
+    },
+    "C1_square_straight/wand": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 5242.45,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "wand_pre_stem: 清理 1 个螺纹碎片"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 20.97,
+          "depth": 20.97,
+          "height": 63.5
+        },
+        "face_types": {
+          "bspline": 18,
+          "cylinder": 6,
+          "plane": 12,
+          "sphere": 8
+        },
+        "total_faces": 44,
+        "total_edges": 82,
+        "checks": [
+          {
+            "name": "wand 物理高度",
+            "expected": 63.0,
+            "actual": 63.5,
+            "tolerance": 5.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "physical_height: 期望63.0, 实际63.5mm (±5.0)"
+          },
+          {
+            "name": "wand 截面(square)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "square 需 plane≥4, 实际 plane=12; {'bspline': 18, 'cylinder': 6, 'plane': 12, 'sphere': 8}"
+          },
+          {
+            "name": "wand 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "C1_square_straight/wiper": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 340.22,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 14.8,
+          "depth": 14.8,
+          "height": 6.0
+        },
+        "face_types": {
+          "cone": 3,
+          "torus": 2,
+          "plane": 4,
+          "cylinder": 3
+        },
+        "total_faces": 12,
+        "total_edges": 20,
+        "checks": [
+          {
+            "name": "wiper 外径",
+            "expected": 14.7,
+            "actual": 14.8,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望14.7, 实际14.8mm (±1.5)"
+          }
+        ]
+      }
+    },
+    "C2_square_taper/bottle": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 4515.31,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "bottle: 过滤 1 个碎片 (最大保留)"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 21.79,
+          "depth": 21.79,
+          "height": 50.33
+        },
+        "face_types": {
+          "bspline": 37,
+          "plane": 4,
+          "sphere": 16
+        },
+        "total_faces": 57,
+        "total_edges": 119,
+        "checks": [
+          {
+            "name": "bottle 高度",
+            "expected": 65.0,
+            "actual": 50.3,
+            "tolerance": 16.2,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望65.0, 实际50.3mm (±16.2)"
+          },
+          {
+            "name": "bottle 外径",
+            "expected": 22.0,
+            "actual": 21.8,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "body_od: 期望22.0, 实际21.8mm (±1.5)"
+          },
+          {
+            "name": "bottle 截面(square)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "square 需 plane≥4, 实际 plane=4; {'bspline': 37, 'plane': 4, 'sphere': 16}"
+          },
+          {
+            "name": "bottle 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "C2_square_taper/cap": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 2175.85,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 21.95,
+          "depth": 21.95,
+          "height": 36.22
+        },
+        "face_types": {
+          "bspline": 32,
+          "sphere": 8,
+          "plane": 6,
+          "cylinder": 4
+        },
+        "total_faces": 50,
+        "total_edges": 120,
+        "checks": [
+          {
+            "name": "cap 高度",
+            "expected": 37.3,
+            "actual": 36.2,
+            "tolerance": 3.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望37.3, 实际36.2mm (±3.0, flat)"
+          },
+          {
+            "name": "cap 外径",
+            "expected": 22.0,
+            "actual": 21.9,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望22.0, 实际21.9mm (±1.5)"
+          },
+          {
+            "name": "cap 截面(square)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "square 需 plane≥4, 实际 plane=6; {'bspline': 32, 'sphere': 8, 'plane': 6, 'cylinder': 4}"
+          }
+        ]
+      }
+    },
+    "C2_square_taper/wand": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 4906.57,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "wand_pre_stem: 清理 1 个螺纹碎片"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 20.97,
+          "depth": 20.97,
+          "height": 58.5
+        },
+        "face_types": {
+          "bspline": 18,
+          "cylinder": 6,
+          "plane": 12,
+          "sphere": 8
+        },
+        "total_faces": 44,
+        "total_edges": 82,
+        "checks": [
+          {
+            "name": "wand 物理高度",
+            "expected": 58.0,
+            "actual": 58.5,
+            "tolerance": 5.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "physical_height: 期望58.0, 实际58.5mm (±5.0)"
+          },
+          {
+            "name": "wand 截面(square)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "square 需 plane≥4, 实际 plane=12; {'bspline': 18, 'cylinder': 6, 'plane': 12, 'sphere': 8}"
+          },
+          {
+            "name": "wand 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "C2_square_taper/wiper": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 340.22,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 14.8,
+          "depth": 14.8,
+          "height": 6.0
+        },
+        "face_types": {
+          "cone": 3,
+          "torus": 2,
+          "plane": 4,
+          "cylinder": 3
+        },
+        "total_faces": 12,
+        "total_edges": 20,
+        "checks": [
+          {
+            "name": "wiper 外径",
+            "expected": 14.7,
+            "actual": 14.8,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望14.7, 实际14.8mm (±1.5)"
+          }
+        ]
+      }
+    },
+    "C3_square_rounded/bottle": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 5117.88,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 21.9,
+          "depth": 21.9,
+          "height": 65.0
+        },
+        "face_types": {
+          "cone": 5,
+          "bspline": 44,
+          "plane": 7,
+          "sphere": 16,
+          "cylinder": 1
+        },
+        "total_faces": 73,
+        "total_edges": 160,
+        "checks": [
+          {
+            "name": "bottle 高度",
+            "expected": 65.0,
+            "actual": 65.0,
+            "tolerance": 2.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望65.0, 实际65.0mm (±2.0)"
+          },
+          {
+            "name": "bottle 外径",
+            "expected": 22.0,
+            "actual": 21.9,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "body_od: 期望22.0, 实际21.9mm (±1.5)"
+          },
+          {
+            "name": "bottle 截面(square)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "square 需 plane≥4, 实际 plane=7; {'cone': 5, 'bspline': 44, 'plane': 7, 'sphere': 16, 'cylinder': 1}"
+          },
+          {
+            "name": "bottle 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "C3_square_rounded/cap": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 2514.47,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 21.89,
+          "depth": 21.89,
+          "height": 37.83
+        },
+        "face_types": {
+          "cylinder": 4,
+          "plane": 7,
+          "bspline": 37,
+          "sphere": 8
+        },
+        "total_faces": 56,
+        "total_edges": 154,
+        "checks": [
+          {
+            "name": "cap 高度",
+            "expected": 37.3,
+            "actual": 37.8,
+            "tolerance": 8.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望37.3, 实际37.8mm (±8.0, dome)"
+          },
+          {
+            "name": "cap 外径",
+            "expected": 22.0,
+            "actual": 21.9,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望22.0, 实际21.9mm (±1.5)"
+          },
+          {
+            "name": "cap 截面(square)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "square 需 plane≥4, 实际 plane=7; {'cylinder': 4, 'plane': 7, 'bspline': 37, 'sphere': 8}"
+          }
+        ]
+      }
+    },
+    "C3_square_rounded/wand": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 3715.31,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "wand_pre_stem: 清理 1 个螺纹碎片"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 20.94,
+          "depth": 20.94,
+          "height": 58.5
+        },
+        "face_types": {
+          "bspline": 18,
+          "cylinder": 6,
+          "plane": 8,
+          "sphere": 8
+        },
+        "total_faces": 40,
+        "total_edges": 86,
+        "checks": [
+          {
+            "name": "wand 物理高度",
+            "expected": 58.0,
+            "actual": 58.5,
+            "tolerance": 5.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "physical_height: 期望58.0, 实际58.5mm (±5.0)"
+          },
+          {
+            "name": "wand 截面(square)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "square 需 plane≥4, 实际 plane=8; {'bspline': 18, 'cylinder': 6, 'plane': 8, 'sphere': 8}"
+          },
+          {
+            "name": "wand 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "C3_square_rounded/wiper": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 340.22,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 14.8,
+          "depth": 14.8,
+          "height": 6.0
+        },
+        "face_types": {
+          "cone": 3,
+          "torus": 2,
+          "plane": 4,
+          "cylinder": 3
+        },
+        "total_faces": 12,
+        "total_edges": 20,
+        "checks": [
+          {
+            "name": "wiper 外径",
+            "expected": 14.7,
+            "actual": 14.8,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望14.7, 实际14.8mm (±1.5)"
+          }
+        ]
+      }
+    },
+    "D1_textured_cap/bottle": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 6142.33,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 23.97,
+          "depth": 23.97,
+          "height": 70.0
+        },
+        "face_types": {
+          "cone": 9,
+          "torus": 3,
+          "plane": 7,
+          "bspline": 2,
+          "cylinder": 1
+        },
+        "total_faces": 22,
+        "total_edges": 44,
+        "checks": [
+          {
+            "name": "bottle 高度",
+            "expected": 70.0,
+            "actual": 70.0,
+            "tolerance": 2.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望70.0, 实际70.0mm (±2.0)"
+          },
+          {
+            "name": "bottle 外径",
+            "expected": 24.0,
+            "actual": 24.0,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "body_od: 期望24.0, 实际24.0mm (±1.5)"
+          },
+          {
+            "name": "bottle 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=1; {'cone': 9, 'torus': 3, 'plane': 7, 'bspline': 2, 'cylinder': 1}"
+          },
+          {
+            "name": "bottle 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "D1_textured_cap/cap": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 2212.82,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 23.99,
+          "depth": 23.99,
+          "height": 39.88
+        },
+        "face_types": {
+          "torus": 2,
+          "bspline": 1,
+          "cone": 2,
+          "plane": 98,
+          "cylinder": 1
+        },
+        "total_faces": 104,
+        "total_edges": 232,
+        "checks": [
+          {
+            "name": "cap 高度",
+            "expected": 40.1,
+            "actual": 39.9,
+            "tolerance": 3.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望40.1, 实际39.9mm (±3.0, flat)"
+          },
+          {
+            "name": "cap 外径",
+            "expected": 24.0,
+            "actual": 24.0,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望24.0, 实际24.0mm (±1.5)"
+          },
+          {
+            "name": "cap 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=1; {'torus': 2, 'bspline': 1, 'cone': 2, 'plane': 98, 'cylinder': 1}"
+          }
+        ]
+      }
+    },
+    "D1_textured_cap/wand": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 3307.29,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "wand_pre_stem: 清理 1 个螺纹碎片"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 21.5,
+          "depth": 21.5,
+          "height": 63.5
+        },
+        "face_types": {
+          "bspline": 2,
+          "cylinder": 6,
+          "plane": 9,
+          "cone": 1,
+          "torus": 1
+        },
+        "total_faces": 19,
+        "total_edges": 27,
+        "checks": [
+          {
+            "name": "wand 物理高度",
+            "expected": 63.0,
+            "actual": 63.5,
+            "tolerance": 5.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "physical_height: 期望63.0, 实际63.5mm (±5.0)"
+          },
+          {
+            "name": "wand 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=6; {'bspline': 2, 'cylinder': 6, 'plane': 9, 'cone': 1, 'torus': 1}"
+          },
+          {
+            "name": "wand 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "D1_textured_cap/wiper": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 391.95,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 15.8,
+          "depth": 15.8,
+          "height": 6.4
+        },
+        "face_types": {
+          "cone": 3,
+          "torus": 2,
+          "plane": 4,
+          "cylinder": 3
+        },
+        "total_faces": 12,
+        "total_edges": 20,
+        "checks": [
+          {
+            "name": "wiper 外径",
+            "expected": 15.7,
+            "actual": 15.8,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望15.7, 实际15.8mm (±1.5)"
+          }
+        ]
+      }
+    },
+    "D2_mushroom_cap/bottle": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 4894.64,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 21.97,
+          "depth": 21.97,
+          "height": 65.0
+        },
+        "face_types": {
+          "cone": 9,
+          "torus": 3,
+          "plane": 7,
+          "bspline": 2,
+          "cylinder": 1
+        },
+        "total_faces": 22,
+        "total_edges": 44,
+        "checks": [
+          {
+            "name": "bottle 高度",
+            "expected": 65.0,
+            "actual": 65.0,
+            "tolerance": 2.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望65.0, 实际65.0mm (±2.0)"
+          },
+          {
+            "name": "bottle 外径",
+            "expected": 22.0,
+            "actual": 22.0,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "body_od: 期望22.0, 实际22.0mm (±1.5)"
+          },
+          {
+            "name": "bottle 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=1; {'cone': 9, 'torus': 3, 'plane': 7, 'bspline': 2, 'cylinder': 1}"
+          },
+          {
+            "name": "bottle 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "D2_mushroom_cap/cap": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 1941.17,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 21.99,
+          "depth": 21.99,
+          "height": 37.08
+        },
+        "face_types": {
+          "torus": 2,
+          "bspline": 1,
+          "cone": 2,
+          "cylinder": 1,
+          "plane": 2
+        },
+        "total_faces": 8,
+        "total_edges": 15,
+        "checks": [
+          {
+            "name": "cap 高度",
+            "expected": 37.3,
+            "actual": 37.1,
+            "tolerance": 8.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望37.3, 实际37.1mm (±8.0, dome)"
+          },
+          {
+            "name": "cap 外径",
+            "expected": 22.0,
+            "actual": 22.0,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望22.0, 实际22.0mm (±1.5)"
+          },
+          {
+            "name": "cap 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=1; {'torus': 2, 'bspline': 1, 'cone': 2, 'cylinder': 1, 'plane': 2}"
+          }
+        ]
+      }
+    },
+    "D2_mushroom_cap/wand": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 4694.84,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "wand_pre_stem: 清理 1 个螺纹碎片"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 22.8,
+          "depth": 22.8,
+          "height": 58.5
+        },
+        "face_types": {
+          "bspline": 2,
+          "cylinder": 6,
+          "plane": 9,
+          "cone": 1,
+          "torus": 1
+        },
+        "total_faces": 19,
+        "total_edges": 27,
+        "checks": [
+          {
+            "name": "wand 物理高度",
+            "expected": 58.0,
+            "actual": 58.5,
+            "tolerance": 5.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "physical_height: 期望58.0, 实际58.5mm (±5.0)"
+          },
+          {
+            "name": "wand 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=6; {'bspline': 2, 'cylinder': 6, 'plane': 9, 'cone': 1, 'torus': 1}"
+          },
+          {
+            "name": "wand 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "D2_mushroom_cap/wiper": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 340.22,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 14.8,
+          "depth": 14.8,
+          "height": 6.0
+        },
+        "face_types": {
+          "cone": 3,
+          "torus": 2,
+          "plane": 4,
+          "cylinder": 3
+        },
+        "total_faces": 12,
+        "total_edges": 20,
+        "checks": [
+          {
+            "name": "wiper 外径",
+            "expected": 14.7,
+            "actual": 14.8,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望14.7, 实际14.8mm (±1.5)"
+          }
+        ]
+      }
+    },
+    "D3_taper_cap/bottle": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 6142.33,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 23.97,
+          "depth": 23.97,
+          "height": 70.0
+        },
+        "face_types": {
+          "cone": 9,
+          "torus": 3,
+          "plane": 7,
+          "bspline": 2,
+          "cylinder": 1
+        },
+        "total_faces": 22,
+        "total_edges": 44,
+        "checks": [
+          {
+            "name": "bottle 高度",
+            "expected": 70.0,
+            "actual": 70.0,
+            "tolerance": 2.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望70.0, 实际70.0mm (±2.0)"
+          },
+          {
+            "name": "bottle 外径",
+            "expected": 24.0,
+            "actual": 24.0,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "body_od: 期望24.0, 实际24.0mm (±1.5)"
+          },
+          {
+            "name": "bottle 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=1; {'cone': 9, 'torus': 3, 'plane': 7, 'bspline': 2, 'cylinder': 1}"
+          },
+          {
+            "name": "bottle 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "D3_taper_cap/cap": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 2378.55,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 23.94,
+          "depth": 23.94,
+          "height": 39.86
+        },
+        "face_types": {
+          "torus": 2,
+          "bspline": 1,
+          "cone": 3,
+          "plane": 3
+        },
+        "total_faces": 9,
+        "total_edges": 14,
+        "checks": [
+          {
+            "name": "cap 高度",
+            "expected": 40.1,
+            "actual": 39.9,
+            "tolerance": 3.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望40.1, 实际39.9mm (±3.0, flat)"
+          },
+          {
+            "name": "cap 外径",
+            "expected": 24.0,
+            "actual": 23.9,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望24.0, 实际23.9mm (±1.5)"
+          },
+          {
+            "name": "cap 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=0; {'torus': 2, 'bspline': 1, 'cone': 3, 'plane': 3}"
+          }
+        ]
+      }
+    },
+    "D3_taper_cap/wand": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 2712.93,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "wand_pre_stem: 清理 1 个螺纹碎片"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 21.5,
+          "depth": 21.5,
+          "height": 64.12
+        },
+        "face_types": {
+          "bspline": 2,
+          "cylinder": 6,
+          "plane": 9,
+          "cone": 2,
+          "torus": 1
+        },
+        "total_faces": 20,
+        "total_edges": 29,
+        "checks": [
+          {
+            "name": "wand 物理高度",
+            "expected": 63.0,
+            "actual": 64.1,
+            "tolerance": 5.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "physical_height: 期望63.0, 实际64.1mm (±5.0)"
+          },
+          {
+            "name": "wand 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=6; {'bspline': 2, 'cylinder': 6, 'plane': 9, 'cone': 2, 'torus': 1}"
+          },
+          {
+            "name": "wand 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "D3_taper_cap/wiper": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 391.95,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 15.8,
+          "depth": 15.8,
+          "height": 6.4
+        },
+        "face_types": {
+          "cone": 3,
+          "torus": 2,
+          "plane": 4,
+          "cylinder": 3
+        },
+        "total_faces": 12,
+        "total_edges": 20,
+        "checks": [
+          {
+            "name": "wiper 外径",
+            "expected": 15.7,
+            "actual": 15.8,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望15.7, 实际15.8mm (±1.5)"
+          }
+        ]
+      }
+    },
+    "D4_smooth_cap/bottle": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 5554.17,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 22.97,
+          "depth": 22.97,
+          "height": 68.0
+        },
+        "face_types": {
+          "cone": 9,
+          "torus": 3,
+          "plane": 7,
+          "bspline": 2,
+          "cylinder": 1
+        },
+        "total_faces": 22,
+        "total_edges": 44,
+        "checks": [
+          {
+            "name": "bottle 高度",
+            "expected": 68.0,
+            "actual": 68.0,
+            "tolerance": 2.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望68.0, 实际68.0mm (±2.0)"
+          },
+          {
+            "name": "bottle 外径",
+            "expected": 23.0,
+            "actual": 23.0,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "body_od: 期望23.0, 实际23.0mm (±1.5)"
+          },
+          {
+            "name": "bottle 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=1; {'cone': 9, 'torus': 3, 'plane': 7, 'bspline': 2, 'cylinder': 1}"
+          },
+          {
+            "name": "bottle 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "D4_smooth_cap/cap": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 2111.27,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 22.99,
+          "depth": 22.99,
+          "height": 38.78
+        },
+        "face_types": {
+          "torus": 2,
+          "bspline": 1,
+          "cone": 2,
+          "cylinder": 1,
+          "plane": 2
+        },
+        "total_faces": 8,
+        "total_edges": 13,
+        "checks": [
+          {
+            "name": "cap 高度",
+            "expected": 39.0,
+            "actual": 38.8,
+            "tolerance": 3.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "height: 期望39.0, 实际38.8mm (±3.0, flat)"
+          },
+          {
+            "name": "cap 外径",
+            "expected": 23.0,
+            "actual": 23.0,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望23.0, 实际23.0mm (±1.5)"
+          },
+          {
+            "name": "cap 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=1; {'torus': 2, 'bspline': 1, 'cone': 2, 'cylinder': 1, 'plane': 2}"
+          }
+        ]
+      }
+    },
+    "D4_smooth_cap/wand": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 3252.74,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [
+        "wand_pre_stem: 清理 1 个螺纹碎片"
+      ],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 22.0,
+          "depth": 22.0,
+          "height": 61.5
+        },
+        "face_types": {
+          "bspline": 2,
+          "cylinder": 6,
+          "plane": 9,
+          "cone": 1,
+          "torus": 1
+        },
+        "total_faces": 19,
+        "total_edges": 27,
+        "checks": [
+          {
+            "name": "wand 物理高度",
+            "expected": 61.0,
+            "actual": 61.5,
+            "tolerance": 5.0,
+            "pass": true,
+            "severity": "hard",
+            "msg": "physical_height: 期望61.0, 实际61.5mm (±5.0)"
+          },
+          {
+            "name": "wand 截面(round)",
+            "pass": true,
+            "severity": "hard",
+            "msg": "round 需旋转面, cyl=6; {'bspline': 2, 'cylinder': 6, 'plane': 9, 'cone': 1, 'torus': 1}"
+          },
+          {
+            "name": "wand 螺纹",
+            "pass": true,
+            "severity": "info",
+            "msg": "螺纹已生成"
+          }
+        ]
+      }
+    },
+    "D4_smooth_cap/wiper": {
+      "ok": true,
+      "solid_count": 1,
+      "volume": 391.95,
+      "is_single_solid": true,
+      "negative_volume": false,
+      "fixes": [],
+      "warnings": [],
+      "geometry_qc": {
+        "bbox": {
+          "width": 15.8,
+          "depth": 15.8,
+          "height": 6.4
+        },
+        "face_types": {
+          "cone": 3,
+          "torus": 2,
+          "plane": 4,
+          "cylinder": 3
+        },
+        "total_faces": 12,
+        "total_edges": 20,
+        "checks": [
+          {
+            "name": "wiper 外径",
+            "expected": 15.7,
+            "actual": 15.8,
+            "tolerance": 1.5,
+            "pass": true,
+            "severity": "hard",
+            "msg": "outer_od: 期望15.7, 实际15.8mm (±1.5)"
+          }
+        ]
+      }
+    }
+  }
+}

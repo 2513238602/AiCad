@@ -23,6 +23,16 @@ export const useViewerStore = defineStore('viewer', () => {
   const isLoading = ref(false)
   const transformMode = ref<'translate' | 'rotate' | 'scale'>('translate')
   const selectedComponentId = ref<string | null>(null)
+  // ── Drag Handle 拖拽编辑 ──
+  const handleEditMode = ref(false)
+  // 显式标志：下次加载时先清空场景（由 clearAll 设置，供展览馆等全量替换场景使用）
+  const clearSceneOnNextLoad = ref(false)
+  // 模式隔离：标记当前模型来自哪个模式，跨模式自动清空旧模型
+  const sessionSource = ref<'workflow' | 'gallery' | 'vlm' | null>(null)
+  // 暂存拖拽产生的参数变更 {componentId: {paramKey: newValue}}
+  const pendingParamChanges = reactive<Record<string, Record<string, number>>>({})
+  // 渲染模式：simple = 固定颜色, realistic = 参考图真实材质
+  const renderMode = ref<'simple' | 'realistic'>('simple')
 
   const totalModels = computed(() => {
     const ids = new Set([...sessionModelIds.value, ...Object.keys(pendingSTLs)])
@@ -75,10 +85,35 @@ export const useViewerStore = defineStore('viewer', () => {
     for (const k of Object.keys(modelColors)) delete modelColors[k]
     for (const k of Object.keys(pendingSTLs)) delete pendingSTLs[k]
     for (const k of Object.keys(assemblyPositions)) delete assemblyPositions[k]
+    clearSceneOnNextLoad.value = true
+    sessionSource.value = null
   }
 
   function toggleAssemblyMode() {
     assemblyMode.value = assemblyMode.value === 'assembled' ? 'exploded' : 'assembled'
+  }
+
+  // ── Drag Handle helpers ──
+
+  function storePendingParam(componentId: string, paramKey: string, value: number) {
+    if (!pendingParamChanges[componentId]) {
+      pendingParamChanges[componentId] = {}
+    }
+    pendingParamChanges[componentId][paramKey] = value
+  }
+
+  function getPendingParams(): Record<string, Record<string, number>> {
+    return { ...pendingParamChanges }
+  }
+
+  function hasPendingParamChanges(): boolean {
+    return Object.keys(pendingParamChanges).length > 0
+  }
+
+  function clearPendingParams() {
+    for (const k of Object.keys(pendingParamChanges)) {
+      delete pendingParamChanges[k]
+    }
   }
 
   return {
@@ -109,7 +144,16 @@ export const useViewerStore = defineStore('viewer', () => {
     addModel,
     removeModelMeta,
     toggleVisibility,
+    handleEditMode,
+    clearSceneOnNextLoad,
+    sessionSource,
+    pendingParamChanges,
     clearAll,
     toggleAssemblyMode,
+    storePendingParam,
+    getPendingParams,
+    hasPendingParamChanges,
+    clearPendingParams,
+    renderMode,
   }
 })

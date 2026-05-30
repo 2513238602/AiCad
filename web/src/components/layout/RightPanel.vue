@@ -10,6 +10,7 @@ import { inferParamDef } from '@/utils/cast'
 import { groupOf, GROUP_ORDER } from '@/utils/paramGroup'
 import type { ParamDef } from '@/api/types'
 import ParamGroup from '@/components/param/ParamGroup.vue'
+import ExoticCapPanel from '@/components/exotic/ExoticCapPanel.vue'
 
 const { t } = useI18n()
 const appStore = useAppStore()
@@ -99,12 +100,31 @@ watch(
 function getGroupLabel(groupKey: string): string {
   return t(`groups.${groupKey}`)
 }
+
+// ── Exotic cap tab ──
+const capTab = ref<'parametric' | 'exotic'>('parametric')
+const isCap = computed(() => appStore.componentId === 'cap')
+
+// 切换组件时重置 tab
+watch(() => appStore.componentId, () => {
+  capTab.value = 'parametric'
+})
 </script>
 
 <template>
   <div class="card right-panel">
     <div class="section-title">{{ t('ui.sectionParams') }}</div>
-    <div class="param-scroll">
+
+    <!-- Cap 组件：参数化 / 异形 tab 切换 -->
+    <div v-if="isCap" class="cap-tab-row">
+      <el-radio-group v-model="capTab" size="small">
+        <el-radio-button value="parametric">{{ t('exotic.tabParametric') }}</el-radio-button>
+        <el-radio-button value="exotic">{{ t('exotic.tabExotic') }}</el-radio-button>
+      </el-radio-group>
+    </div>
+
+    <!-- 参数化面板 -->
+    <div v-if="!isCap || capTab === 'parametric'" class="param-scroll">
       <el-collapse v-model="activeGroups">
         <ParamGroup
           v-for="(items, groupKey) in paramGroups"
@@ -115,12 +135,21 @@ function getGroupLabel(groupKey: string): string {
         />
       </el-collapse>
     </div>
+
+    <!-- 异形瓶盖面板 -->
+    <div v-else class="param-scroll">
+      <ExoticCapPanel />
+    </div>
   </div>
 </template>
 
 <style scoped>
 .right-panel {
   min-height: 200px;
+}
+
+.cap-tab-row {
+  margin-bottom: 12px;
 }
 
 .param-scroll {

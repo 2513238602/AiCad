@@ -105,7 +105,7 @@ class BottleComponent:
             # ═══════════════════════════════════════════════════════════════
             ParamDef(
                 k="height_mm", name="总高 H", unit="mm", type="float",
-                default=70.0, min=30.0, max=150.0, step=0.1,
+                default=70.0, min=15.0, max=150.0, step=0.1,
                 required=True, is_core=True, group="整体"
             ),
             ParamDef(
@@ -120,8 +120,36 @@ class BottleComponent:
             ),
             ParamDef(
                 k="taper_deg", name="锥度角", unit="deg", type="float",
-                default=0.0, min=0.0, max=8.0, step=0.1,
+                default=0.0, min=-5.0, max=8.0, step=0.1,
                 is_core=True, group="整体"
+            ),
+            ParamDef(
+                k="cross_section", name="截面形状", type="enum",
+                default="round", choices=["round", "square", "triangle", "hexagon", "octagon"],
+                is_core=True, group="整体"
+            ),
+            ParamDef(
+                k="corner_radius_mm", name="方形圆角", unit="mm", type="float",
+                default=3.0, min=0.5, max=10.0, step=0.1,
+                is_core=True, group="整体"
+            ),
+            ParamDef(
+                k="profile_mode", name="外轮廓模式", type="enum",
+                default="classic", choices=["classic", "spline"],
+                is_core=True, group="整体"
+            ),
+            ParamDef(
+                k="profile_points_json", name="轮廓控制点 (JSON)", type="str",
+                default="[]", is_core=True, group="整体"
+            ),
+            ParamDef(
+                k="profile_symmetry", name="轮廓对称模式", type="enum",
+                default="symmetric", choices=["symmetric", "asymmetric"],
+                is_core=True, group="整体"
+            ),
+            ParamDef(
+                k="profile_b_points_json", name="B轮廓控制点 (JSON)", type="str",
+                default="[]", is_core=True, group="整体"
             ),
 
             # ═══════════════════════════════════════════════════════════════
@@ -210,11 +238,12 @@ class BottleComponent:
             ParamDef(
                 k="full_capacity_ml", name="满口容量", unit="ml", type="float",
                 default=6.0, min=2.5, max=18.0, step=0.1,
-                is_core=False, group="容量", readonly=True
+                is_core=False, group="容量", readonly=True,
+                derived_rule=get_derived_rule("bottle", "full_capacity_ml")
             ),
             ParamDef(
                 k="inner_depth_mm", name="内深", unit="mm", type="float",
-                default=55.0, min=20.0, max=130.0, step=0.1,
+                default=55.0, min=10.0, max=130.0, step=0.1,
                 required=True, is_core=False, group="容量",
                 derived_rule=get_derived_rule("bottle", "inner_depth_mm")
             ),
@@ -247,6 +276,48 @@ class BottleComponent:
                 k="bottom_fillet_mm", name="底部外圆角", unit="mm", type="float",
                 default=1.5, min=0.0, max=8.0, step=0.1,
                 is_core=True, group="底部"
+            ),
+
+            # ═══════════════════════════════════════════════════════════════
+            # G. 核心参数 - 装饰特征
+            # ═══════════════════════════════════════════════════════════════
+            ParamDef(
+                k="collar_enabled", name="肩部装饰环", type="bool",
+                default=False, is_core=True, group="装饰"
+            ),
+            ParamDef(
+                k="collar_height_mm", name="装饰环高度", unit="mm", type="float",
+                default=4.0, min=1.5, max=12.0, step=0.5,
+                is_core=True, group="装饰"
+            ),
+            ParamDef(
+                k="collar_rib_count", name="装饰环筋数", type="int",
+                default=30, min=0, max=60, step=1,
+                is_core=True, group="装饰"
+            ),
+            ParamDef(
+                k="collar_rib_depth_mm", name="装饰环筋深", unit="mm", type="float",
+                default=0.3, min=0.05, max=1.0, step=0.05,
+                is_core=True, group="装饰"
+            ),
+            ParamDef(
+                k="collar_width_excess_mm", name="装饰环外凸量", unit="mm", type="float",
+                default=0.0, min=0.0, max=3.0, step=0.1,
+                is_core=True, group="装饰"
+            ),
+            ParamDef(
+                k="base_ring_enabled", name="底座环", type="bool",
+                default=False, is_core=True, group="装饰"
+            ),
+            ParamDef(
+                k="base_ring_height_mm", name="底座环高度", unit="mm", type="float",
+                default=2.0, min=0.5, max=8.0, step=0.5,
+                is_core=True, group="装饰"
+            ),
+            ParamDef(
+                k="base_ring_width_excess_mm", name="底座环宽余量", unit="mm", type="float",
+                default=0.5, min=0.2, max=3.0, step=0.1,
+                is_core=True, group="装饰"
             ),
 
             # ═══════════════════════════════════════════════════════════════
@@ -349,6 +420,104 @@ class BottleComponent:
                     "bottom_style": "flat",
                     "bottom_concave_mm": 0.0,
                     "bottom_fillet_mm": 2.0,
+
+                    "finish": "18-415",
+                    "cap_clearance_mm": 0.2,
+                },
+            },
+            {
+                "id": "bottle_spline_s_curve",
+                "name": "S 形曲线瓶 5ml",
+                "desc": "spline 曲线外形，微鼓肚 S 形造型，时尚设计感",
+                "params": {
+                    "height_mm": 70.0,
+                    "body_od_mm": 24.0,
+                    "shape": "cyl",
+                    "taper_deg": 0.5,
+                    "profile_mode": "spline",
+                    "profile_points_json": json.dumps([
+                        [12.0, 0.0],
+                        [12.3, 10.0],
+                        [12.5, 25.0],
+                        [12.2, 40.0],
+                        [10.5, 52.0],
+                        [9.0, 60.0],
+                    ]),
+
+                    "neck_od_mm": 18.0,
+                    "neck_height_mm": 10.0,
+                    "lip_thickness_mm": 1.0,
+
+                    "thread.enabled": True,
+                    "thread.pitch_mm": 2.7,
+                    "thread.turns": 2,
+                    "thread.depth_mm": 0.5,
+                    "thread.lead_angle_deg": 3.0,
+                    "thread.segmented": False,
+                    "thread.gap_angle_deg": 20.0,
+
+                    "shoulder_height_mm": 10.0,
+                    "shoulder_style": "round",
+                    "shoulder_fillet_mm": 3.0,
+
+                    "capacity_ml": 5.0,
+                    "full_capacity_ml": 6.0,
+                    "inner_depth_mm": 55.0,
+                    "wall_thickness_mm": 1.2,
+                    "bottom_thickness_mm": 2.0,
+
+                    "bottom_style": "flat",
+                    "bottom_concave_mm": 0.0,
+                    "bottom_fillet_mm": 1.5,
+
+                    "finish": "18-415",
+                    "cap_clearance_mm": 0.2,
+                },
+            },
+            {
+                "id": "bottle_spline_round_shoulder",
+                "name": "直筒圆肩瓶 5ml",
+                "desc": "spline 曲线外形，笔直瓶身 + 柔和圆肩过渡",
+                "params": {
+                    "height_mm": 70.0,
+                    "body_od_mm": 24.0,
+                    "shape": "cyl",
+                    "taper_deg": 0.5,
+                    "profile_mode": "spline",
+                    "profile_points_json": json.dumps([
+                        [12.0, 0.0],
+                        [12.0, 15.0],
+                        [11.9, 35.0],
+                        [11.5, 48.0],
+                        [10.0, 55.0],
+                        [9.0, 60.0],
+                    ]),
+
+                    "neck_od_mm": 18.0,
+                    "neck_height_mm": 10.0,
+                    "lip_thickness_mm": 1.0,
+
+                    "thread.enabled": True,
+                    "thread.pitch_mm": 2.7,
+                    "thread.turns": 2,
+                    "thread.depth_mm": 0.5,
+                    "thread.lead_angle_deg": 3.0,
+                    "thread.segmented": False,
+                    "thread.gap_angle_deg": 20.0,
+
+                    "shoulder_height_mm": 10.0,
+                    "shoulder_style": "round",
+                    "shoulder_fillet_mm": 3.0,
+
+                    "capacity_ml": 5.0,
+                    "full_capacity_ml": 6.0,
+                    "inner_depth_mm": 55.0,
+                    "wall_thickness_mm": 1.2,
+                    "bottom_thickness_mm": 2.0,
+
+                    "bottom_style": "flat",
+                    "bottom_concave_mm": 0.0,
+                    "bottom_fillet_mm": 1.5,
 
                     "finish": "18-415",
                     "cap_clearance_mm": 0.2,
@@ -506,20 +675,23 @@ class BottleComponent:
         }
 
         if not qc["ok"]:
-            out["error"] = "参数不满足硬约束（strict），已阻止导出。"
+            _fails = [c["msg"] for c in qc.get("checks", []) if not c["ok"] and c.get("severity") == "hard"]
+            out["error"] = "硬约束失败：" + "；".join(_fails) if _fails else "参数不满足硬约束（strict），已阻止导出。"
             return out
 
         modeler = Modeler()
         meta: Dict[str, Any] = {}
         try:
             solid = modeler.build("bottle", p_norm, meta=meta)
+            out["solid"] = solid
             modeler.export_step(solid, str(step_path))
             out["step"] = str(step_path)
             # 导出 STL 用于 Web 3D 预览
             try:
                 import cadquery as cq
 
-                cq.exporters.export(solid, str(stl_path), exportType="STL")
+                cq.exporters.export(solid, str(stl_path), exportType="STL",
+                                    tolerance=0.01, angularTolerance=0.05)
                 out["stl"] = str(stl_path)
             except Exception:
                 out["stl"] = None
@@ -530,7 +702,7 @@ class BottleComponent:
             return out
 
         try:
-            export_bottle_sheet(p_norm, svg_path)
+            export_bottle_sheet(p_norm, svg_path, solid=solid)
             out["svg"] = str(svg_path)
         except Exception as e:
             out["ok"] = False

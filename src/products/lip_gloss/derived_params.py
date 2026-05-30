@@ -25,8 +25,71 @@ from typing import Any, Dict, Tuple
 
 from typing import List
 
+from typing import List as _List_alias  # avoid shadow
+
 from core.param_system import CrossComponentDerived, DerivedRule, get_derived_registry
 from core.component_state import get_state_manager
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Spline 默认轮廓生成函数
+# ═══════════════════════════════════════════════════════════════════════════
+
+def generate_default_bottle_profile(
+    body_r: float, body_h: float, shoulder_h: float,
+    neck_r: float, taper_deg: float = 0.5
+) -> list[tuple[float, float]]:
+    """Bottle: 从标量参数自动生成 6 点 spline 轮廓（body+shoulder 区域）。
+    轮廓从 Z=0（瓶底）到 Z=body_h+shoulder_h（肩顶/颈底），
+    首点半径 = body_r，末点半径 = neck_r。
+    生成一条略微鼓肚的平滑 S 形曲线。
+    注意：body 区域 (z ≤ body_h) 的点半径不低于 body_r * 0.97
+    """
+    total_h = body_h + shoulder_h
+    # 拔模角导致的顶部收缩
+    delta_r = math.tan(math.radians(max(taper_deg, 0.5))) * body_h
+    top_body_r = body_r - delta_r
+
+    return [
+        (body_r, 0.0),                                      # 瓶底
+        (body_r * 1.02, body_h * 0.3),                      # 微鼓肚（瓶身区域）
+        (body_r * 1.00, body_h * 0.8),                      # 瓶身上段（保持半径）
+        (top_body_r, body_h),                                # 瓶身顶部（肩底）
+        ((top_body_r + neck_r) * 0.5, body_h + shoulder_h * 0.6),  # 肩部过渡
+        (neck_r, total_h),                                   # 颈底（与 neck frustum 衔接）
+    ]
+
+
+def generate_default_bottle_profile_b(
+    profile_a: list[tuple[float, float]],
+    ratio: float = 0.9,
+) -> list[tuple[float, float]]:
+    """从 A 轮廓生成默认 B 轮廓（Y 方向）。
+    中间点半径 = A 轮廓 × ratio（稍窄），首尾保持相同（底部/颈部圆形配合）。
+    """
+    result = []
+    for i, (r, z) in enumerate(profile_a):
+        if i == 0 or i == len(profile_a) - 1:
+            result.append((r, z))
+        else:
+            result.append((round(r * ratio, 2), z))
+    return result
+
+
+def generate_default_cap_profile(
+    r0: float, r1: float, H: float
+) -> list[tuple[float, float]]:
+    """Cap: 从标量参数自动生成 4 点 spline 轮廓。
+    r0 = 底部半径（开口侧），r1 = 顶部半径，H = 总高。
+    生成一条优雅的微弧线（模拟真实瓶盖的微妙曲面）。
+    """
+    dr = r0 - r1
+    return [
+        (r0, 0.0),                                          # 开口底部
+        (r0 - dr * 0.15, H * 0.3),                          # 下段缓收
+        (r0 - dr * 0.55, H * 0.7),                          # 中上段过渡
+        (r1, H),                                             # 顶部
+    ]
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -40,7 +103,7 @@ CAP_MIN_TOP_THICK = 1.5      # 最小顶部厚度 mm
 # 瓶身 (Bottle)
 BOTTLE_MIN_WALL = 1.0        # 最小壁厚 mm
 BOTTLE_MIN_BOTTOM = 1.5      # 最小底厚 mm
-BOTTLE_MIN_SHOULDER = 5.0    # 最小肩高 mm
+BOTTLE_MIN_SHOULDER = 2.0    # 最小肩高 mm
 
 # 刷杆 (Wand)
 WAND_GAP_SEAL_RING = 5.5     # 外径 - 气密环外径间隙
@@ -55,15 +118,15 @@ WIPER_MIN_WALL = 1.0         # 最小壁厚 mm
 # ═══════════════════════════════════════════════════════════════════════════
 
 def cap_inner_id_default(outer_od: float, params: Dict[str, Any]) -> float:
-    """计算内径默认值：外径 - 2 * 最小壁厚"""
+    """计算内径默认值：统一使用标准壁厚（确保盖壳可见）"""
     return outer_od - 2 * CAP_MIN_WALL
 
 
 def cap_inner_id_range(outer_od: float, params: Dict[str, Any]) -> Tuple[float, float]:
-    """计算内径动态范围：最大 = 外径 - 1.6mm（最小壁厚），最小 = 8mm"""
-    max_id = outer_od - 2 * CAP_MIN_WALL
+    """计算内径动态范围"""
     min_id = 8.0
-    return (min_id, max_id)
+    max_id = outer_od - 2 * CAP_MIN_WALL
+    return (min_id, max(min_id, max_id))
 
 
 def cap_cavity_depth_default(height: float, params: Dict[str, Any]) -> float:
@@ -76,6 +139,36 @@ def cap_cavity_depth_range(height: float, params: Dict[str, Any]) -> Tuple[float
     max_depth = height - CAP_MIN_TOP_THICK
     min_depth = 5.0
     return (min_depth, max_depth)
+
+
+def cap_stem_length_default(height: float, params: Dict[str, Any]) -> float:
+    """杆长默认值：内腔深 + 20mm（需伸入瓶身）"""
+    cav = params.get("cavity_depth_mm", height - CAP_MIN_TOP_THICK)
+    return cav + 20.0
+
+
+def cap_stem_length_range(height: float, params: Dict[str, Any]) -> Tuple[float, float]:
+    return (20.0, 150.0)
+
+
+def cap_thread_crest_default(outer_od: float, params: Dict[str, Any]) -> float:
+    """螺牙峰径默认值 = 内径（与颈部配合）"""
+    inner_id = params.get("inner_id_mm", outer_od - 2 * CAP_MIN_WALL)
+    return inner_id
+
+
+def cap_thread_crest_range(outer_od: float, params: Dict[str, Any]) -> Tuple[float, float]:
+    inner_id = params.get("inner_id_mm", outer_od - 2 * CAP_MIN_WALL)
+    return (10.0, min(28.0, inner_id))
+
+
+def cap_seal_ring_od_default(outer_od: float, params: Dict[str, Any]) -> float:
+    """气密环外径默认值 = 外径 - 5.5mm"""
+    return max(8.0, outer_od - 5.5)
+
+
+def cap_seal_ring_od_range(outer_od: float, params: Dict[str, Any]) -> Tuple[float, float]:
+    return (8.0, min(25.0, outer_od - 2.0))
 
 
 CAP_DERIVED_RULES: Dict[str, DerivedRule] = {
@@ -91,6 +184,24 @@ CAP_DERIVED_RULES: Dict[str, DerivedRule] = {
         compute_range=cap_cavity_depth_range,
         description="内腔深 = 总高 - 1.5mm（最小顶厚）"
     ),
+    "stem.length_mm": DerivedRule(
+        master_param="height_mm",
+        compute_default=cap_stem_length_default,
+        compute_range=cap_stem_length_range,
+        description="杆长 = 内腔深 + 20mm"
+    ),
+    "thread.crest_dia_mm": DerivedRule(
+        master_param="outer_od_mm",
+        compute_default=cap_thread_crest_default,
+        compute_range=cap_thread_crest_range,
+        description="螺牙峰径 ≈ 内径"
+    ),
+    "seal_ring.od_mm": DerivedRule(
+        master_param="outer_od_mm",
+        compute_default=cap_seal_ring_od_default,
+        compute_range=cap_seal_ring_od_range,
+        description="气密环外径 = 外径 - 5.5mm"
+    ),
 }
 
 
@@ -102,6 +213,10 @@ def bottle_shoulder_height_default(body_od: float, params: Dict[str, Any]) -> fl
     """计算肩高默认值：较短肩部确保cap紧密配合、wand不进入肩部区域"""
     neck_od = params.get("neck_od_mm", 18.0)
     diff = body_od - neck_od
+    taper_deg = params.get("taper_deg", 0)
+    # 锥形瓶无独立肩部（颈部直接接瓶身锥度段）
+    if taper_deg > 2:
+        return 0.0
     return max(BOTTLE_MIN_SHOULDER, diff * 0.5 + 3.0)
 
 
@@ -109,7 +224,12 @@ def bottle_shoulder_height_range(body_od: float, params: Dict[str, Any]) -> Tupl
     """计算肩高动态范围"""
     neck_od = params.get("neck_od_mm", 18.0)
     diff = body_od - neck_od
-    min_h = max(BOTTLE_MIN_SHOULDER, diff * 0.3)
+    taper_deg = params.get("taper_deg", 0)
+    # 锥形瓶（锥度 > 2°）可以没有独立肩部（颈部直接接瓶身）
+    if taper_deg > 2:
+        min_h = 0.0
+    else:
+        min_h = max(BOTTLE_MIN_SHOULDER, diff * 0.3)
     height = params.get("height_mm", 70.0)
     max_h = min(height * 0.4, 30.0)
     return (min_h, max_h)
@@ -143,12 +263,47 @@ def bottle_wall_thickness_range(body_od: float, params: Dict[str, Any]) -> Tuple
 
 
 def bottle_capacity_default(body_od: float, params: Dict[str, Any]) -> float:
-    """计算容量：根据尺寸自动计算"""
+    """计算容量：根据尺寸自动计算（锥度瓶用锥台公式）"""
     wall = params.get("wall_thickness_mm", 1.2)
     inner_depth = params.get("inner_depth_mm", 55.0)
-    inner_d = body_od - 2 * wall
-    inner_r = inner_d / 2.0
-    v_ml = math.pi * inner_r * inner_r * inner_depth / 1000.0
+    taper_deg = params.get("taper_deg", 0)
+    inner_r_bottom = (body_od - 2 * wall) / 2.0
+
+    if taper_deg > 0:
+        # 锥台体积: V = π*h/3 * (r1² + r1*r2 + r2²)
+        body_h = params.get("height_mm", 70) - params.get("neck_height_mm", 10) - params.get("shoulder_height_mm", 8)
+        if body_h <= 0:
+            body_h = 1.0
+        delta_r = math.tan(math.radians(taper_deg)) * body_h
+        top_r_body = body_od / 2.0 - delta_r
+        inner_r_top = max(inner_r_bottom * 0.3, top_r_body - wall)
+        r1, r2 = inner_r_bottom, inner_r_top
+        v_ml = math.pi * inner_depth / 3.0 * (r1**2 + r1 * r2 + r2**2) / 1000.0
+    else:
+        v_ml = math.pi * inner_r_bottom**2 * inner_depth / 1000.0
+    return round(v_ml, 1)
+
+
+def bottle_full_capacity_default(body_od: float, params: Dict[str, Any]) -> float:
+    """计算满口容量：根据尺寸自动计算（总高 - 底厚），锥度瓶用锥台公式"""
+    wall = params.get("wall_thickness_mm", 1.2)
+    height = params.get("height_mm", 70.0)
+    bottom_t = params.get("bottom_thickness_mm", 2.0)
+    taper_deg = params.get("taper_deg", 0)
+    inner_r_bottom = (body_od - 2 * wall) / 2.0
+    full_depth = height - bottom_t
+
+    if taper_deg > 0:
+        body_h = height - params.get("neck_height_mm", 10) - params.get("shoulder_height_mm", 8)
+        if body_h <= 0:
+            body_h = 1.0
+        delta_r = math.tan(math.radians(taper_deg)) * body_h
+        top_r_body = body_od / 2.0 - delta_r
+        inner_r_top = max(inner_r_bottom * 0.3, top_r_body - wall)
+        r1, r2 = inner_r_bottom, inner_r_top
+        v_ml = math.pi * full_depth / 3.0 * (r1**2 + r1 * r2 + r2**2) / 1000.0
+    else:
+        v_ml = math.pi * inner_r_bottom**2 * full_depth / 1000.0
     return round(v_ml, 1)
 
 
@@ -174,8 +329,14 @@ BOTTLE_DERIVED_RULES: Dict[str, DerivedRule] = {
     "capacity_ml": DerivedRule(
         master_param="body_od_mm",
         compute_default=bottle_capacity_default,
-        compute_range=None,  # 容量只有计算值，无可调范围
+        compute_range=None,
         description="容量由尺寸自动计算"
+    ),
+    "full_capacity_ml": DerivedRule(
+        master_param="body_od_mm",
+        compute_default=bottle_full_capacity_default,
+        compute_range=None,
+        description="满口容量由尺寸自动计算"
     ),
 }
 
@@ -184,14 +345,28 @@ BOTTLE_DERIVED_RULES: Dict[str, DerivedRule] = {
 # Wand 组件派生规则
 # ═══════════════════════════════════════════════════════════════════════════
 
+def _thread_root(params: Dict[str, Any], fallback_od: float) -> float:
+    """从螺纹参数计算底径（峰径 - 2×牙深），用于气密环约束"""
+    thr = params.get("thread", {})
+    if not isinstance(thr, dict) or thr.get("enabled", True) is False:
+        return float("inf")  # 无螺纹时不限制
+    crest = float(thr.get("crest_dia_mm", fallback_od - 5.0))
+    depth = float(thr.get("depth_mm", 0.5))
+    return crest - 2 * depth
+
+
 def wand_seal_ring_od_default(outer_od: float, params: Dict[str, Any]) -> float:
-    """计算气密环外径默认值：外径 - 5.5mm"""
-    return outer_od - WAND_GAP_SEAL_RING
+    """计算气密环外径默认值：min(外径 - 5.5, 螺牙底径 + 1.0)"""
+    basic = outer_od - WAND_GAP_SEAL_RING
+    root = _thread_root(params, outer_od)
+    return max(8.0, min(basic, root + 1.0))
 
 
 def wand_seal_ring_od_range(outer_od: float, params: Dict[str, Any]) -> Tuple[float, float]:
-    """计算气密环外径动态范围"""
+    """计算气密环外径动态范围（上限受螺牙底径 +1.5 限制）"""
     max_od = outer_od - 3.0
+    root = _thread_root(params, outer_od)
+    max_od = min(max_od, root + 1.5)
     min_od = 10.0
     return (min_od, max_od)
 
@@ -422,6 +597,21 @@ BOTTLE_WAND_MARGIN = 8.0      # 杆长→内深的余量上限
 BOTTLE_WIPER_NECK_GAP = 1.0   # 内塞-颈部高度间隙
 
 
+def _bottle_shoulder_top_od(body_od: float, p: dict) -> float:
+    """计算锥形瓶肩顶外径（cap 衔接处）。直筒瓶返回 body_od 不变。"""
+    taper = p.get('taper_deg', 0)
+    if taper <= 0:
+        return body_od
+    h = p.get('height_mm', 50)
+    neck_h = p.get('neck_height_mm', 10)
+    shoulder_h = p.get('shoulder_height_mm', 8)
+    body_h = max(0, h - neck_h - shoulder_h)
+    delta_r = math.tan(math.radians(taper)) * body_h
+    top_od = body_od - 2 * delta_r
+    neck_od = p.get('neck_od_mm', 10)
+    return round(max(neck_od + 2, top_od), 1)
+
+
 CROSS_COMPONENT_RULES: List[CrossComponentDerived] = [
 
     # ═══════════════════════════════════════════════════════════════════
@@ -524,35 +714,33 @@ CROSS_COMPONENT_RULES: List[CrossComponentDerived] = [
         lock_when_set=True,
         description="瓶身外径 ≈ 瓶盖外径（外观齐平）"
     ),
-    # B2: Bottle 外径定 → Cap 外径锁定（等径齐平）
+    # B2: Bottle 外径定 → Cap 外径锁定
+    # 锥形瓶：cap 底部 = 瓶身肩顶外径（衔接连续）
+    # 直筒瓶：cap 底部 = body_od（等径齐平）
     CrossComponentDerived(
         source_component="bottle",
         source_param="body_od_mm",
         target_component="cap",
         target_param="outer_od_mm",
-        compute_range=lambda v, p: (v - 0.5, v + 0.5),
-        compute_default=lambda v, p: v,
+        compute_range=lambda v, p: (_bottle_shoulder_top_od(v, p) - 0.5,
+                                    _bottle_shoulder_top_od(v, p) + 0.5),
+        compute_default=lambda v, p: _bottle_shoulder_top_od(v, p),
         lock_when_set=True,
-        description="瓶盖外径 ≈ 瓶身外径（外观齐平）"
+        description="瓶盖外径 ≈ 瓶身肩顶外径（锥形瓶衔接连续）"
     ),
 
-    # B3: Cap 内径定 → Bottle 颈外径范围
+    # B3: Cap 内径定 → Bottle 颈外径上限
     # 物理约束：颈外径 < 瓶盖内径（瓶颈必须能装入瓶盖内腔）
-    # 下限只用 finish 规格约束（QC 检查 |neck_od - spec_od| ≤ 1.0）
-    # 注意：大瓶盖 (inner_id=31.6) 可以配小口径 (finish 18-415)，
-    #       不能强制 neck_od 接近 inner_id，否则与 finish 冲突
+    # finish 标注由后端 _fix_finish_spec 自动修正
     CrossComponentDerived(
         source_component="cap",
         source_param="inner_id_mm",
         target_component="bottle",
         target_param="neck_od_mm",
-        compute_range=lambda v, p: (
-            float(str(p.get('finish', '18-415')).split('-')[0]) - 1.0,
-            min(v - 0.5, float(str(p.get('finish', '18-415')).split('-')[0]) + 1.0)
-        ),
-        compute_default=lambda v, p: round(float(str(p.get('finish', '18-415')).split('-')[0]), 1),
+        compute_range=lambda v, p: (8.0, v - 0.5),
+        compute_default=lambda v, p: round(min(v - 1.0, 18.0), 1),
         lock_when_set=False,
-        description="颈外径 ≈ finish 规格值（±1mm），且 < 瓶盖内径"
+        description="颈外径 < 瓶盖内径（瓶颈需穿入瓶盖）"
     ),
     # B4: Bottle 颈外径定 → Cap 内径下限
     # 物理约束：inner_id > neck_od（瓶颈装入瓶盖）
@@ -604,15 +792,16 @@ CROSS_COMPONENT_RULES: List[CrossComponentDerived] = [
     # ═══════════════════════════════════════════════════════════════════
 
     # D1: Bottle 颈外径定 → Wiper 凸环外径上限
+    # 凸环必须装入颈内径(neck_id = neck_od - 2*壁厚≈2mm)，留0.1~0.3mm间隙
     CrossComponentDerived(
         source_component="bottle",
         source_param="neck_od_mm",
         target_component="wiper",
         target_param="flange_od_mm",
-        compute_range=lambda v, p: (v - 2.0, v - 0.5),
-        compute_default=lambda v, p: round(v - 1.0, 1),
+        compute_range=lambda v, p: (v - 4.0, v - 2.1),
+        compute_default=lambda v, p: round(v - 2.2, 1),
         lock_when_set=True,
-        description="内塞凸环外径 ≈ 瓶颈外径 - 1mm（颈部⊃内塞）"
+        description="内塞凸环外径 ≈ 颈内径 - 0.2mm（必须装入颈部）"
     ),
     # D2: Wiper 凸环外径定 → Bottle 颈外径下限
     CrossComponentDerived(

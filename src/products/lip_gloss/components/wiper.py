@@ -313,7 +313,7 @@ class WiperComponent:
             """壁厚合理性：(外径-内径)/2 >= 0.5mm"""
             od = float(p["outer_od_mm"])
             id_ = float(p["inner_id_mm"])
-            wall = (od - id_) / 2.0
+            wall = round((od - id_) / 2.0, 4)
             return wall >= 0.5
 
         def _orifice_edge_valid(p: Dict[str, Any]) -> bool:
@@ -340,7 +340,8 @@ class WiperComponent:
             except (ValueError, IndexError):
                 return True
             # 凸环外径应接近瓶口内径（略小于规格外径）
-            return abs(flange_od - spec_od) <= 2.0
+            # 小颈瓶（14mm）壁厚占比大，内径差距更大，容差放宽到 3.5mm
+            return abs(flange_od - spec_od) <= 3.5
 
         return [
             Rule("geometry_valid", "hard", "几何不合理：需满足 外径 > 内径 > 孔径 > 0", _geometry_valid),
@@ -402,20 +403,23 @@ class WiperComponent:
         }
 
         if not qc["ok"]:
-            out["error"] = "参数不满足硬约束（strict），已阻止导出。"
+            _fails = [c["msg"] for c in qc.get("checks", []) if not c["ok"] and c.get("severity") == "hard"]
+            out["error"] = "硬约束失败：" + "；".join(_fails) if _fails else "参数不满足硬约束（strict），已阻止导出。"
             return out
 
         modeler = Modeler()
         meta: Dict[str, Any] = {}
         try:
             solid = modeler.build("wiper", p_norm, meta=meta)
+            out["solid"] = solid
             modeler.export_step(solid, str(step_path))
             out["step"] = str(step_path)
             # 导出 STL 用于 Web 3D 预览
             try:
                 import cadquery as cq
 
-                cq.exporters.export(solid, str(stl_path), exportType="STL")
+                cq.exporters.export(solid, str(stl_path), exportType="STL",
+                                    tolerance=0.01, angularTolerance=0.05)
                 out["stl"] = str(stl_path)
             except Exception:
                 out["stl"] = None
@@ -426,7 +430,7 @@ class WiperComponent:
             return out
 
         try:
-            export_wiper_sheet(p_norm, svg_path)
+            export_wiper_sheet(p_norm, svg_path, solid=solid)
             out["svg"] = str(svg_path)
         except Exception as e:
             out["ok"] = False

@@ -1,21 +1,26 @@
 # -*- coding: utf-8 -*-
+"""刷杆工程图 — 符合 GB/T 基本标准的参数化 SVG 图纸。"""
 from __future__ import annotations
 from pathlib import Path
 from datetime import datetime
+from typing import Any
+
+from .primitives import (
+    _f, svg_header, drawing_frame, first_angle_layout, title_block,
+    hatch_defs, hatch_rect, hatch_polygon,
+    rect, line, text, circle, polygon,
+    centerline, hidden_rect, hidden_line,
+    dim_h, dim_v, section_symbol, fit_scale,
+    SW_OUTLINE, SW_THIN,
+)
 
 
-def _f(x: float) -> str:
-    return f"{x:.1f}"
-
-
-def export_wand_sheet(p: dict, out_svg: Path, title: str = "唇釉瓶-刷杆 工程图（参数化）") -> None:
-    """
-    刷杆工程图：
-    - A4 横向
-    - 正视图 / 剖视图 / 俯视图 + 参数表
-    - 关键尺寸标注
-    """
-    # ---- 提取参数 ----
+def export_wand_sheet(p: dict, out_svg: Path,
+                      title: str = "唇釉瓶-刷杆",
+                      solid: Any = None) -> None:
+    # ------------------------------------------------------------------
+    # 参数提取
+    # ------------------------------------------------------------------
     wand_type = str(p.get("wand_type", "cap_integrated"))
     total_h = float(p.get("total_height_mm", 65.0))
     outer_od = float(p.get("outer_od_mm", 24.0))
@@ -25,13 +30,9 @@ def export_wand_sheet(p: dict, out_svg: Path, title: str = "唇釉瓶-刷杆 工
     stem_len = float(p.get("stem_length_mm", 55.0))
     stem_wall = float(p.get("stem_wall_mm", 0.8))
 
-    orifice = float(p.get("orifice_mm", 7.0))
-
     thr = p.get("thread", {}) or {}
     thr_crest = float(thr.get("crest_dia_mm", 18.0))
     thr_root = float(thr.get("root_dia_mm", 16.5))
-    thr_pitch = float(thr.get("pitch_mm", 2.7))
-    thr_turns = int(thr.get("turns", 2))
 
     seal = p.get("seal_ring", {}) or {}
     seal_od = float(seal.get("od_mm", 17.5))
@@ -41,254 +42,208 @@ def export_wand_sheet(p: dict, out_svg: Path, title: str = "唇釉瓶-刷杆 工
     brush_type = str(brush.get("type", "doe_foot"))
     brush_len = float(brush.get("length_mm", 12.0))
     brush_w = float(brush.get("width_mm", 10.0))
-    brush_t = float(brush.get("thickness_mm", 4.0))
 
     finish = str(p.get("finish", "18-415"))
-
-    # ---- 页面布局参数 ----
-    W, Hp = 297.0, 210.0  # A4 横向
-    M = 8.0  # 外边距
-    title_h = 28.0  # 标题栏高度
-
-    frame_x0, frame_y0 = M, M
-    frame_x1, frame_y1 = W - M, Hp - M
-    work_y1 = frame_y1 - title_h  # 工作区底部
-
-    # 三列布局
-    col_gap = 6.0
-    left_margin = 6.0
-    right_margin = 6.0
-    available_w = frame_x1 - frame_x0 - left_margin - right_margin - 2 * col_gap
-    col_w = available_w / 3.0
-
-    vx0 = frame_x0 + left_margin
-    vy0 = frame_y0 + 6
-    vH = work_y1 - vy0 - 4
-
-    # 计算缩放比例
-    max_view_h = vH * 0.60
-    scale = min(max_view_h / max(total_h, 1.0), (col_w - 30) / max(outer_od, 1.0))
-    scale = max(scale, 0.8)
-    scale = min(scale, 2.0)
-
-    # ---- SVG 绘图函数 ----
-    def rect(x: float, y: float, w: float, h: float, stroke: str = "black", sw: float = 0.5, fill: str = "none") -> str:
-        return f'<rect x="{x:.2f}" y="{y:.2f}" width="{w:.2f}" height="{h:.2f}" stroke="{stroke}" stroke-width="{sw}" fill="{fill}"/>'
-
-    def line(x1: float, y1: float, x2: float, y2: float, stroke: str = "black", sw: float = 0.5, dash: str | None = None) -> str:
-        ds = f' stroke-dasharray="{dash}"' if dash else ""
-        return f'<line x1="{x1:.2f}" y1="{y1:.2f}" x2="{x2:.2f}" y2="{y2:.2f}" stroke="{stroke}" stroke-width="{sw}"{ds}/>'
-
-    def text(x: float, y: float, s: str, size: float = 3.2, anchor: str = "start", weight: str = "normal") -> str:
-        s = (s or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-        fw = f' font-weight="{weight}"' if weight != "normal" else ""
-        return f'<text x="{x:.2f}" y="{y:.2f}" font-size="{size}" text-anchor="{anchor}" font-family="Arial, sans-serif"{fw}>{s}</text>'
-
-    def circle(cx: float, cy: float, r: float, stroke: str = "black", sw: float = 0.5, fill: str = "none") -> str:
-        return f'<circle cx="{cx:.2f}" cy="{cy:.2f}" r="{r:.2f}" fill="{fill}" stroke="{stroke}" stroke-width="{sw}"/>'
-
-    def ellipse(cx: float, cy: float, rx: float, ry: float, stroke: str = "black", sw: float = 0.5, fill: str = "none") -> str:
-        return f'<ellipse cx="{cx:.2f}" cy="{cy:.2f}" rx="{rx:.2f}" ry="{ry:.2f}" fill="{fill}" stroke="{stroke}" stroke-width="{sw}"/>'
-
-    def dim_h(x1: float, x2: float, y: float, label: str) -> str:
-        """水平尺寸标注"""
-        arrow = 1.5
-        out = [
-            line(x1, y, x2, y, sw=0.3),
-            line(x1, y, x1 + arrow, y - arrow, sw=0.3),
-            line(x1, y, x1 + arrow, y + arrow, sw=0.3),
-            line(x2, y, x2 - arrow, y - arrow, sw=0.3),
-            line(x2, y, x2 - arrow, y + arrow, sw=0.3),
-            text((x1 + x2) / 2, y - 1.5, label, size=2.8, anchor="middle"),
-        ]
-        return "\n".join(out)
-
-    def dim_v(x: float, y1: float, y2: float, label: str, offset: float = 2.0) -> str:
-        """垂直尺寸标注"""
-        arrow = 1.5
-        out = [
-            line(x, y1, x, y2, sw=0.3),
-            line(x, y1, x - arrow, y1 + arrow, sw=0.3),
-            line(x, y1, x + arrow, y1 + arrow, sw=0.3),
-            line(x, y2, x - arrow, y2 - arrow, sw=0.3),
-            line(x, y2, x + arrow, y2 - arrow, sw=0.3),
-            text(x + offset, (y1 + y2) / 2 + 1, label, size=2.8, anchor="start"),
-        ]
-        return "\n".join(out)
-
-    # ---- 开始绘制 ----
-    svg = []
-    svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}mm" height="{Hp}mm" viewBox="0 0 {W} {Hp}">')
-
-    # 外框
-    svg.append(rect(frame_x0, frame_y0, frame_x1 - frame_x0, frame_y1 - frame_y0, sw=0.6))
-    svg.append(rect(frame_x0 + 2, frame_y0 + 2, frame_x1 - frame_x0 - 4, frame_y1 - frame_y0 - 4, sw=0.3))
-
-    # ---- 标题栏 ----
-    tx0, ty0 = frame_x0 + 2, frame_y1 - title_h + 2
-    tw, th = frame_x1 - frame_x0 - 4, title_h - 4
-    svg.append(rect(tx0, ty0, tw, th, sw=0.3))
-    svg.append(line(tx0 + tw * 0.65, ty0, tx0 + tw * 0.65, ty0 + th, sw=0.3))
-
     type_label = "一体式" if wand_type == "cap_integrated" else "独立式"
-    svg.append(text(tx0 + 4, ty0 + 7, title, size=4.5, weight="bold"))
-    svg.append(text(tx0 + 4, ty0 + 14, f"类型：{type_label}    口部规格：{finish}    刷头：{brush_type}", size=3.0))
-    svg.append(text(tx0 + 4, ty0 + 20, "单位：mm    比例：NTS    投影：第一角法", size=3.0))
 
-    svg.append(text(tx0 + tw * 0.65 + 4, ty0 + 8, "版本：A", size=3.0))
-    svg.append(text(tx0 + tw * 0.65 + 4, ty0 + 14, "未注公差：±0.2", size=3.0))
-    svg.append(text(tx0 + tw * 0.65 + 4, ty0 + 20, datetime.now().strftime("日期：%Y-%m-%d"), size=3.0))
+    cap_wall = max(0.1, (outer_od - thr_crest) / 2.0)
 
-    # ---- 计算视图位置 ----
-    cap_w = outer_od * scale
-    cap_hh = cap_h * scale
-    stem_w = stem_d * scale
-    stem_hh = stem_len * scale
-    brush_hh = brush_len * scale
+    # ------------------------------------------------------------------
+    # 页面与布局
+    # ------------------------------------------------------------------
+    W, Hp = 297.0, 210.0
+    layout = first_angle_layout(W, Hp)
+    box_front = layout["front"]
+    box_sect = layout["section"]
+    box_plan = layout["plan"]
+    box_title = layout["title"]
 
-    view_top = vy0 + 15
+    # 缩放（刷杆较长，需要控制）
+    pad_h, pad_v = 12.0, 18.0
+    s = fit_scale(box_front[2] - 2 * pad_h, box_front[3] - pad_v - 20, outer_od, total_h)
+    s = max(0.6, min(s, 2.0))
+    s_sect = fit_scale(box_sect[2] - 2 * pad_h, box_sect[3] - pad_v - 20, outer_od, total_h)
+    s_sect = max(0.6, min(s_sect, 2.0))
+    s_plan = fit_scale(box_plan[2] - 2 * pad_h, box_plan[3] - pad_v - 10, outer_od, outer_od)
+    s_plan = min(s_plan, 2.5)
 
-    # ---- 第一列：正视图 ----
-    col1_x = vx0
-    svg.append(rect(col1_x, vy0, col_w, vH, sw=0.2, stroke="#ccc"))
-    svg.append(text(col1_x + col_w / 2, vy0 + 5, "正视图", size=3.2, anchor="middle", weight="bold"))
+    # ------------------------------------------------------------------
+    # SVG 输出
+    # ------------------------------------------------------------------
+    svg: list[str] = [svg_header(W, Hp)]
+    svg.extend(drawing_frame(W, Hp))
+    svg.append(hatch_defs())
 
-    cx1 = col1_x + col_w / 2
-    cap_left = cx1 - cap_w / 2
-    stem_left = cx1 - stem_w / 2
+    # ------------------------------------------------------------------
+    # 正视图（左上）
+    # ------------------------------------------------------------------
+    fx0, fy0, fw, fh = box_front
+    svg.append(text(fx0 + fw / 2, fy0 + 5, "正视图", size=3.2, anchor="middle", weight="bold"))
 
-    # 盖子外形
-    svg.append(rect(cap_left, view_top, cap_w, cap_hh, sw=0.6))
+    cap_w = outer_od * s
+    cap_hh = cap_h * s
+    stem_w = stem_d * s
+    stem_hh = stem_len * s
+    brush_hh = brush_len * s
+    brush_w_s = brush_w * s / 2
 
-    # 杆身
-    stem_top_y = view_top + cap_hh
-    svg.append(rect(stem_left, stem_top_y, stem_w, stem_hh, sw=0.5))
+    cx = fx0 + fw / 2
+    top_y = fy0 + 10 + (fh - 10 - total_h * s) / 2
+    cap_left = cx - cap_w / 2
+    stem_left = cx - stem_w / 2
+    stem_top = top_y + cap_hh
+    brush_top = top_y + cap_hh + stem_hh
 
-    # 刷头（简化为三角形）
-    brush_top_y = stem_top_y + stem_hh
-    brush_w_scaled = brush_w * scale / 2
-    brush_points = f"{cx1},{brush_top_y + brush_hh} {cx1 - brush_w_scaled},{brush_top_y + brush_hh} {stem_left},{brush_top_y}"
-    svg.append(f'<polygon points="{brush_points}" fill="none" stroke="black" stroke-width="0.5"/>')
-    brush_points2 = f"{cx1},{brush_top_y + brush_hh} {cx1 + brush_w_scaled},{brush_top_y + brush_hh} {stem_left + stem_w},{brush_top_y}"
-    svg.append(f'<polygon points="{brush_points2}" fill="none" stroke="black" stroke-width="0.5"/>')
-
-    # 中心线
-    svg.append(line(cx1, view_top - 5, cx1, brush_top_y + brush_hh + 5, sw=0.2, dash="2,1"))
-
-    # 尺寸标注
-    svg.append(dim_h(cap_left, cap_left + cap_w, view_top - 5, f"Ø{_f(outer_od)}"))
-    svg.append(dim_v(cap_left - 8, view_top, view_top + cap_hh, f"盖高{_f(cap_h)}"))
-    svg.append(dim_h(stem_left, stem_left + stem_w, stem_top_y + stem_hh / 2, f"Ø{_f(stem_d)}"))
-    svg.append(dim_v(cap_left + cap_w + 8, view_top, brush_top_y + brush_hh, f"总高{_f(total_h)}"))
-
-    # ---- 第二列：剖视图 ----
-    col2_x = vx0 + col_w + col_gap
-    svg.append(rect(col2_x, vy0, col_w, vH, sw=0.2, stroke="#ccc"))
-    svg.append(text(col2_x + col_w / 2, vy0 + 5, "A-A 剖视图", size=3.2, anchor="middle", weight="bold"))
-
-    cx2 = col2_x + col_w / 2
-    cap_left2 = cx2 - cap_w / 2
-
-    # 盖子外形
-    svg.append(rect(cap_left2, view_top, cap_w, cap_hh, sw=0.6))
-
-    # 内腔（螺纹区域）
-    thr_w = thr_crest * scale
-    thr_left = cx2 - thr_w / 2
-    cavity_hh = cap_hh * 0.7
-    svg.append(rect(thr_left, view_top, thr_w, cavity_hh, sw=0.4))
-
-    # 气密环
-    seal_w = seal_od * scale
-    seal_hh = seal_h * scale
-    seal_left = cx2 - seal_w / 2
-    seal_y = view_top + cavity_hh - seal_hh
-    svg.append(rect(seal_left, seal_y, seal_w, seal_hh, sw=0.4, fill="#ddd"))
-
-    # 杆身
-    stem_left2 = cx2 - stem_w / 2
-    svg.append(rect(stem_left2, view_top + cap_hh, stem_w, stem_hh, sw=0.5))
-
-    # 杆身空心
-    if stem_wall > 0 and stem_wall < stem_d / 2:
-        inner_stem_w = (stem_d - 2 * stem_wall) * scale
-        inner_stem_left = cx2 - inner_stem_w / 2
-        svg.append(rect(inner_stem_left, view_top + cap_hh, inner_stem_w, stem_hh * 0.8, sw=0.3))
-
-    # 刷头
-    brush_top_y2 = view_top + cap_hh + stem_hh
-    svg.append(line(stem_left2, brush_top_y2, cx2 - brush_w_scaled, brush_top_y2 + brush_hh, sw=0.5))
-    svg.append(line(stem_left2 + stem_w, brush_top_y2, cx2 + brush_w_scaled, brush_top_y2 + brush_hh, sw=0.5))
-    svg.append(line(cx2 - brush_w_scaled, brush_top_y2 + brush_hh, cx2 + brush_w_scaled, brush_top_y2 + brush_hh, sw=0.5))
+    if solid is not None:
+        from .projection import project_to_svg, DIR_FRONT
+        svg.extend(project_to_svg(solid, DIR_FRONT, scale=s,
+                                  cx=cx, cy=top_y + total_h * s / 2))
+    else:
+        svg.append(rect(cap_left, top_y, cap_w, cap_hh, sw=SW_OUTLINE))
+        svg.append(rect(stem_left, stem_top, stem_w, stem_hh, sw=SW_OUTLINE))
+        pts_l = f"{cx},{brush_top + brush_hh} {cx - brush_w_s},{brush_top + brush_hh} {stem_left},{brush_top}"
+        svg.append(f'<polygon points="{pts_l}" fill="none" stroke="black" stroke-width="{SW_OUTLINE}"/>')
+        pts_r = f"{cx},{brush_top + brush_hh} {cx + brush_w_s},{brush_top + brush_hh} {stem_left + stem_w},{brush_top}"
+        svg.append(f'<polygon points="{pts_r}" fill="none" stroke="black" stroke-width="{SW_OUTLINE}"/>')
+        thr_w_f = thr_crest * s
+        thr_left_f = cx - thr_w_f / 2
+        svg.append(hidden_rect(thr_left_f, top_y, thr_w_f, cap_hh * 0.7))
+        seal_w_f = seal_od * s
+        seal_left_f = cx - seal_w_f / 2
+        seal_hh_f = seal_h * s
+        svg.append(hidden_rect(seal_left_f, top_y + cap_hh * 0.7 - seal_hh_f, seal_w_f, seal_hh_f))
 
     # 中心线
-    svg.append(line(cx2, view_top - 5, cx2, brush_top_y2 + brush_hh + 5, sw=0.2, dash="2,1"))
+    svg.append(centerline(cx, top_y - 6, cx, brush_top + brush_hh + 6))
+
+    # 剖切符号
+    svg.extend(section_symbol(cx, top_y - 3, brush_top + brush_hh + 3, "A", "right"))
 
     # 尺寸标注
-    svg.append(dim_h(thr_left, thr_left + thr_w, view_top - 5, f"螺Ø{_f(thr_crest)}"))
-    svg.append(dim_h(seal_left, seal_left + seal_w, seal_y - 3, f"密封Ø{_f(seal_od)}"))
-    svg.append(text(cap_left2 - 1, view_top + cavity_hh / 2, f"壁厚{_f(stem_wall)}", size=2.6, anchor="end"))
+    svg.extend(dim_h(cap_left, cap_left + cap_w, top_y - 8,
+                     f"Ø{_f(outer_od)}", ext_y1=top_y, ext_y2=top_y))
+    svg.extend(dim_v(cap_left - 10, top_y, top_y + cap_hh,
+                     _f(cap_h), ext_x1=cap_left, ext_x2=cap_left))
+    svg.extend(dim_h(stem_left, stem_left + stem_w, stem_top + stem_hh / 2,
+                     f"Ø{_f(stem_d)}"))
+    svg.extend(dim_v(cap_left + cap_w + 10, top_y, brush_top + brush_hh,
+                     _f(total_h), ext_x1=cap_left + cap_w, ext_x2=cap_left + cap_w))
 
-    # ---- 第三列：俯视图 + 参数表 ----
-    col3_x = vx0 + 2 * (col_w + col_gap)
-    svg.append(rect(col3_x, vy0, col_w, vH, sw=0.2, stroke="#ccc"))
-    svg.append(text(col3_x + col_w / 2, vy0 + 5, "俯视图", size=3.2, anchor="middle", weight="bold"))
+    # ------------------------------------------------------------------
+    # A-A 剖视图（右上）
+    # ------------------------------------------------------------------
+    sx0, sy0, sw_, sh_ = box_sect
+    svg.append(text(sx0 + sw_ / 2, sy0 + 5, "A-A", size=3.2, anchor="middle", weight="bold"))
 
-    # 俯视图同心圆
-    ccx = col3_x + col_w / 2
-    r_outer = (outer_od / 2) * scale
-    ccy = view_top + r_outer + 5
+    cap_w2 = outer_od * s_sect
+    cap_hh2 = cap_h * s_sect
+    stem_w2 = stem_d * s_sect
+    stem_hh2 = stem_len * s_sect
+    brush_hh2 = brush_len * s_sect
+    brush_w_s2 = brush_w * s_sect / 2
+    cx2 = sx0 + sw_ / 2
+    top_y2 = sy0 + 10 + (sh_ - 10 - total_h * s_sect) / 2
+    cap_left2 = cx2 - cap_w2 / 2
 
-    # 盖子外圆
-    svg.append(circle(ccx, ccy, r_outer, sw=0.6))
-    # 内腔圆
-    r_inner = (thr_crest / 2) * scale
-    svg.append(circle(ccx, ccy, r_inner, sw=0.4))
-    # 气密环圆
-    r_seal = (seal_od / 2) * scale
-    svg.append(circle(ccx, ccy, r_seal, sw=0.3, fill="#eee"))
-    # 杆身圆
-    r_stem = (stem_d / 2) * scale
-    svg.append(circle(ccx, ccy, r_stem, sw=0.5, fill="#ccc"))
+    if solid is not None:
+        from .projection import section_to_svg, DIR_FRONT
+        svg.extend(section_to_svg(solid, DIR_FRONT,
+                                  cut_origin=(0, 0, 0), cut_normal=(0, 1, 0),
+                                  scale=s_sect, cx=cx2, cy=top_y2 + total_h * s_sect / 2))
+    else:
+        thr_w2 = thr_crest * s_sect
+        thr_left2 = cx2 - thr_w2 / 2
+        cap_wall_w = (cap_w2 - thr_w2) / 2
+        cavity_hh2 = cap_hh2 * 0.7
+        svg.append(hatch_rect(cap_left2, top_y2, cap_w2, cap_hh2 - cavity_hh2))
+        svg.append(hatch_rect(cap_left2, top_y2 + cap_hh2 - cavity_hh2, cap_wall_w, cavity_hh2))
+        svg.append(hatch_rect(thr_left2 + thr_w2, top_y2 + cap_hh2 - cavity_hh2, cap_wall_w, cavity_hh2))
+        stem_left2 = cx2 - stem_w2 / 2
+        stem_top2 = top_y2 + cap_hh2
+        if stem_wall > 0 and stem_wall < stem_d / 2:
+            inner_stem_w2 = (stem_d - 2 * stem_wall) * s_sect
+            stem_wall_w2 = stem_wall * s_sect
+            svg.append(hatch_rect(stem_left2, stem_top2, stem_wall_w2, stem_hh2 * 0.8))
+            svg.append(hatch_rect(stem_left2 + stem_w2 - stem_wall_w2, stem_top2, stem_wall_w2, stem_hh2 * 0.8))
+        seal_w2 = seal_od * s_sect
+        seal_hh2 = seal_h * s_sect
+        seal_left2 = cx2 - seal_w2 / 2
+        seal_y2 = top_y2 + cap_hh2 - cavity_hh2 + (cavity_hh2 - seal_hh2)
+        svg.append(hatch_rect(seal_left2, seal_y2, seal_w2, seal_hh2))
+        svg.append(rect(seal_left2, seal_y2, seal_w2, seal_hh2, sw=SW_THIN, fill="#ddd"))
+        svg.append(rect(cap_left2, top_y2, cap_w2, cap_hh2, sw=SW_OUTLINE))
+        svg.append(rect(thr_left2, top_y2 + cap_hh2 - cavity_hh2, thr_w2, cavity_hh2, sw=SW_THIN))
+        svg.append(rect(stem_left2, stem_top2, stem_w2, stem_hh2, sw=SW_OUTLINE))
+        if stem_wall > 0 and stem_wall < stem_d / 2:
+            inner_stem_left2 = cx2 - inner_stem_w2 / 2
+            svg.append(rect(inner_stem_left2, stem_top2, inner_stem_w2, stem_hh2 * 0.8, sw=SW_THIN))
+        brush_top2 = stem_top2 + stem_hh2
+        svg.append(line(stem_left2, brush_top2, cx2 - brush_w_s2, brush_top2 + brush_hh2, sw=SW_OUTLINE))
+        svg.append(line(stem_left2 + stem_w2, brush_top2, cx2 + brush_w_s2, brush_top2 + brush_hh2, sw=SW_OUTLINE))
+        svg.append(line(cx2 - brush_w_s2, brush_top2 + brush_hh2, cx2 + brush_w_s2, brush_top2 + brush_hh2, sw=SW_OUTLINE))
 
-    # 十字线
-    svg.append(line(ccx - r_outer - 5, ccy, ccx + r_outer + 5, ccy, sw=0.2, dash="2,1"))
-    svg.append(line(ccx, ccy - r_outer - 5, ccx, ccy + r_outer + 5, sw=0.2, dash="2,1"))
+    # 中心线
+    brush_top2 = top_y2 + cap_hh2 + stem_hh2
+    svg.append(centerline(cx2, top_y2 - 6, cx2, brush_top2 + brush_hh2 + 6))
 
-    # 俯视图尺寸
-    svg.append(dim_h(ccx - r_outer, ccx + r_outer, ccy + r_outer + 6, f"Ø{_f(outer_od)}"))
+    # 尺寸标注
+    thr_w2 = thr_crest * s_sect
+    thr_left2 = cx2 - thr_w2 / 2
+    seal_w2 = seal_od * s_sect
+    seal_hh2 = seal_h * s_sect
+    seal_left2 = cx2 - seal_w2 / 2
+    cavity_hh2 = cap_hh2 * 0.7
+    seal_y2 = top_y2 + cap_hh2 - cavity_hh2 + (cavity_hh2 - seal_hh2)
+    svg.extend(dim_h(thr_left2, thr_left2 + thr_w2, top_y2 - 5,
+                     f"Ø{_f(thr_crest)}", ext_y1=top_y2, ext_y2=top_y2))
+    svg.extend(dim_h(seal_left2, seal_left2 + seal_w2, seal_y2 - 4,
+                     f"Ø{_f(seal_od)}"))
 
-    # ---- 参数表 ----
-    table_y = ccy + r_outer + 18
-    table_x = col3_x + 4
-    line_h = 4.0
+    # ------------------------------------------------------------------
+    # 俯视图（左下）
+    # ------------------------------------------------------------------
+    px0, py0, pw, ph = box_plan
+    svg.append(text(px0 + pw / 2, py0 + 5, "俯视图", size=3.2, anchor="middle", weight="bold"))
 
-    svg.append(text(table_x, table_y, "关键参数", size=3.0, weight="bold"))
-    table_y += 2
+    r_outer = (outer_od / 2) * s_plan
+    ccx = px0 + pw / 2
+    ccy = py0 + 10 + (ph - 10 - 2 * r_outer) / 2 + r_outer
 
-    params = [
-        ("结构类型", type_label),
-        ("总高", f"{_f(total_h)} mm"),
-        ("外径", f"Ø{_f(outer_od)} mm"),
-        ("盖高", f"{_f(cap_h)} mm"),
-        ("杆径", f"Ø{_f(stem_d)} mm"),
-        ("杆长", f"{_f(stem_len)} mm"),
-        ("螺牙峰径", f"Ø{_f(thr_crest)} mm"),
-        ("螺牙底径", f"Ø{_f(thr_root)} mm"),
-        ("气密环径", f"Ø{_f(seal_od)} mm"),
-        ("刷头长", f"{_f(brush_len)} mm"),
-    ]
+    if solid is not None:
+        from .projection import project_top_to_svg
+        svg.extend(project_top_to_svg(solid, scale=s_plan, cx=ccx, cy=ccy))
+    else:
+        svg.append(circle(ccx, ccy, r_outer, sw=SW_OUTLINE))
+        r_thr = (thr_crest / 2) * s_plan
+        svg.append(circle(ccx, ccy, r_thr, sw=SW_THIN))
+        r_seal = (seal_od / 2) * s_plan
+        svg.append(circle(ccx, ccy, r_seal, sw=SW_THIN, fill="#eee"))
+        r_stem = (stem_d / 2) * s_plan
+        svg.append(circle(ccx, ccy, r_stem, sw=SW_OUTLINE, fill="#ccc"))
 
-    max_rows = int((work_y1 - table_y - 5) / line_h)
-    params = params[:max_rows]
+    svg.append(centerline(ccx - r_outer - 8, ccy, ccx + r_outer + 8, ccy))
+    svg.append(centerline(ccx, ccy - r_outer - 8, ccx, ccy + r_outer + 8))
 
-    for i, (name, val) in enumerate(params):
-        y = table_y + (i + 1) * line_h
-        svg.append(text(table_x, y, f"{name}:", size=2.6))
-        svg.append(text(table_x + 26, y, val, size=2.6))
+    svg.extend(dim_h(ccx - r_outer, ccx + r_outer, ccy + r_outer + 10,
+                     f"Ø{_f(outer_od)}", ext_y1=ccy + r_outer, ext_y2=ccy + r_outer))
+
+    # ------------------------------------------------------------------
+    # 标题栏（右下）
+    # ------------------------------------------------------------------
+    tx0, ty0, tw, th = box_title
+    svg.extend(title_block(tx0, ty0, tw, th, {
+        "title": title,
+        "subtitle": f"类型: {type_label}  刷头: {brush_type}",
+        "drawing_no": f"LG-WND-{finish}",
+        "material": "PP + 尼龙",
+        "scale_text": "NTS",
+        "finish": finish,
+        "date": datetime.now().strftime("%Y-%m-%d"),
+        "version": "A",
+        "tolerance": "±0.2",
+    }))
 
     svg.append("</svg>")
 
-    # ---- 写入文件 ----
     out_svg.parent.mkdir(parents=True, exist_ok=True)
     out_svg.write_text("\n".join(svg), encoding="utf-8")

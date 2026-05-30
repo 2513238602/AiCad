@@ -16,6 +16,7 @@ import { getNested } from '@/utils/nested'
 import { translateName } from '@/i18n'
 import type { ParamDef, CrossConstraint } from '@/api/types'
 import { dlog } from '@/utils/debugLog'
+import ProfileEditor from './ProfileEditor.vue'
 
 const props = defineProps<{
   paramDef: ParamDef
@@ -41,6 +42,11 @@ const crossConstraint = computed<CrossConstraint | null>(
 const isLocked = computed(() => crossConstraint.value?.locked ?? false)
 const isReadonly = computed(() => derivedReadonly.value || isLocked.value)
 
+// Whether current component is in spline profile mode
+const isSplineMode = computed(() => {
+  return getNested(paramsStore.values, 'profile_mode', 'classic') === 'spline'
+})
+
 // Display name
 const displayName = computed(() => {
   const paramI18nKey = `params.${d.value.k}`
@@ -51,6 +57,13 @@ const displayName = computed(() => {
 })
 
 const unit = computed(() => (d.value.unit ? ` (${d.value.unit})` : ''))
+
+// Enum label translation
+function enumLabel(ch: string): string {
+  const key = `enums.${ch}`
+  const translated = t(key)
+  return translated !== key ? translated : ch
+}
 
 // Effective range (cross-constraint > derived > schema)
 const effectiveMin = computed<number | undefined>(() => {
@@ -202,7 +215,7 @@ const constraintTooltip = computed(() => {
       style="width: 100%"
       size="small"
     >
-      <el-option v-for="ch in d.choices || []" :key="ch" :label="ch" :value="ch" />
+      <el-option v-for="ch in d.choices || []" :key="ch" :label="enumLabel(ch)" :value="ch" />
     </el-select>
 
     <!-- Bool type -->
@@ -217,6 +230,12 @@ const constraintTooltip = computed(() => {
       <el-option :label="t('ui.optYes')" value="true" />
       <el-option :label="t('ui.optNo')" value="false" />
     </el-select>
+
+    <!-- Profile points JSON → visual editor (only when profile_mode is spline) -->
+    <ProfileEditor
+      v-else-if="d.type === 'str' && d.k.endsWith('profile_points_json') && isSplineMode"
+      :param-key="d.k"
+    />
 
     <!-- String type -->
     <el-input

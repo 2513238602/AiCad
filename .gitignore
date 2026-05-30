@@ -8,11 +8,31 @@ __pycache__/
 .venv/
 .conda/
 
+# Environment secrets
+.env
+
 # Test & build artifacts
-artifacts/
+artifacts/*
+!artifacts/showroom/
+artifacts/showroom/*
+!artifacts/showroom/empty_showroom.glb
+!artifacts/showroom/manifest.json
 *.stl
 *.step
+*.stp
 test_output.txt
+imgui.ini
+
+# Local heavyweight toolchains
+tools/blender/
+tools/downloads/
+
+# Generated test/debug outputs
+tests/a3_test_output/
+tests/diag_output/
+tests/**/test_output/
+tests/**/output/
+tests/**/__generated__/
 
 # IDE
 .vscode/

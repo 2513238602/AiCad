@@ -123,13 +123,29 @@ class WandComponent:
             ),
             ParamDef(
                 k="outer_od_mm", name="外径（盖子外径）", unit="mm", type="float",
-                default=21.5, min=15.0, max=35.0, step=0.1,
+                default=21.5, min=10.0, max=35.0, step=0.1,
                 required=True, is_core=True, group="整体"
             ),
             ParamDef(
                 k="cap_height_mm", name="盖子高度", unit="mm", type="float",
                 default=18.0, min=8.0, max=35.0, step=0.1,
                 required=True, is_core=True, group="整体"
+            ),
+            ParamDef(
+                k="cap_taper_deg", name="盖部锥度角", unit="deg", type="float",
+                default=0.0, min=0.0, max=10.0, step=0.5,
+                is_core=False, group="整体"
+            ),
+            ParamDef(
+                k="cross_section", name="截面形状", type="enum",
+                default="round",
+                choices=["round", "square", "triangle", "hexagon", "octagon"],
+                is_core=False, group="整体"
+            ),
+            ParamDef(
+                k="corner_radius_mm", name="截面圆角", unit="mm", type="float",
+                default=3.0, min=0.3, max=10.0, step=0.1,
+                is_core=False, group="整体"
             ),
 
             # ═══════════════════════════════════════════════════════════════
@@ -237,7 +253,7 @@ class WandComponent:
             # ═══════════════════════════════════════════════════════════════
             ParamDef(
                 k="seal_ring.od_mm", name="气密环外径", unit="mm", type="float",
-                default=16.0, min=12.0, max=25.0, step=0.1,
+                default=16.0, min=8.0, max=25.0, step=0.1,
                 required=True, is_core=False, group="气密环",
                 derived_rule=get_derived_rule("wand", "seal_ring.od_mm")
             ),
@@ -258,7 +274,7 @@ class WandComponent:
             ParamDef(
                 k="brush.type", name="刷头类型", type="enum",
                 default="doe_foot",
-                choices=["doe_foot", "fiber_brush", "silicone_spatula"],
+                choices=["doe_foot", "fiber_brush", "silicone_spatula", "pointed", "angled"],
                 is_core=True, group="刷头"
             ),
             ParamDef(
@@ -305,6 +321,7 @@ class WandComponent:
                     "total_height_mm": 65.0,
                     "outer_od_mm": 21.5,  # 瓶盖内径22.4 - 0.9 = 21.5
                     "cap_height_mm": 17.0,  # 需 ≤ cap腔顶-safe_z（避免穿透cap顶部）
+                    "cap_taper_deg": 0.0,
 
                     # 杆身
                     "stem_diameter_mm": 4.0,
@@ -357,6 +374,7 @@ class WandComponent:
                     "total_height_mm": 70.0,
                     "outer_od_mm": 21.5,  # 瓶盖内径22.4 - 0.9 = 21.5
                     "cap_height_mm": 17.0,  # 需 ≤ cap腔顶-safe_z（避免穿透cap顶部）
+                    "cap_taper_deg": 0.0,
 
                     # 杆身
                     "stem_diameter_mm": 4.5,
@@ -410,6 +428,8 @@ class WandComponent:
         def _thread_valid(p: Dict[str, Any]) -> bool:
             """螺纹合理性：峰径 - 2*牙深 > 杆径"""
             thr = p.get("thread", {}) or {}
+            if not bool(thr.get("enabled", True)):
+                return True  # 螺纹禁用时跳过
             crest = float(thr.get("crest_dia_mm", 18.0))
             depth = float(thr.get("depth_mm", 0.5))
             stem = float(p["stem_diameter_mm"])
@@ -419,14 +439,14 @@ class WandComponent:
 
         def _seal_fit(p: Dict[str, Any]) -> bool:
             """气密环配合：气密环外径 < 螺牙底径"""
+            thr = p.get("thread", {}) or {}
+            if not bool(thr.get("enabled", True)):
+                return True  # 螺纹禁用时跳过
             seal_ring = p.get("seal_ring", {}) or {}
             seal_od = float(seal_ring.get("od_mm", 17.5))
-            thr = p.get("thread", {}) or {}
             crest = float(thr.get("crest_dia_mm", 18.0))
             depth = float(thr.get("depth_mm", 0.5))
-            # 底径由峰径和牙深自动计算
             root = crest - 2 * depth
-            # 气密环应略小于螺纹底径
             return seal_od <= root + 1.5
 
         def _height_check(p: Dict[str, Any]) -> bool:
@@ -442,6 +462,8 @@ class WandComponent:
         def _finish_match(p: Dict[str, Any]) -> bool:
             """规格匹配：螺牙峰径与finish标注匹配"""
             thr = p.get("thread", {}) or {}
+            if not bool(thr.get("enabled", True)):
+                return True  # 螺纹禁用时跳过
             crest = float(thr.get("crest_dia_mm", 18.0))
             finish = str(p.get("finish", "18-415"))
             try:
@@ -511,20 +533,23 @@ class WandComponent:
         }
 
         if not qc["ok"]:
-            out["error"] = "参数不满足硬约束（strict），已阻止导出。"
+            _fails = [c["msg"] for c in qc.get("checks", []) if not c["ok"] and c.get("severity") == "hard"]
+            out["error"] = "硬约束失败：" + "；".join(_fails) if _fails else "参数不满足硬约束（strict），已阻止导出。"
             return out
 
         modeler = Modeler()
         meta: Dict[str, Any] = {}
         try:
             solid = modeler.build("wand", p_norm, meta=meta)
+            out["solid"] = solid
             modeler.export_step(solid, str(step_path))
             out["step"] = str(step_path)
             # 导出 STL 用于 Web 3D 预览
             try:
                 import cadquery as cq
 
-                cq.exporters.export(solid, str(stl_path), exportType="STL")
+                cq.exporters.export(solid, str(stl_path), exportType="STL",
+                                    tolerance=0.01, angularTolerance=0.05)
                 out["stl"] = str(stl_path)
             except Exception:
                 out["stl"] = None
@@ -535,7 +560,7 @@ class WandComponent:
             return out
 
         try:
-            export_wand_sheet(p_norm, svg_path)
+            export_wand_sheet(p_norm, svg_path, solid=solid)
             out["svg"] = str(svg_path)
         except Exception as e:
             out["ok"] = False

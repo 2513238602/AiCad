@@ -1,0 +1,420 @@
+{
+  "id": "empty_showroom_v1",
+  "asset": "empty_showroom.glb",
+  "units": "meters",
+  "default_camera": {
+    "position": [
+      0,
+      -7.0,
+      2.15
+    ],
+    "target": [
+      0,
+      -0.2,
+      1.2
+    ],
+    "fov": 67
+  },
+  "navigation": {
+    "bounds": {
+      "min": [
+        -11.2,
+        -7.2,
+        0.0
+      ],
+      "max": [
+        11.2,
+        7.2,
+        3.2
+      ]
+    },
+    "walk_speed": 3.0,
+    "look_sensitivity": 0.0025
+  },
+  "slots": [
+    {
+      "id": "A01",
+      "position": [
+        -8.4,
+        4.95,
+        1.38
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "camera_target": [
+        -8.4,
+        4.95,
+        1.35
+      ],
+      "camera_position": [
+        -8.4,
+        1.75,
+        2.25
+      ],
+      "display_radius": 1.2
+    },
+    {
+      "id": "A02",
+      "position": [
+        -5.6,
+        4.95,
+        1.38
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "camera_target": [
+        -5.6,
+        4.95,
+        1.35
+      ],
+      "camera_position": [
+        -5.6,
+        1.75,
+        2.25
+      ],
+      "display_radius": 1.2
+    },
+    {
+      "id": "A03",
+      "position": [
+        -2.8,
+        4.95,
+        1.38
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "camera_target": [
+        -2.8,
+        4.95,
+        1.35
+      ],
+      "camera_position": [
+        -2.8,
+        1.75,
+        2.25
+      ],
+      "display_radius": 1.2
+    },
+    {
+      "id": "A04",
+      "position": [
+        0.0,
+        4.95,
+        1.38
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "camera_target": [
+        0.0,
+        4.95,
+        1.35
+      ],
+      "camera_position": [
+        0.0,
+        1.75,
+        2.25
+      ],
+      "display_radius": 1.2
+    },
+    {
+      "id": "A05",
+      "position": [
+        2.8,
+        4.95,
+        1.38
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "camera_target": [
+        2.8,
+        4.95,
+        1.35
+      ],
+      "camera_position": [
+        2.8,
+        1.75,
+        2.25
+      ],
+      "display_radius": 1.2
+    },
+    {
+      "id": "A06",
+      "position": [
+        5.6,
+        4.95,
+        1.38
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "camera_target": [
+        5.6,
+        4.95,
+        1.35
+      ],
+      "camera_position": [
+        5.6,
+        1.75,
+        2.25
+      ],
+      "display_radius": 1.2
+    },
+    {
+      "id": "A07",
+      "position": [
+        8.4,
+        4.95,
+        1.38
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "camera_target": [
+        8.4,
+        4.95,
+        1.35
+      ],
+      "camera_position": [
+        8.4,
+        1.75,
+        2.25
+      ],
+      "display_radius": 1.2
+    },
+    {
+      "id": "B01",
+      "position": [
+        -8.4,
+        -4.2,
+        1.38
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "camera_target": [
+        -8.4,
+        -4.2,
+        1.35
+      ],
+      "camera_position": [
+        -8.4,
+        -7.4,
+        2.25
+      ],
+      "display_radius": 1.2
+    },
+    {
+      "id": "B02",
+      "position": [
+        -5.6,
+        -4.2,
+        1.38
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "camera_target": [
+        -5.6,
+        -4.2,
+        1.35
+      ],
+      "camera_position": [
+        -5.6,
+        -7.4,
+        2.25
+      ],
+      "display_radius": 1.2
+    },
+    {
+      "id": "B03",
+      "position": [
+        -2.8,
+        -4.2,
+        1.38
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "camera_target": [
+        -2.8,
+        -4.2,
+        1.35
+      ],
+      "camera_position": [
+        -2.8,
+        -7.4,
+        2.25
+      ],
+      "display_radius": 1.2
+    },
+    {
+      "id": "B04",
+      "position": [
+        0.0,
+        -4.2,
+        1.38
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "camera_target": [
+        0.0,
+        -4.2,
+        1.35
+      ],
+      "camera_position": [
+        0.0,
+        -7.4,
+        2.25
+      ],
+      "display_radius": 1.2
+    },
+    {
+      "id": "B05",
+      "position": [
+        2.8,
+        -4.2,
+        1.38
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "camera_target": [
+        2.8,
+        -4.2,
+        1.35
+      ],
+      "camera_position": [
+        2.8,
+        -7.4,
+        2.25
+      ],
+      "display_radius": 1.2
+    },
+    {
+      "id": "B06",
+      "position": [
+        5.6,
+        -4.2,
+        1.38
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "camera_target": [
+        5.6,
+        -4.2,
+        1.35
+      ],
+      "camera_position": [
+        5.6,
+        -7.4,
+        2.25
+      ],
+      "display_radius": 1.2
+    },
+    {
+      "id": "B07",
+      "position": [
+        8.4,
+        -4.2,
+        1.38
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "camera_target": [
+        8.4,
+        -4.2,
+        1.35
+      ],
+      "camera_position": [
+        8.4,
+        -7.4,
+        2.25
+      ],
+      "display_radius": 1.2
+    },
+    {
+      "id": "CENTER_01",
+      "position": [
+        -2.0,
+        0.15,
+        1.38
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "camera_target": [
+        -2.0,
+        0.15,
+        1.35
+      ],
+      "camera_position": [
+        -2.0,
+        -3.05,
+        2.25
+      ],
+      "display_radius": 1.2
+    },
+    {
+      "id": "CENTER_02",
+      "position": [
+        2.0,
+        0.15,
+        1.38
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "camera_target": [
+        2.0,
+        0.15,
+        1.35
+      ],
+      "camera_position": [
+        2.0,
+        -3.05,
+        2.25
+      ],
+      "display_radius": 1.2
+    }
+  ]
+}

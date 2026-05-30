@@ -13,6 +13,19 @@ def _json_load(path: Path) -> Dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _json_safe(value: Any) -> Any:
+    if value is None or isinstance(value, (str, int, float, bool)):
+        return value
+    if isinstance(value, Path):
+        return str(value)
+    if isinstance(value, dict):
+        return {str(k): _json_safe(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_json_safe(v) for v in value]
+    # CadQuery solids/workplanes are useful internally but not printable JSON.
+    return f"<{value.__class__.__name__}>"
+
+
 def main():
     ap = argparse.ArgumentParser("CADMVP generic generator")
     ap.add_argument("--product", default="lip_gloss")
@@ -38,7 +51,7 @@ def main():
     comp = get_component(args.product, args.component)
     res = comp.generate(preset_id=args.preset, user_params=params, outroot=args.outroot, title=args.title)
 
-    print(json.dumps(res, ensure_ascii=False, indent=2))
+    print(json.dumps(_json_safe(res), ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

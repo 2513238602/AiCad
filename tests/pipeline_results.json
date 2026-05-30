@@ -1,0 +1,817 @@
+[
+  {
+    "category": "A1_round_flat",
+    "description": "圆形直筒+平顶盖",
+    "image": "01_huihe_LG056_round.png",
+    "vlm_ok": true,
+    "vlm_time_s": 0,
+    "vlm_description": "(跳过VLM)",
+    "vlm_shape": {
+      "cross_section": "round",
+      "corner_radius_mm": 3.0,
+      "shape": "cyl",
+      "taper_deg": 0.0,
+      "profile_mode": "classic",
+      "profile_points": [],
+      "shoulder_style": "round",
+      "shoulder_fillet_mm": 3.0,
+      "bottom_style": "flat",
+      "cap_height_ratio": 0.4,
+      "cap_od_ratio": 1.0,
+      "cap_taper_deg": 0.0,
+      "cap_top_shape": "flat",
+      "cap_grip_style": "smooth",
+      "confidence": 1.0
+    },
+    "vlm_analysis": {},
+    "components": {
+      "bottle": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 1.55,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\A1_round_flat\\2026-03-24_120753__bottle__custom\\bottle.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\A1_round_flat\\2026-03-24_120753__bottle__custom\\bottle.stl"
+      },
+      "cap": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.6,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\A1_round_flat\\2026-03-24_120754__cap__custom\\cap.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\A1_round_flat\\2026-03-24_120754__cap__custom\\cap.stl"
+      },
+      "wand": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 5.4,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\A1_round_flat\\2026-03-24_120755__wand__custom\\wand.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\A1_round_flat\\2026-03-24_120755__wand__custom\\wand.stl"
+      },
+      "wiper": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.69,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\A1_round_flat\\2026-03-24_120800__wiper__custom\\wiper.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\A1_round_flat\\2026-03-24_120800__wiper__custom\\wiper.stl"
+      }
+    },
+    "all_ok": true,
+    "errors": []
+  },
+  {
+    "category": "A2_round_dome",
+    "description": "圆形直筒+圆顶盖",
+    "image": "01_topfeel_MA125A_dome.jpg",
+    "vlm_ok": true,
+    "vlm_time_s": 0,
+    "vlm_description": "(跳过VLM)",
+    "vlm_shape": {
+      "cross_section": "round",
+      "corner_radius_mm": 3.0,
+      "shape": "cyl",
+      "taper_deg": 0.0,
+      "profile_mode": "classic",
+      "profile_points": [],
+      "shoulder_style": "round",
+      "shoulder_fillet_mm": 3.0,
+      "bottom_style": "flat",
+      "cap_height_ratio": 0.4,
+      "cap_od_ratio": 1.0,
+      "cap_taper_deg": 0.0,
+      "cap_top_shape": "dome",
+      "cap_grip_style": "smooth",
+      "confidence": 1.0
+    },
+    "vlm_analysis": {},
+    "components": {
+      "bottle": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 2.17,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\A2_round_dome\\2026-03-24_120801__bottle__custom\\bottle.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\A2_round_dome\\2026-03-24_120801__bottle__custom\\bottle.stl"
+      },
+      "cap": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.74,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\A2_round_dome\\2026-03-24_120803__cap__custom\\cap.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\A2_round_dome\\2026-03-24_120803__cap__custom\\cap.stl"
+      },
+      "wand": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 5.36,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\A2_round_dome\\2026-03-24_120804__wand__custom\\wand.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\A2_round_dome\\2026-03-24_120804__wand__custom\\wand.stl"
+      },
+      "wiper": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.65,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\A2_round_dome\\2026-03-24_120809__wiper__custom\\wiper.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\A2_round_dome\\2026-03-24_120809__wiper__custom\\wiper.stl"
+      }
+    },
+    "all_ok": true,
+    "errors": []
+  },
+  {
+    "category": "A3_round_pointed",
+    "description": "圆形直筒+尖顶盖",
+    "image": "cairui_cone_01.webp",
+    "vlm_ok": true,
+    "vlm_time_s": 0,
+    "vlm_description": "(跳过VLM)",
+    "vlm_shape": {
+      "cross_section": "round",
+      "corner_radius_mm": 3.0,
+      "shape": "cyl",
+      "taper_deg": 0.0,
+      "profile_mode": "classic",
+      "profile_points": [],
+      "shoulder_style": "round",
+      "shoulder_fillet_mm": 3.0,
+      "bottom_style": "flat",
+      "cap_height_ratio": 0.4,
+      "cap_od_ratio": 1.0,
+      "cap_taper_deg": 0.0,
+      "cap_top_shape": "pointed",
+      "cap_grip_style": "smooth",
+      "confidence": 1.0
+    },
+    "vlm_analysis": {},
+    "components": {
+      "bottle": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 2.08,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\A3_round_pointed\\2026-03-24_120810__bottle__custom\\bottle.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\A3_round_pointed\\2026-03-24_120810__bottle__custom\\bottle.stl"
+      },
+      "cap": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.65,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\A3_round_pointed\\2026-03-24_120812__cap__custom\\cap.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\A3_round_pointed\\2026-03-24_120812__cap__custom\\cap.stl"
+      },
+      "wand": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 5.29,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\A3_round_pointed\\2026-03-24_120813__wand__custom\\wand.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\A3_round_pointed\\2026-03-24_120813__wand__custom\\wand.stl"
+      },
+      "wiper": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.63,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\A3_round_pointed\\2026-03-24_120818__wiper__custom\\wiper.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\A3_round_pointed\\2026-03-24_120818__wiper__custom\\wiper.stl"
+      }
+    },
+    "all_ok": true,
+    "errors": []
+  },
+  {
+    "category": "B1_tapered",
+    "description": "圆形锥形瓶身",
+    "image": "01_huihe_LG041_taper.png",
+    "vlm_ok": true,
+    "vlm_time_s": 0,
+    "vlm_description": "(跳过VLM)",
+    "vlm_shape": {
+      "cross_section": "round",
+      "corner_radius_mm": 3.0,
+      "shape": "taper",
+      "taper_deg": 3.0,
+      "profile_mode": "classic",
+      "profile_points": [],
+      "shoulder_style": "angular",
+      "shoulder_fillet_mm": 3.0,
+      "bottom_style": "flat",
+      "cap_height_ratio": 0.4,
+      "cap_od_ratio": 1.0,
+      "cap_taper_deg": 0.0,
+      "cap_top_shape": "flat",
+      "cap_grip_style": "smooth",
+      "confidence": 1.0
+    },
+    "vlm_analysis": {},
+    "components": {
+      "bottle": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 1.85,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\B1_tapered\\2026-03-24_120819__bottle__custom\\bottle.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\B1_tapered\\2026-03-24_120819__bottle__custom\\bottle.stl"
+      },
+      "cap": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.6,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\B1_tapered\\2026-03-24_120821__cap__custom\\cap.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\B1_tapered\\2026-03-24_120821__cap__custom\\cap.stl"
+      },
+      "wand": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 5.7,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\B1_tapered\\2026-03-24_120821__wand__custom\\wand.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\B1_tapered\\2026-03-24_120821__wand__custom\\wand.stl"
+      },
+      "wiper": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.67,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\B1_tapered\\2026-03-24_120827__wiper__custom\\wiper.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\B1_tapered\\2026-03-24_120827__wiper__custom\\wiper.stl"
+      }
+    },
+    "all_ok": true,
+    "errors": []
+  },
+  {
+    "category": "B2_barrel",
+    "description": "桶形/鼓形瓶身",
+    "image": "01_huihe_LG048_barrel.png",
+    "vlm_ok": true,
+    "vlm_time_s": 0,
+    "vlm_description": "(跳过VLM)",
+    "vlm_shape": {
+      "cross_section": "round",
+      "corner_radius_mm": 3.0,
+      "shape": "cyl",
+      "taper_deg": 0.0,
+      "profile_mode": "spline",
+      "profile_points": [],
+      "shoulder_style": "sloped",
+      "shoulder_fillet_mm": 3.0,
+      "bottom_style": "flat",
+      "cap_height_ratio": 0.4,
+      "cap_od_ratio": 1.0,
+      "cap_taper_deg": 0.0,
+      "cap_top_shape": "flat",
+      "cap_grip_style": "smooth",
+      "confidence": 1.0
+    },
+    "vlm_analysis": {},
+    "components": {
+      "bottle": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 3.64,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\B2_barrel\\2026-03-24_120828__bottle__custom\\bottle.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\B2_barrel\\2026-03-24_120828__bottle__custom\\bottle.stl"
+      },
+      "cap": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 3.3,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\B2_barrel\\2026-03-24_120831__cap__custom\\cap.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\B2_barrel\\2026-03-24_120831__cap__custom\\cap.stl"
+      },
+      "wand": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 5.5,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\B2_barrel\\2026-03-24_120834__wand__custom\\wand.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\B2_barrel\\2026-03-24_120834__wand__custom\\wand.stl"
+      },
+      "wiper": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.65,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\B2_barrel\\2026-03-24_120840__wiper__custom\\wiper.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\B2_barrel\\2026-03-24_120840__wiper__custom\\wiper.stl"
+      }
+    },
+    "all_ok": true,
+    "errors": []
+  },
+  {
+    "category": "B3_teardrop",
+    "description": "水滴形瓶身",
+    "image": "01_huihe_LG043_drop.png",
+    "vlm_ok": true,
+    "vlm_time_s": 0,
+    "vlm_description": "(跳过VLM)",
+    "vlm_shape": {
+      "cross_section": "round",
+      "corner_radius_mm": 3.0,
+      "shape": "cyl",
+      "taper_deg": 0.0,
+      "profile_mode": "spline",
+      "profile_points": [],
+      "shoulder_style": "round",
+      "shoulder_fillet_mm": 3.0,
+      "bottom_style": "convex",
+      "cap_height_ratio": 0.4,
+      "cap_od_ratio": 1.0,
+      "cap_taper_deg": 0.0,
+      "cap_top_shape": "flat",
+      "cap_grip_style": "smooth",
+      "confidence": 1.0,
+      "bottom_concave_mm": 1.5
+    },
+    "vlm_analysis": {},
+    "components": {
+      "bottle": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 3.0,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\B3_teardrop\\2026-03-24_120841__bottle__custom\\bottle.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\B3_teardrop\\2026-03-24_120841__bottle__custom\\bottle.stl"
+      },
+      "cap": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 3.14,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\B3_teardrop\\2026-03-24_120844__cap__custom\\cap.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\B3_teardrop\\2026-03-24_120844__cap__custom\\cap.stl"
+      },
+      "wand": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 5.48,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\B3_teardrop\\2026-03-24_120847__wand__custom\\wand.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\B3_teardrop\\2026-03-24_120847__wand__custom\\wand.stl"
+      },
+      "wiper": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.67,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\B3_teardrop\\2026-03-24_120852__wiper__custom\\wiper.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\B3_teardrop\\2026-03-24_120852__wiper__custom\\wiper.stl"
+      }
+    },
+    "all_ok": true,
+    "errors": []
+  },
+  {
+    "category": "B4_scurve",
+    "description": "S形曲线瓶身",
+    "image": "01_huihe_LG047_curve.png",
+    "vlm_ok": true,
+    "vlm_time_s": 0,
+    "vlm_description": "(跳过VLM)",
+    "vlm_shape": {
+      "cross_section": "round",
+      "corner_radius_mm": 3.0,
+      "shape": "cyl",
+      "taper_deg": 0.0,
+      "profile_mode": "spline",
+      "profile_points": [],
+      "shoulder_style": "round",
+      "shoulder_fillet_mm": 3.0,
+      "bottom_style": "flat",
+      "cap_height_ratio": 0.4,
+      "cap_od_ratio": 1.0,
+      "cap_taper_deg": 0.0,
+      "cap_top_shape": "flat",
+      "cap_grip_style": "smooth",
+      "confidence": 1.0
+    },
+    "vlm_analysis": {},
+    "components": {
+      "bottle": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 4.03,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\B4_scurve\\2026-03-24_120853__bottle__custom\\bottle.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\B4_scurve\\2026-03-24_120853__bottle__custom\\bottle.stl"
+      },
+      "cap": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 2.99,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\B4_scurve\\2026-03-24_120857__cap__custom\\cap.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\B4_scurve\\2026-03-24_120857__cap__custom\\cap.stl"
+      },
+      "wand": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 5.28,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\B4_scurve\\2026-03-24_120900__wand__custom\\wand.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\B4_scurve\\2026-03-24_120900__wand__custom\\wand.stl"
+      },
+      "wiper": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.63,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\B4_scurve\\2026-03-24_120905__wiper__custom\\wiper.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\B4_scurve\\2026-03-24_120905__wiper__custom\\wiper.stl"
+      }
+    },
+    "all_ok": true,
+    "errors": []
+  },
+  {
+    "category": "C1_square_straight",
+    "description": "方形直筒",
+    "image": "01_huihe_LG049_square.png",
+    "vlm_ok": true,
+    "vlm_time_s": 0,
+    "vlm_description": "(跳过VLM)",
+    "vlm_shape": {
+      "cross_section": "square",
+      "corner_radius_mm": 3.0,
+      "shape": "cyl",
+      "taper_deg": 0.0,
+      "profile_mode": "classic",
+      "profile_points": [],
+      "shoulder_style": "round",
+      "shoulder_fillet_mm": 3.0,
+      "bottom_style": "flat",
+      "cap_height_ratio": 0.4,
+      "cap_od_ratio": 1.0,
+      "cap_taper_deg": 0.0,
+      "cap_top_shape": "flat",
+      "cap_grip_style": "smooth",
+      "confidence": 1.0
+    },
+    "vlm_analysis": {},
+    "components": {
+      "bottle": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 3.4,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\C1_square_straight\\2026-03-24_120906__bottle__custom\\bottle.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\C1_square_straight\\2026-03-24_120906__bottle__custom\\bottle.stl"
+      },
+      "cap": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 1.32,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\C1_square_straight\\2026-03-24_120909__cap__custom\\cap.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\C1_square_straight\\2026-03-24_120909__cap__custom\\cap.stl"
+      },
+      "wand": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 5.85,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\C1_square_straight\\2026-03-24_120911__wand__custom\\wand.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\C1_square_straight\\2026-03-24_120911__wand__custom\\wand.stl"
+      },
+      "wiper": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.7,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\C1_square_straight\\2026-03-24_120916__wiper__custom\\wiper.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\C1_square_straight\\2026-03-24_120916__wiper__custom\\wiper.stl"
+      }
+    },
+    "all_ok": true,
+    "errors": []
+  },
+  {
+    "category": "C2_square_taper",
+    "description": "方形锥度",
+    "image": "canda_square_01.webp",
+    "vlm_ok": true,
+    "vlm_time_s": 0,
+    "vlm_description": "(跳过VLM)",
+    "vlm_shape": {
+      "cross_section": "square",
+      "corner_radius_mm": 3.0,
+      "shape": "cyl",
+      "taper_deg": 2.0,
+      "profile_mode": "classic",
+      "profile_points": [],
+      "shoulder_style": "sloped",
+      "shoulder_fillet_mm": 3.0,
+      "bottom_style": "flat",
+      "cap_height_ratio": 0.4,
+      "cap_od_ratio": 1.0,
+      "cap_taper_deg": 0.0,
+      "cap_top_shape": "flat",
+      "cap_grip_style": "smooth",
+      "confidence": 1.0
+    },
+    "vlm_analysis": {},
+    "components": {
+      "bottle": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 3.47,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\C2_square_taper\\2026-03-24_120917__bottle__custom\\bottle.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\C2_square_taper\\2026-03-24_120917__bottle__custom\\bottle.stl"
+      },
+      "cap": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 1.27,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\C2_square_taper\\2026-03-24_120921__cap__custom\\cap.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\C2_square_taper\\2026-03-24_120921__cap__custom\\cap.stl"
+      },
+      "wand": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 5.43,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\C2_square_taper\\2026-03-24_120922__wand__custom\\wand.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\C2_square_taper\\2026-03-24_120922__wand__custom\\wand.stl"
+      },
+      "wiper": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.66,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\C2_square_taper\\2026-03-24_120927__wiper__custom\\wiper.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\C2_square_taper\\2026-03-24_120927__wiper__custom\\wiper.stl"
+      }
+    },
+    "all_ok": true,
+    "errors": []
+  },
+  {
+    "category": "C3_square_rounded",
+    "description": "大圆角方形",
+    "image": "huassin_gradient_01.webp",
+    "vlm_ok": true,
+    "vlm_time_s": 0,
+    "vlm_description": "(跳过VLM)",
+    "vlm_shape": {
+      "cross_section": "square",
+      "corner_radius_mm": 3.0,
+      "shape": "cyl",
+      "taper_deg": 0.0,
+      "profile_mode": "classic",
+      "profile_points": [],
+      "shoulder_style": "round",
+      "shoulder_fillet_mm": 3.0,
+      "bottom_style": "flat",
+      "cap_height_ratio": 0.4,
+      "cap_od_ratio": 1.0,
+      "cap_taper_deg": 0.0,
+      "cap_top_shape": "flat",
+      "cap_grip_style": "smooth",
+      "confidence": 1.0
+    },
+    "vlm_analysis": {},
+    "components": {
+      "bottle": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 3.37,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\C3_square_rounded\\2026-03-24_120928__bottle__custom\\bottle.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\C3_square_rounded\\2026-03-24_120928__bottle__custom\\bottle.stl"
+      },
+      "cap": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 1.31,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\C3_square_rounded\\2026-03-24_120931__cap__custom\\cap.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\C3_square_rounded\\2026-03-24_120931__cap__custom\\cap.stl"
+      },
+      "wand": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 5.63,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\C3_square_rounded\\2026-03-24_120933__wand__custom\\wand.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\C3_square_rounded\\2026-03-24_120933__wand__custom\\wand.stl"
+      },
+      "wiper": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.65,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\C3_square_rounded\\2026-03-24_120938__wiper__custom\\wiper.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\C3_square_rounded\\2026-03-24_120938__wiper__custom\\wiper.stl"
+      }
+    },
+    "all_ok": true,
+    "errors": []
+  },
+  {
+    "category": "D1_textured_cap",
+    "description": "纹理盖",
+    "image": "canda_diamond_01.webp",
+    "vlm_ok": true,
+    "vlm_time_s": 0,
+    "vlm_description": "(跳过VLM)",
+    "vlm_shape": {
+      "cross_section": "round",
+      "corner_radius_mm": 3.0,
+      "shape": "cyl",
+      "taper_deg": 0.0,
+      "profile_mode": "classic",
+      "profile_points": [],
+      "shoulder_style": "round",
+      "shoulder_fillet_mm": 3.0,
+      "bottom_style": "flat",
+      "cap_height_ratio": 0.4,
+      "cap_od_ratio": 1.0,
+      "cap_taper_deg": 0.0,
+      "cap_top_shape": "flat",
+      "cap_grip_style": "ribs",
+      "confidence": 1.0,
+      "cap_grip_count": 24,
+      "cap_grip_depth_mm": 0.3
+    },
+    "vlm_analysis": {},
+    "components": {
+      "bottle": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 1.91,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\D1_textured_cap\\2026-03-24_120939__bottle__custom\\bottle.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\D1_textured_cap\\2026-03-24_120939__bottle__custom\\bottle.stl"
+      },
+      "cap": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 1.39,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\D1_textured_cap\\2026-03-24_120941__cap__custom\\cap.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\D1_textured_cap\\2026-03-24_120941__cap__custom\\cap.stl"
+      },
+      "wand": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 5.38,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\D1_textured_cap\\2026-03-24_120942__wand__custom\\wand.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\D1_textured_cap\\2026-03-24_120942__wand__custom\\wand.stl"
+      },
+      "wiper": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.69,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\D1_textured_cap\\2026-03-24_120948__wiper__custom\\wiper.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\D1_textured_cap\\2026-03-24_120948__wiper__custom\\wiper.stl"
+      }
+    },
+    "all_ok": true,
+    "errors": []
+  },
+  {
+    "category": "D2_mushroom_cap",
+    "description": "蘑菇盖/大头盖",
+    "image": "01_kesiyu_pink_bigbrush.webp",
+    "vlm_ok": true,
+    "vlm_time_s": 0,
+    "vlm_description": "(跳过VLM)",
+    "vlm_shape": {
+      "cross_section": "round",
+      "corner_radius_mm": 3.0,
+      "shape": "cyl",
+      "taper_deg": 0.0,
+      "profile_mode": "classic",
+      "profile_points": [],
+      "shoulder_style": "round",
+      "shoulder_fillet_mm": 3.0,
+      "bottom_style": "flat",
+      "cap_height_ratio": 0.4,
+      "cap_od_ratio": 1.15,
+      "cap_taper_deg": 0.0,
+      "cap_top_shape": "flat",
+      "cap_grip_style": "smooth",
+      "confidence": 1.0
+    },
+    "vlm_analysis": {},
+    "components": {
+      "bottle": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 2.07,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\D2_mushroom_cap\\2026-03-24_120948__bottle__custom\\bottle.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\D2_mushroom_cap\\2026-03-24_120948__bottle__custom\\bottle.stl"
+      },
+      "cap": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.67,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\D2_mushroom_cap\\2026-03-24_120950__cap__custom\\cap.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\D2_mushroom_cap\\2026-03-24_120950__cap__custom\\cap.stl"
+      },
+      "wand": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 5.37,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\D2_mushroom_cap\\2026-03-24_120951__wand__custom\\wand.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\D2_mushroom_cap\\2026-03-24_120951__wand__custom\\wand.stl"
+      },
+      "wiper": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.68,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\D2_mushroom_cap\\2026-03-24_120956__wiper__custom\\wiper.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\D2_mushroom_cap\\2026-03-24_120956__wiper__custom\\wiper.stl"
+      }
+    },
+    "all_ok": true,
+    "errors": []
+  },
+  {
+    "category": "D3_taper_cap",
+    "description": "锥度盖",
+    "image": "canda_crown_01.webp",
+    "vlm_ok": true,
+    "vlm_time_s": 0,
+    "vlm_description": "(跳过VLM)",
+    "vlm_shape": {
+      "cross_section": "round",
+      "corner_radius_mm": 3.0,
+      "shape": "cyl",
+      "taper_deg": 0.0,
+      "profile_mode": "classic",
+      "profile_points": [],
+      "shoulder_style": "round",
+      "shoulder_fillet_mm": 3.0,
+      "bottom_style": "flat",
+      "cap_height_ratio": 0.4,
+      "cap_od_ratio": 1.0,
+      "cap_taper_deg": 4.0,
+      "cap_top_shape": "flat",
+      "cap_grip_style": "smooth",
+      "confidence": 1.0
+    },
+    "vlm_analysis": {},
+    "components": {
+      "bottle": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 1.91,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\D3_taper_cap\\2026-03-24_120957__bottle__custom\\bottle.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\D3_taper_cap\\2026-03-24_120957__bottle__custom\\bottle.stl"
+      },
+      "cap": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.61,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\D3_taper_cap\\2026-03-24_120959__cap__custom\\cap.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\D3_taper_cap\\2026-03-24_120959__cap__custom\\cap.stl"
+      },
+      "wand": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 5.18,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\D3_taper_cap\\2026-03-24_121000__wand__custom\\wand.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\D3_taper_cap\\2026-03-24_121000__wand__custom\\wand.stl"
+      },
+      "wiper": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.69,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\D3_taper_cap\\2026-03-24_121005__wiper__custom\\wiper.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\D3_taper_cap\\2026-03-24_121005__wiper__custom\\wiper.stl"
+      }
+    },
+    "all_ok": true,
+    "errors": []
+  },
+  {
+    "category": "D4_smooth_cap",
+    "description": "光面特殊形状盖",
+    "image": "01_folover_matte_color.webp",
+    "vlm_ok": true,
+    "vlm_time_s": 0,
+    "vlm_description": "(跳过VLM)",
+    "vlm_shape": {
+      "cross_section": "round",
+      "corner_radius_mm": 3.0,
+      "shape": "cyl",
+      "taper_deg": 0.0,
+      "profile_mode": "classic",
+      "profile_points": [],
+      "shoulder_style": "round",
+      "shoulder_fillet_mm": 3.0,
+      "bottom_style": "flat",
+      "cap_height_ratio": 0.4,
+      "cap_od_ratio": 1.0,
+      "cap_taper_deg": 0.0,
+      "cap_top_shape": "flat",
+      "cap_grip_style": "smooth",
+      "confidence": 1.0
+    },
+    "vlm_analysis": {},
+    "components": {
+      "bottle": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 1.89,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\D4_smooth_cap\\2026-03-24_121005__bottle__custom\\bottle.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\D4_smooth_cap\\2026-03-24_121005__bottle__custom\\bottle.stl"
+      },
+      "cap": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.63,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\D4_smooth_cap\\2026-03-24_121007__cap__custom\\cap.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\D4_smooth_cap\\2026-03-24_121007__cap__custom\\cap.stl"
+      },
+      "wand": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 5.06,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\D4_smooth_cap\\2026-03-24_121008__wand__custom\\wand.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\D4_smooth_cap\\2026-03-24_121008__wand__custom\\wand.stl"
+      },
+      "wiper": {
+        "ok": true,
+        "reason": "OK",
+        "time_s": 0.66,
+        "step": "G:\\AiCad\\artifacts\\test_pipeline\\D4_smooth_cap\\2026-03-24_121013__wiper__custom\\wiper.step",
+        "stl": "G:\\AiCad\\artifacts\\test_pipeline\\D4_smooth_cap\\2026-03-24_121013__wiper__custom\\wiper.stl"
+      }
+    },
+    "all_ok": true,
+    "errors": []
+  }
+]

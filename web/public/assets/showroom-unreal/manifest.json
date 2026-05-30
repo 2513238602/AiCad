@@ -1,0 +1,144 @@
+﻿{
+  "sourceProject": "../../../../DarkRuinsMegascansSample/",
+  "assets": [
+    {
+      "name": "Display_Main_C",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/Display_Main_C",
+      "url": "/assets/showroom-unreal/Display_Main_C.glb",
+      "bytes": 2720
+    },
+    {
+      "name": "Display_Side_B",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/Display_Side_B",
+      "url": "/assets/showroom-unreal/Display_Side_B.glb",
+      "bytes": 18852
+    },
+    {
+      "name": "Display_Side_C",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/Display_Side_C",
+      "url": "/assets/showroom-unreal/Display_Side_C.glb",
+      "bytes": 2740
+    },
+    {
+      "name": "Display_Corner_B",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/Display_Corner_B",
+      "url": "/assets/showroom-unreal/Display_Corner_B.glb",
+      "bytes": 21596
+    },
+    {
+      "name": "Display_Corner_C",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/Display_Corner_C",
+      "url": "/assets/showroom-unreal/Display_Corner_C.glb",
+      "bytes": 23192
+    },
+    {
+      "name": "Display_Curve_C",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/Display_Curve_C",
+      "url": "/assets/showroom-unreal/Display_Curve_C.glb",
+      "bytes": 11696
+    },
+    {
+      "name": "Display_EdgeCurve_B",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/Display_EdgeCurve_B",
+      "url": "/assets/showroom-unreal/Display_EdgeCurve_B.glb",
+      "bytes": 23548
+    },
+    {
+      "name": "Display_EdgeCurve_C",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/Display_EdgeCurve_C",
+      "url": "/assets/showroom-unreal/Display_EdgeCurve_C.glb",
+      "bytes": 13620
+    },
+    {
+      "name": "ShadowBox_1MPanel",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/ShadowBox_1MPanel",
+      "url": "/assets/showroom-unreal/ShadowBox_1MPanel.glb",
+      "bytes": 92560
+    },
+    {
+      "name": "ShadowBox_1MPanel2",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/ShadowBox_1MPanel2",
+      "url": "/assets/showroom-unreal/ShadowBox_1MPanel2.glb",
+      "bytes": 7032
+    },
+    {
+      "name": "ShadowBox_RoundEdge",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/ShadowBox_RoundEdge",
+      "url": "/assets/showroom-unreal/ShadowBox_RoundEdge.glb",
+      "bytes": 21788
+    },
+    {
+      "name": "SM_DisplayFrame_Corner",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/SM_DisplayFrame_Corner",
+      "url": "/assets/showroom-unreal/SM_DisplayFrame_Corner.glb",
+      "bytes": 11092
+    },
+    {
+      "name": "SM_DisplayFrame_Corner_Bottom",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/SM_DisplayFrame_Corner_Bottom",
+      "url": "/assets/showroom-unreal/SM_DisplayFrame_Corner_Bottom.glb",
+      "bytes": 11096
+    },
+    {
+      "name": "SM_DisplayFrame_Corner_Top",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/SM_DisplayFrame_Corner_Top",
+      "url": "/assets/showroom-unreal/SM_DisplayFrame_Corner_Top.glb",
+      "bytes": 8332
+    },
+    {
+      "name": "SM_DisplayFrame_Side",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/SM_DisplayFrame_Side",
+      "url": "/assets/showroom-unreal/SM_DisplayFrame_Side.glb",
+      "bytes": 3556
+    },
+    {
+      "name": "SM_DisplayFrame_Side_Bottom",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/SM_DisplayFrame_Side_Bottom",
+      "url": "/assets/showroom-unreal/SM_DisplayFrame_Side_Bottom.glb",
+      "bytes": 3152
+    },
+    {
+      "name": "SM_DisplayFrame_Side_Top",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/SM_DisplayFrame_Side_Top",
+      "url": "/assets/showroom-unreal/SM_DisplayFrame_Side_Top.glb",
+      "bytes": 4332
+    },
+    {
+      "name": "Tile_10MWall",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/Tile_10MWall",
+      "url": "/assets/showroom-unreal/Tile_10MWall.glb",
+      "bytes": 2648
+    },
+    {
+      "name": "Tile_10MPillar_B_2",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/Tile_10MPillar_B_2",
+      "url": "/assets/showroom-unreal/Tile_10MPillar_B_2.glb",
+      "bytes": 6192
+    },
+    {
+      "name": "Floor_Corner",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/Floor_Corner",
+      "url": "/assets/showroom-unreal/Floor_Corner.glb",
+      "bytes": 15388
+    },
+    {
+      "name": "Floor_Edge",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/Floor_Edge",
+      "url": "/assets/showroom-unreal/Floor_Edge.glb",
+      "bytes": 9576
+    },
+    {
+      "name": "TrimFeature_MetalTrim_Straight_B",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/TrimFeature_MetalTrim_Straight_B",
+      "url": "/assets/showroom-unreal/TrimFeature_MetalTrim_Straight_B.glb",
+      "bytes": 6040
+    },
+    {
+      "name": "TrimFeature_MetalTrim_Bend_B",
+      "source": "/Game/AssetZoo/DemoRoom/Meshes/TrimFeature_MetalTrim_Bend_B",
+      "url": "/assets/showroom-unreal/TrimFeature_MetalTrim_Bend_B.glb",
+      "bytes": 22212
+    }
+  ],
+  "errors": []
+}

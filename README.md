@@ -12,6 +12,33 @@ AiCad 是一个面向化妆品包装工程师的 Web 参数化 CAD 生成平台�
 
 **核心价值**：工程师无需在 SolidWorks/Fusion360 中手动建模，只需在可视化界面调整参数，即可获得带螺纹、密封结构、装配配合的生产级 CAD 文件 —— 全部自动校验。
 
+## 当前版本：V2
+
+V2 是当前可运行分支，目标是完整保留现有体验：
+
+- 高级模式 / 向导模式参数化生成
+- 唇釉瓶四组件 CAD：瓶盖、瓶身、内塞、刷杆
+- STEP / STL / SVG 工程图输出
+- 3D 预览、装配检查、截面查看
+- VLM/CV 自动管线雏形
+- Gallery 与虚拟展馆入口
+
+V2 的发布说明见 [docs/V2_RELEASE_NOTES.md](docs/V2_RELEASE_NOTES.md)。
+
+## V3 方向
+
+V3 的目标是把 AIGC 的复杂外观生成能力接入 AiCad，并由 AiCad 重建为可用于开模沟通的工业 CAD：
+
+```text
+Codex / GPT Image 创意图
+→ AIGC 生成 3D 外观 shell
+→ AiCad 分析并生成 AppearanceIR
+→ CadQuery/OpenCASCADE 重建生产 CAD
+→ STEP / STL / 工程图 / 装配与可制造性检查
+```
+
+V3 完整方案见 [report/V3/AiCad_V3_AIGC_to_Production_CAD.md](report/V3/AiCad_V3_AIGC_to_Production_CAD.md)。
+
 ### 主界面
 
 ![主界面](docs/images/main-ui.png)

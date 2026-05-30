@@ -1,0 +1,650 @@
+{
+  "id": "aicad_gallery_showroom_v3",
+  "asset": "gallery_shell.glb",
+  "units": "meters",
+  "module_library": {
+    "display_case": "cosmetic_showcase_v1",
+    "source": "scripts/showroom_display_modules.py",
+    "reusable": true
+  },
+  "cad_model_calibration": {
+    "cad_units": "millimeters",
+    "meters_per_cad_mm": 0.001,
+    "default_presentation_boost": 1.35,
+    "fit_policy": "scale by real-world mm first, then cap by slot usable volume",
+    "upright_axis": "Z",
+    "front_axis": "-Y"
+  },
+  "lighting_calibration": {
+    "renderer_exposure": 0.98,
+    "glass_receives_dynamic_shadow": false,
+    "product_key_light": [
+      0.0,
+      -0.42,
+      0.72
+    ],
+    "product_fill_light": [
+      0.32,
+      0.18,
+      0.45
+    ],
+    "product_rim_light": [
+      -0.28,
+      0.34,
+      0.58
+    ]
+  },
+  "glass_calibration": {
+    "opacity": 0.22,
+    "roughness": 0.08,
+    "ior": 1.45,
+    "reflection_mode": "showroom_environment_hint"
+  },
+  "slots": [
+    {
+      "id": "L01",
+      "module": "cosmetic_showcase_v1",
+      "kind": "left_wall_vitrine",
+      "anchor_name": "CAD_SLOT_L01",
+      "position": [
+        -5.6,
+        0.6868,
+        1.3648
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "usable_volume_m": {
+        "width": 0.34,
+        "depth": 0.26,
+        "height": 0.42
+      },
+      "cad_fit": {
+        "cad_units": "millimeters",
+        "meters_per_cad_mm": 0.001,
+        "presentation_boost": 1.35,
+        "max_fit_scale": 3.5,
+        "target_height_m": 0.32,
+        "max_diameter_m": 0.2132,
+        "placement_z_offset_m": 0.0
+      },
+      "lighting": {
+        "key": [
+          0.0,
+          -0.42,
+          0.72
+        ],
+        "fill": [
+          0.32,
+          0.18,
+          0.45
+        ],
+        "rim": [
+          -0.28,
+          0.34,
+          0.58
+        ],
+        "recommended_exposure": 0.98
+      },
+      "glass": {
+        "front_panel_y_m": -0.5304,
+        "opacity": 0.22,
+        "roughness": 0.08,
+        "ior": 1.45,
+        "reflection_hint": "use showroom environment, avoid casting dynamic shadows through glass"
+      }
+    },
+    {
+      "id": "L02",
+      "module": "cosmetic_showcase_v1",
+      "kind": "left_wall_vitrine",
+      "anchor_name": "CAD_SLOT_L02",
+      "position": [
+        -5.6,
+        6.9536,
+        1.2656
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "usable_volume_m": {
+        "width": 0.34,
+        "depth": 0.26,
+        "height": 0.42
+      },
+      "cad_fit": {
+        "cad_units": "millimeters",
+        "meters_per_cad_mm": 0.001,
+        "presentation_boost": 1.35,
+        "max_fit_scale": 3.5,
+        "target_height_m": 0.32,
+        "max_diameter_m": 0.2132,
+        "placement_z_offset_m": 0.0
+      },
+      "lighting": {
+        "key": [
+          0.0,
+          -0.42,
+          0.72
+        ],
+        "fill": [
+          0.32,
+          0.18,
+          0.45
+        ],
+        "rim": [
+          -0.28,
+          0.34,
+          0.58
+        ],
+        "recommended_exposure": 0.98
+      },
+      "glass": {
+        "front_panel_y_m": -0.4758,
+        "opacity": 0.22,
+        "roughness": 0.08,
+        "ior": 1.45,
+        "reflection_hint": "use showroom environment, avoid casting dynamic shadows through glass"
+      }
+    },
+    {
+      "id": "L03",
+      "module": "cosmetic_showcase_v1",
+      "kind": "left_wall_vitrine",
+      "anchor_name": "CAD_SLOT_L03",
+      "position": [
+        -5.6,
+        14.4608,
+        1.2344
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "usable_volume_m": {
+        "width": 0.34,
+        "depth": 0.26,
+        "height": 0.42
+      },
+      "cad_fit": {
+        "cad_units": "millimeters",
+        "meters_per_cad_mm": 0.001,
+        "presentation_boost": 1.35,
+        "max_fit_scale": 3.5,
+        "target_height_m": 0.32,
+        "max_diameter_m": 0.2132,
+        "placement_z_offset_m": 0.0
+      },
+      "lighting": {
+        "key": [
+          0.0,
+          -0.42,
+          0.72
+        ],
+        "fill": [
+          0.32,
+          0.18,
+          0.45
+        ],
+        "rim": [
+          -0.28,
+          0.34,
+          0.58
+        ],
+        "recommended_exposure": 0.98
+      },
+      "glass": {
+        "front_panel_y_m": -0.4524,
+        "opacity": 0.22,
+        "roughness": 0.08,
+        "ior": 1.45,
+        "reflection_hint": "use showroom environment, avoid casting dynamic shadows through glass"
+      }
+    },
+    {
+      "id": "L04",
+      "module": "cosmetic_showcase_v1",
+      "kind": "left_wall_vitrine",
+      "anchor_name": "CAD_SLOT_L04",
+      "position": [
+        -5.6,
+        22.5656,
+        1.2088
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "usable_volume_m": {
+        "width": 0.34,
+        "depth": 0.26,
+        "height": 0.42
+      },
+      "cad_fit": {
+        "cad_units": "millimeters",
+        "meters_per_cad_mm": 0.001,
+        "presentation_boost": 1.35,
+        "max_fit_scale": 3.5,
+        "target_height_m": 0.32,
+        "max_diameter_m": 0.2132,
+        "placement_z_offset_m": 0.0
+      },
+      "lighting": {
+        "key": [
+          0.0,
+          -0.42,
+          0.72
+        ],
+        "fill": [
+          0.32,
+          0.18,
+          0.45
+        ],
+        "rim": [
+          -0.28,
+          0.34,
+          0.58
+        ],
+        "recommended_exposure": 0.98
+      },
+      "glass": {
+        "front_panel_y_m": -0.4368,
+        "opacity": 0.22,
+        "roughness": 0.08,
+        "ior": 1.45,
+        "reflection_hint": "use showroom environment, avoid casting dynamic shadows through glass"
+      }
+    },
+    {
+      "id": "R01",
+      "module": "cosmetic_showcase_v1",
+      "kind": "right_wall_vitrine",
+      "anchor_name": "CAD_SLOT_R01",
+      "position": [
+        5.6,
+        3.7368,
+        1.3648
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "usable_volume_m": {
+        "width": 0.34,
+        "depth": 0.26,
+        "height": 0.42
+      },
+      "cad_fit": {
+        "cad_units": "millimeters",
+        "meters_per_cad_mm": 0.001,
+        "presentation_boost": 1.35,
+        "max_fit_scale": 3.5,
+        "target_height_m": 0.32,
+        "max_diameter_m": 0.2132,
+        "placement_z_offset_m": 0.0
+      },
+      "lighting": {
+        "key": [
+          0.0,
+          -0.42,
+          0.72
+        ],
+        "fill": [
+          0.32,
+          0.18,
+          0.45
+        ],
+        "rim": [
+          -0.28,
+          0.34,
+          0.58
+        ],
+        "recommended_exposure": 0.98
+      },
+      "glass": {
+        "front_panel_y_m": -0.5304,
+        "opacity": 0.22,
+        "roughness": 0.08,
+        "ior": 1.45,
+        "reflection_hint": "use showroom environment, avoid casting dynamic shadows through glass"
+      }
+    },
+    {
+      "id": "R02",
+      "module": "cosmetic_showcase_v1",
+      "kind": "right_wall_vitrine",
+      "anchor_name": "CAD_SLOT_R02",
+      "position": [
+        5.6,
+        10.7536,
+        1.2656
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "usable_volume_m": {
+        "width": 0.34,
+        "depth": 0.26,
+        "height": 0.42
+      },
+      "cad_fit": {
+        "cad_units": "millimeters",
+        "meters_per_cad_mm": 0.001,
+        "presentation_boost": 1.35,
+        "max_fit_scale": 3.5,
+        "target_height_m": 0.32,
+        "max_diameter_m": 0.2132,
+        "placement_z_offset_m": 0.0
+      },
+      "lighting": {
+        "key": [
+          0.0,
+          -0.42,
+          0.72
+        ],
+        "fill": [
+          0.32,
+          0.18,
+          0.45
+        ],
+        "rim": [
+          -0.28,
+          0.34,
+          0.58
+        ],
+        "recommended_exposure": 0.98
+      },
+      "glass": {
+        "front_panel_y_m": -0.4758,
+        "opacity": 0.22,
+        "roughness": 0.08,
+        "ior": 1.45,
+        "reflection_hint": "use showroom environment, avoid casting dynamic shadows through glass"
+      }
+    },
+    {
+      "id": "R03",
+      "module": "cosmetic_showcase_v1",
+      "kind": "right_wall_vitrine",
+      "anchor_name": "CAD_SLOT_R03",
+      "position": [
+        5.6,
+        18.3608,
+        1.2344
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "usable_volume_m": {
+        "width": 0.34,
+        "depth": 0.26,
+        "height": 0.42
+      },
+      "cad_fit": {
+        "cad_units": "millimeters",
+        "meters_per_cad_mm": 0.001,
+        "presentation_boost": 1.35,
+        "max_fit_scale": 3.5,
+        "target_height_m": 0.32,
+        "max_diameter_m": 0.2132,
+        "placement_z_offset_m": 0.0
+      },
+      "lighting": {
+        "key": [
+          0.0,
+          -0.42,
+          0.72
+        ],
+        "fill": [
+          0.32,
+          0.18,
+          0.45
+        ],
+        "rim": [
+          -0.28,
+          0.34,
+          0.58
+        ],
+        "recommended_exposure": 0.98
+      },
+      "glass": {
+        "front_panel_y_m": -0.4524,
+        "opacity": 0.22,
+        "roughness": 0.08,
+        "ior": 1.45,
+        "reflection_hint": "use showroom environment, avoid casting dynamic shadows through glass"
+      }
+    },
+    {
+      "id": "R04",
+      "module": "cosmetic_showcase_v1",
+      "kind": "right_wall_vitrine",
+      "anchor_name": "CAD_SLOT_R04",
+      "position": [
+        5.6,
+        25.5656,
+        1.2088
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "usable_volume_m": {
+        "width": 0.34,
+        "depth": 0.26,
+        "height": 0.42
+      },
+      "cad_fit": {
+        "cad_units": "millimeters",
+        "meters_per_cad_mm": 0.001,
+        "presentation_boost": 1.35,
+        "max_fit_scale": 3.5,
+        "target_height_m": 0.32,
+        "max_diameter_m": 0.2132,
+        "placement_z_offset_m": 0.0
+      },
+      "lighting": {
+        "key": [
+          0.0,
+          -0.42,
+          0.72
+        ],
+        "fill": [
+          0.32,
+          0.18,
+          0.45
+        ],
+        "rim": [
+          -0.28,
+          0.34,
+          0.58
+        ],
+        "recommended_exposure": 0.98
+      },
+      "glass": {
+        "front_panel_y_m": -0.4368,
+        "opacity": 0.22,
+        "roughness": 0.08,
+        "ior": 1.45,
+        "reflection_hint": "use showroom environment, avoid casting dynamic shadows through glass"
+      }
+    },
+    {
+      "id": "C01",
+      "module": "cosmetic_showcase_v1",
+      "kind": "central_island_vitrine",
+      "anchor_name": "CAD_SLOT_C01",
+      "position": [
+        0.0,
+        7.6008,
+        1.4536
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "usable_volume_m": {
+        "width": 0.34,
+        "depth": 0.26,
+        "height": 0.42
+      },
+      "cad_fit": {
+        "cad_units": "millimeters",
+        "meters_per_cad_mm": 0.001,
+        "presentation_boost": 1.35,
+        "max_fit_scale": 3.5,
+        "target_height_m": 0.32,
+        "max_diameter_m": 0.2132,
+        "placement_z_offset_m": 0.0
+      },
+      "lighting": {
+        "key": [
+          0.0,
+          -0.42,
+          0.72
+        ],
+        "fill": [
+          0.32,
+          0.18,
+          0.45
+        ],
+        "rim": [
+          -0.28,
+          0.34,
+          0.58
+        ],
+        "recommended_exposure": 0.98
+      },
+      "glass": {
+        "front_panel_y_m": -0.6474,
+        "opacity": 0.22,
+        "roughness": 0.08,
+        "ior": 1.45,
+        "reflection_hint": "use showroom environment, avoid casting dynamic shadows through glass"
+      }
+    },
+    {
+      "id": "C02",
+      "module": "cosmetic_showcase_v1",
+      "kind": "central_island_vitrine",
+      "anchor_name": "CAD_SLOT_C02",
+      "position": [
+        0.0,
+        16.3008,
+        1.4536
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "usable_volume_m": {
+        "width": 0.34,
+        "depth": 0.26,
+        "height": 0.42
+      },
+      "cad_fit": {
+        "cad_units": "millimeters",
+        "meters_per_cad_mm": 0.001,
+        "presentation_boost": 1.35,
+        "max_fit_scale": 3.5,
+        "target_height_m": 0.32,
+        "max_diameter_m": 0.2132,
+        "placement_z_offset_m": 0.0
+      },
+      "lighting": {
+        "key": [
+          0.0,
+          -0.42,
+          0.72
+        ],
+        "fill": [
+          0.32,
+          0.18,
+          0.45
+        ],
+        "rim": [
+          -0.28,
+          0.34,
+          0.58
+        ],
+        "recommended_exposure": 0.98
+      },
+      "glass": {
+        "front_panel_y_m": -0.6474,
+        "opacity": 0.22,
+        "roughness": 0.08,
+        "ior": 1.45,
+        "reflection_hint": "use showroom environment, avoid casting dynamic shadows through glass"
+      }
+    },
+    {
+      "id": "C03",
+      "module": "cosmetic_showcase_v1",
+      "kind": "central_island_vitrine",
+      "anchor_name": "CAD_SLOT_C03",
+      "position": [
+        0.0,
+        24.2008,
+        1.4536
+      ],
+      "rotation": [
+        0,
+        0,
+        0.0
+      ],
+      "usable_volume_m": {
+        "width": 0.34,
+        "depth": 0.26,
+        "height": 0.42
+      },
+      "cad_fit": {
+        "cad_units": "millimeters",
+        "meters_per_cad_mm": 0.001,
+        "presentation_boost": 1.35,
+        "max_fit_scale": 3.5,
+        "target_height_m": 0.32,
+        "max_diameter_m": 0.2132,
+        "placement_z_offset_m": 0.0
+      },
+      "lighting": {
+        "key": [
+          0.0,
+          -0.42,
+          0.72
+        ],
+        "fill": [
+          0.32,
+          0.18,
+          0.45
+        ],
+        "rim": [
+          -0.28,
+          0.34,
+          0.58
+        ],
+        "recommended_exposure": 0.98
+      },
+      "glass": {
+        "front_panel_y_m": -0.6474,
+        "opacity": 0.22,
+        "roughness": 0.08,
+        "ior": 1.45,
+        "reflection_hint": "use showroom environment, avoid casting dynamic shadows through glass"
+      }
+    }
+  ]
+}

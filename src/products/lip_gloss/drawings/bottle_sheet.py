@@ -1,22 +1,26 @@
 # -*- coding: utf-8 -*-
+"""瓶身工程图 — 符合 GB/T 基本标准的参数化 SVG 图纸。"""
 from __future__ import annotations
 from pathlib import Path
 from datetime import datetime
+from typing import Any
+
+from .primitives import (
+    _f, svg_header, drawing_frame, first_angle_layout, title_block,
+    hatch_defs, hatch_rect,
+    rect, line, text, circle,
+    centerline, hidden_rect, hidden_line,
+    dim_h, dim_v, section_symbol, fit_scale,
+    SW_OUTLINE, SW_THIN,
+)
 
 
-def _f(x: float) -> str:
-    return f"{x:.1f}"
-
-
-def export_bottle_sheet(p: dict, out_svg: Path, title: str = "唇釉瓶-瓶身 工程图（参数化）") -> None:
-    """
-    简化但工程师可用的瓶身图纸：
-    - A4 横向
-    - 正视图 / 剖视图 / 俯视图 + 参数表
-    - 关键尺寸标注
-    - 自动布局防越位
-    """
-    # ---- 提取参数 ----
+def export_bottle_sheet(p: dict, out_svg: Path,
+                        title: str = "唇釉瓶-瓶身",
+                        solid: Any = None) -> None:
+    # ------------------------------------------------------------------
+    # 参数提取
+    # ------------------------------------------------------------------
     H = float(p.get("height_mm", 100.0))
     body_od = float(p.get("body_od_mm", 24.0))
     wall = float(p.get("wall_thickness_mm", 1.2))
@@ -34,197 +38,173 @@ def export_bottle_sheet(p: dict, out_svg: Path, title: str = "唇釉瓶-瓶身 �
     neck_id = max(0.1, neck_od - 2 * lip_t)
     body_id = max(0.1, body_od - 2 * wall)
 
-    # ---- 页面布局参数 ----
-    W, Hp = 297.0, 210.0  # A4 横向
-    M = 8.0  # 外边距
-    title_h = 28.0  # 标题栏高度
+    # ------------------------------------------------------------------
+    # 页面与布局
+    # ------------------------------------------------------------------
+    W, Hp = 297.0, 210.0
+    layout = first_angle_layout(W, Hp)
+    box_front = layout["front"]
+    box_sect = layout["section"]
+    box_plan = layout["plan"]
+    box_title = layout["title"]
 
-    frame_x0, frame_y0 = M, M
-    frame_x1, frame_y1 = W - M, Hp - M
-    work_y1 = frame_y1 - title_h  # 工作区底部
+    # 缩放
+    pad_h, pad_v = 16.0, 18.0
+    s = fit_scale(box_front[2] - 2 * pad_h, box_front[3] - pad_v - 20, body_od, H)
+    s = min(s, 1.5)
+    s_sect = fit_scale(box_sect[2] - 2 * pad_h, box_sect[3] - pad_v - 20, body_od, H)
+    s_sect = min(s_sect, 1.5)
+    s_plan = fit_scale(box_plan[2] - 2 * pad_h, box_plan[3] - pad_v - 10, body_od, body_od)
+    s_plan = min(s_plan, 1.5)
 
-    # 三列布局：正视图 | 剖视图 | 俯视图+参数表
-    col_gap = 6.0
-    left_margin = 6.0
-    right_margin = 6.0
-    available_w = frame_x1 - frame_x0 - left_margin - right_margin - 2 * col_gap
-    col_w = available_w / 3.0
+    # ------------------------------------------------------------------
+    # SVG 输出
+    # ------------------------------------------------------------------
+    svg: list[str] = [svg_header(W, Hp)]
+    svg.extend(drawing_frame(W, Hp))
+    svg.append(hatch_defs())
 
-    vx0 = frame_x0 + left_margin
-    vy0 = frame_y0 + 6
-    vH = work_y1 - vy0 - 4
+    # ------------------------------------------------------------------
+    # 正视图（左上）
+    # ------------------------------------------------------------------
+    fx0, fy0, fw, fh = box_front
+    svg.append(text(fx0 + fw / 2, fy0 + 5, "正视图", size=3.2, anchor="middle", weight="bold"))
 
-    # 计算缩放比例（确保图形不超出区域）
-    max_view_h = vH * 0.65  # 视图最大高度
-    scale = min(max_view_h / max(H, 1.0), (col_w - 30) / max(body_od, 1.0))
-    scale = min(scale, 1.5)  # 限制最大缩放
+    bottle_w = body_od * s
+    bottle_h = H * s
+    neck_w = neck_od * s
+    neck_hh = neck_h * s
+    cx = fx0 + fw / 2
+    top_y = fy0 + 10 + (fh - 10 - bottle_h) / 2
+    left_x = cx - bottle_w / 2
+    neck_left = cx - neck_w / 2
 
-    # ---- SVG 绘图函数 ----
-    def rect(x: float, y: float, w: float, h: float, stroke: str = "black", sw: float = 0.5, fill: str = "none") -> str:
-        return f'<rect x="{x:.2f}" y="{y:.2f}" width="{w:.2f}" height="{h:.2f}" stroke="{stroke}" stroke-width="{sw}" fill="{fill}"/>'
+    if solid is not None:
+        from .projection import project_to_svg, DIR_FRONT
+        svg.extend(project_to_svg(solid, DIR_FRONT, scale=s,
+                                  cx=cx, cy=top_y + bottle_h / 2))
+    else:
+        svg.append(rect(left_x, top_y, bottle_w, bottle_h, sw=SW_OUTLINE))
+        svg.append(rect(neck_left, top_y, neck_w, neck_hh, sw=SW_OUTLINE))
+        inner_w_f = body_id * s
+        inner_left_f = cx - inner_w_f / 2
+        cavity_top_f = top_y + lip_t * s
+        cavity_h_f = bottle_h - bottom_t * s - lip_t * s
+        if cavity_h_f > 0:
+            svg.append(hidden_rect(inner_left_f, cavity_top_f, inner_w_f, cavity_h_f))
 
-    def line(x1: float, y1: float, x2: float, y2: float, stroke: str = "black", sw: float = 0.5, dash: str | None = None) -> str:
-        ds = f' stroke-dasharray="{dash}"' if dash else ""
-        return f'<line x1="{x1:.2f}" y1="{y1:.2f}" x2="{x2:.2f}" y2="{y2:.2f}" stroke="{stroke}" stroke-width="{sw}"{ds}/>'
-
-    def text(x: float, y: float, s: str, size: float = 3.2, anchor: str = "start", weight: str = "normal") -> str:
-        s = (s or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-        fw = f' font-weight="{weight}"' if weight != "normal" else ""
-        return f'<text x="{x:.2f}" y="{y:.2f}" font-size="{size}" text-anchor="{anchor}" font-family="Arial, sans-serif"{fw}>{s}</text>'
-
-    def dim_h(x1: float, x2: float, y: float, label: str) -> str:
-        """水平尺寸标注"""
-        arrow = 1.5
-        out = [
-            line(x1, y, x2, y, sw=0.3),
-            line(x1, y, x1 + arrow, y - arrow, sw=0.3),
-            line(x1, y, x1 + arrow, y + arrow, sw=0.3),
-            line(x2, y, x2 - arrow, y - arrow, sw=0.3),
-            line(x2, y, x2 - arrow, y + arrow, sw=0.3),
-            text((x1 + x2) / 2, y - 1.5, label, size=2.8, anchor="middle"),
-        ]
-        return "\n".join(out)
-
-    def dim_v(x: float, y1: float, y2: float, label: str, offset: float = 2.0) -> str:
-        """垂直尺寸标注"""
-        arrow = 1.5
-        out = [
-            line(x, y1, x, y2, sw=0.3),
-            line(x, y1, x - arrow, y1 + arrow, sw=0.3),
-            line(x, y1, x + arrow, y1 + arrow, sw=0.3),
-            line(x, y2, x - arrow, y2 - arrow, sw=0.3),
-            line(x, y2, x + arrow, y2 - arrow, sw=0.3),
-            text(x + offset, (y1 + y2) / 2 + 1, label, size=2.8, anchor="start"),
-        ]
-        return "\n".join(out)
-
-    # ---- 开始绘制 ----
-    svg = []
-    svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}mm" height="{Hp}mm" viewBox="0 0 {W} {Hp}">')
-
-    # 外框
-    svg.append(rect(frame_x0, frame_y0, frame_x1 - frame_x0, frame_y1 - frame_y0, sw=0.6))
-    svg.append(rect(frame_x0 + 2, frame_y0 + 2, frame_x1 - frame_x0 - 4, frame_y1 - frame_y0 - 4, sw=0.3))
-
-    # ---- 标题栏 ----
-    tx0, ty0 = frame_x0 + 2, frame_y1 - title_h + 2
-    tw, th = frame_x1 - frame_x0 - 4, title_h - 4
-    svg.append(rect(tx0, ty0, tw, th, sw=0.3))
-    svg.append(line(tx0 + tw * 0.65, ty0, tx0 + tw * 0.65, ty0 + th, sw=0.3))
-
-    svg.append(text(tx0 + 4, ty0 + 7, title, size=4.5, weight="bold"))
-    svg.append(text(tx0 + 4, ty0 + 14, f"口部：{finish}    轮廓：{kind}    锥度：{_f(taper_deg)}°", size=3.0))
-    svg.append(text(tx0 + 4, ty0 + 20, "单位：mm    比例：NTS    投影：第一角法", size=3.0))
-
-    svg.append(text(tx0 + tw * 0.65 + 4, ty0 + 8, "版本：A", size=3.0))
-    svg.append(text(tx0 + tw * 0.65 + 4, ty0 + 14, "未注公差：±0.2", size=3.0))
-    svg.append(text(tx0 + tw * 0.65 + 4, ty0 + 20, datetime.now().strftime("日期：%Y-%m-%d"), size=3.0))
-
-    # ---- 计算视图位置 ----
-    bottle_w = body_od * scale
-    bottle_h = H * scale
-    neck_w = neck_od * scale
-    neck_hh = neck_h * scale
-
-    view_top = vy0 + 12  # 视图顶部（留出标题空间）
-
-    # ---- 第一列：正视图 ----
-    col1_x = vx0
-    svg.append(rect(col1_x, vy0, col_w, vH, sw=0.2, stroke="#ccc"))
-    svg.append(text(col1_x + col_w / 2, vy0 + 5, "正视图", size=3.2, anchor="middle", weight="bold"))
-
-    cx1 = col1_x + col_w / 2
-    left1 = cx1 - bottle_w / 2
-
-    # 瓶身外形
-    svg.append(rect(left1, view_top, bottle_w, bottle_h, sw=0.6))
-    # 颈部
-    neck_left1 = cx1 - neck_w / 2
-    svg.append(rect(neck_left1, view_top, neck_w, neck_hh, sw=0.6))
     # 中心线
-    svg.append(line(cx1, view_top - 3, cx1, view_top + bottle_h + 3, sw=0.2, dash="2,1"))
+    svg.append(centerline(cx, top_y - 6, cx, top_y + bottle_h + 6))
+
+    # 剖切符号 A-A
+    svg.extend(section_symbol(cx, top_y - 3, top_y + bottle_h + 3, "A", "right"))
 
     # 尺寸标注
-    svg.append(dim_h(left1, left1 + bottle_w, view_top + bottle_h + 8, f"Ø{_f(body_od)}"))
-    svg.append(dim_v(left1 + bottle_w + 8, view_top, view_top + bottle_h, f"H={_f(H)}"))
-    svg.append(dim_h(neck_left1, neck_left1 + neck_w, view_top - 5, f"Ø{_f(neck_od)}"))
+    dim_y = top_y + bottle_h + 12
+    svg.extend(dim_h(left_x, left_x + bottle_w, dim_y,
+                     f"Ø{_f(body_od)}", ext_y1=top_y + bottle_h, ext_y2=top_y + bottle_h))
+    svg.extend(dim_v(left_x + bottle_w + 12, top_y, top_y + bottle_h,
+                     _f(H), ext_x1=left_x + bottle_w, ext_x2=left_x + bottle_w))
+    svg.extend(dim_h(neck_left, neck_left + neck_w, top_y - 5,
+                     f"Ø{_f(neck_od)}", ext_y1=top_y, ext_y2=top_y))
 
-    # ---- 第二列：剖视图 ----
-    col2_x = vx0 + col_w + col_gap
-    svg.append(rect(col2_x, vy0, col_w, vH, sw=0.2, stroke="#ccc"))
-    svg.append(text(col2_x + col_w / 2, vy0 + 5, "A-A 剖视图", size=3.2, anchor="middle", weight="bold"))
+    # ------------------------------------------------------------------
+    # A-A 剖视图（右上）
+    # ------------------------------------------------------------------
+    sx0, sy0, sw_, sh_ = box_sect
+    svg.append(text(sx0 + sw_ / 2, sy0 + 5, "A-A", size=3.2, anchor="middle", weight="bold"))
 
-    cx2 = col2_x + col_w / 2
-    left2 = cx2 - bottle_w / 2
+    bottle_w2 = body_od * s_sect
+    bottle_h2 = H * s_sect
+    cx2 = sx0 + sw_ / 2
+    top_y2 = sy0 + 10 + (sh_ - 10 - bottle_h2) / 2
+    left_x2 = cx2 - bottle_w2 / 2
 
-    # 外形
-    svg.append(rect(left2, view_top, bottle_w, bottle_h, sw=0.6))
-    # 内腔
-    inner_w = body_id * scale
-    inner_left2 = cx2 - inner_w / 2
-    cavity_top = view_top + lip_t * scale
-    cavity_h = bottle_h - bottom_t * scale - lip_t * scale
-    if cavity_h > 0:
-        svg.append(rect(inner_left2, cavity_top, inner_w, cavity_h, sw=0.4))
+    if solid is not None:
+        from .projection import section_to_svg, DIR_FRONT
+        svg.extend(section_to_svg(solid, DIR_FRONT,
+                                  cut_origin=(0, 0, 0), cut_normal=(0, 1, 0),
+                                  scale=s_sect, cx=cx2, cy=top_y2 + bottle_h2 / 2))
+    else:
+        wall_w2 = wall * s_sect
+        bottom_h2 = bottom_t * s_sect
+        lip_h2 = lip_t * s_sect
+        inner_w2 = body_id * s_sect
+        inner_left2 = cx2 - inner_w2 / 2
+        cavity_top2 = top_y2 + lip_h2
+        cavity_h2 = bottle_h2 - bottom_h2 - lip_h2
+        svg.append(hatch_rect(left_x2, top_y2 + bottle_h2 - bottom_h2, bottle_w2, bottom_h2))
+        if cavity_h2 > 0:
+            svg.append(hatch_rect(left_x2, cavity_top2, wall_w2, cavity_h2))
+        if cavity_h2 > 0:
+            svg.append(hatch_rect(inner_left2 + inner_w2, cavity_top2, wall_w2, cavity_h2))
+        neck_w2 = neck_od * s_sect
+        neck_hh2 = neck_h * s_sect
+        neck_left2 = cx2 - neck_w2 / 2
+        neck_wall2 = lip_t * s_sect
+        svg.append(hatch_rect(neck_left2, top_y2, neck_wall2, neck_hh2))
+        svg.append(hatch_rect(neck_left2 + neck_w2 - neck_wall2, top_y2, neck_wall2, neck_hh2))
+        svg.append(rect(left_x2, top_y2, bottle_w2, bottle_h2, sw=SW_OUTLINE))
+        svg.append(rect(neck_left2, top_y2, neck_w2, neck_hh2, sw=SW_OUTLINE))
+        if cavity_h2 > 0:
+            svg.append(rect(inner_left2, cavity_top2, inner_w2, cavity_h2, sw=SW_OUTLINE))
+
     # 中心线
-    svg.append(line(cx2, view_top - 3, cx2, view_top + bottle_h + 3, sw=0.2, dash="2,1"))
+    svg.append(centerline(cx2, top_y2 - 6, cx2, top_y2 + bottle_h2 + 6))
 
     # 尺寸标注
-    svg.append(dim_v(inner_left2 + inner_w + 6, view_top + bottle_h - bottom_t * scale, view_top + bottle_h, f"底厚{_f(bottom_t)}", offset=1.5))
-    svg.append(dim_h(inner_left2, inner_left2 + inner_w, view_top + bottle_h + 8, f"内Ø{_f(body_id)}"))
-    svg.append(text(left2 - 1, view_top + bottle_h / 2, f"壁厚{_f(wall)}", size=2.6, anchor="end"))
+    inner_w2 = body_id * s_sect
+    bottom_h2 = bottom_t * s_sect
+    inner_left2 = cx2 - inner_w2 / 2
+    dim_y2 = top_y2 + bottle_h2 + 12
+    svg.extend(dim_h(inner_left2, inner_left2 + inner_w2, dim_y2,
+                     f"Ø{_f(body_id)}", ext_y1=top_y2 + bottle_h2, ext_y2=top_y2 + bottle_h2))
+    svg.extend(dim_v(inner_left2 + inner_w2 + 10,
+                     top_y2 + bottle_h2 - bottom_h2, top_y2 + bottle_h2,
+                     _f(bottom_t),
+                     ext_x1=inner_left2 + inner_w2, ext_x2=inner_left2 + inner_w2))
 
-    # ---- 第三列：俯视图 + 参数表 ----
-    col3_x = vx0 + 2 * (col_w + col_gap)
-    svg.append(rect(col3_x, vy0, col_w, vH, sw=0.2, stroke="#ccc"))
-    svg.append(text(col3_x + col_w / 2, vy0 + 5, "俯视图", size=3.2, anchor="middle", weight="bold"))
+    # ------------------------------------------------------------------
+    # 俯视图（左下）
+    # ------------------------------------------------------------------
+    px0, py0, pw, ph = box_plan
+    svg.append(text(px0 + pw / 2, py0 + 5, "俯视图", size=3.2, anchor="middle", weight="bold"))
 
-    # 俯视图圆
-    ccx = col3_x + col_w / 2
-    r_outer = (body_od / 2) * scale
-    ccy = view_top + r_outer + 5
-    svg.append(f'<circle cx="{ccx:.2f}" cy="{ccy:.2f}" r="{r_outer:.2f}" fill="none" stroke="black" stroke-width="0.6"/>')
-    # 内圆
-    r_inner = (body_id / 2) * scale
-    svg.append(f'<circle cx="{ccx:.2f}" cy="{ccy:.2f}" r="{r_inner:.2f}" fill="none" stroke="black" stroke-width="0.4"/>')
-    # 十字线
-    svg.append(line(ccx - r_outer - 5, ccy, ccx + r_outer + 5, ccy, sw=0.2, dash="2,1"))
-    svg.append(line(ccx, ccy - r_outer - 5, ccx, ccy + r_outer + 5, sw=0.2, dash="2,1"))
+    r_outer = (body_od / 2) * s_plan
+    r_inner = (body_id / 2) * s_plan
+    ccx = px0 + pw / 2
+    ccy = py0 + 10 + (ph - 10 - 2 * r_outer) / 2 + r_outer
 
-    # 俯视图尺寸
-    svg.append(dim_h(ccx - r_outer, ccx + r_outer, ccy + r_outer + 6, f"Ø{_f(body_od)}"))
+    if solid is not None:
+        from .projection import project_top_to_svg
+        svg.extend(project_top_to_svg(solid, scale=s_plan, cx=ccx, cy=ccy))
+    else:
+        svg.append(circle(ccx, ccy, r_outer, sw=SW_OUTLINE))
+        svg.append(circle(ccx, ccy, r_inner, sw=SW_THIN))
 
-    # ---- 参数表（在俯视图下方）----
-    table_y = ccy + r_outer + 18
-    table_x = col3_x + 4
-    line_h = 4.5  # 行高
+    svg.append(centerline(ccx - r_outer - 8, ccy, ccx + r_outer + 8, ccy))
+    svg.append(centerline(ccx, ccy - r_outer - 8, ccx, ccy + r_outer + 8))
 
-    svg.append(text(table_x, table_y, "关键参数", size=3.0, weight="bold"))
-    table_y += 2
+    svg.extend(dim_h(ccx - r_outer, ccx + r_outer, ccy + r_outer + 10,
+                     f"Ø{_f(body_od)}", ext_y1=ccy + r_outer, ext_y2=ccy + r_outer))
 
-    params = [
-        ("总高 H", f"{_f(H)} mm"),
-        ("瓶身外径", f"Ø{_f(body_od)} mm"),
-        ("口外径", f"Ø{_f(neck_od)} mm"),
-        ("口内径", f"≈Ø{_f(neck_id)} mm"),
-        ("颈高", f"{_f(neck_h)} mm"),
-        ("肩高", f"{_f(shoulder_h)} mm"),
-        ("壁厚", f"{_f(wall)} mm"),
-        ("底厚", f"{_f(bottom_t)} mm"),
-        ("容量", f"{_f(capacity_ml)} ml"),
-    ]
-
-    # 确保参数表不超出边界
-    max_rows = int((work_y1 - table_y - 5) / line_h)
-    params = params[:max_rows]
-
-    for i, (name, val) in enumerate(params):
-        y = table_y + (i + 1) * line_h
-        svg.append(text(table_x, y, f"{name}:", size=2.6))
-        svg.append(text(table_x + 28, y, val, size=2.6))
+    # ------------------------------------------------------------------
+    # 标题栏（右下）
+    # ------------------------------------------------------------------
+    tx0, ty0, tw, th = box_title
+    svg.extend(title_block(tx0, ty0, tw, th, {
+        "title": title,
+        "subtitle": f"形状: {kind}  锥度: {_f(taper_deg)}°  容量: {_f(capacity_ml)}ml",
+        "drawing_no": f"LG-BTL-{finish}",
+        "material": "PET / PETG",
+        "scale_text": "NTS",
+        "finish": finish,
+        "date": datetime.now().strftime("%Y-%m-%d"),
+        "version": "A",
+        "tolerance": "±0.2",
+    }))
 
     svg.append("</svg>")
 
-    # ---- 写入文件 ----
     out_svg.parent.mkdir(parents=True, exist_ok=True)
     out_svg.write_text("\n".join(svg), encoding="utf-8")
