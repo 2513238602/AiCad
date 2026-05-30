@@ -3,7 +3,7 @@
 # AiCad V2 - 化妆品包材 CAD 自动生成与预览系统
 
 > V2 分支：参数化工业 CAD + 图像/VLM 自动管线 + Gallery/虚拟展馆预览。  
-> V1 保留在 `v1.0` tag / `master` 分支；V2 保留在 `v2` 分支。
+> V1 保留在 `V1` 分支；本分支为 `V2`，也是当前默认分支。
 
 ---
 
@@ -244,9 +244,8 @@ V2 发布前已验证：
 ## 版本关系
 
 ```text
-V1: tag v1.0 / branch master
-V2: branch v2
-dev: 历史开发分支
+V1: branch V1
+V2: branch V2，当前默认分支
 V3: 下一阶段规划，尚未作为独立开发分支发布
 ```
 

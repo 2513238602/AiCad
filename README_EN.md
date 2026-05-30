@@ -3,7 +3,7 @@
 # AiCad V2 - Cosmetic Packaging CAD Automation and Preview System
 
 > V2 branch: parametric production CAD, image/VLM automation experiments, Gallery, and virtual showroom preview.  
-> V1 is preserved at the `v1.0` tag and `master` branch. V2 is preserved on the `v2` branch.
+> V1 is preserved on the `V1` branch. This branch is `V2`, and it is the current default branch.
 
 ---
 
@@ -179,9 +179,8 @@ Install Blender globally or place a local copy under `tools/blender/`. The folde
 ## Version Map
 
 ```text
-V1: tag v1.0 / branch master
-V2: branch v2
-dev: historical development branch
+V1: branch V1
+V2: branch V2, current default branch
 V3: roadmap only, not yet released as a branch
 ```
 
