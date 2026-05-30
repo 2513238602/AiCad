@@ -1,100 +1,104 @@
 [English](README_EN.md) | **中文**
 
-# AiCad - 化妆品包装参数化 CAD 生成器
+# AiCad V2 - 化妆品包材 CAD 自动生成与预览系统
 
-> 参数化唇釉瓶装配体 CAD 系统 —— 从参数到可制造 STEP 文件，秒级生成。
+> V2 分支：参数化工业 CAD + 图像/VLM 自动管线 + Gallery/虚拟展馆预览。  
+> V1 保留在 `v1.0` tag / `master` 分支；V2 保留在 `v2` 分支。
 
 ---
 
-## 项目简介
+## V2 定位
 
-AiCad 是一个面向化妆品包装工程师的 Web 参数化 CAD 生成平台。系统可自动生成唇釉瓶完整装配体（瓶盖、瓶身、内塞、刷杆），输出制造级精度的 **STEP**、**STL** 和 **工程图 (SVG)**。
+AiCad V2 是面向化妆品包材，尤其是唇釉瓶组件的 CAD 自动生成原型。它在 V1 的参数化 CAD 生成能力上，继续加入了自动管线、图像/VLM 外观识别实验、异形/轮廓建模探索、Gallery 与虚拟展馆预览。
 
-**核心价值**：工程师无需在 SolidWorks/Fusion360 中手动建模，只需在可视化界面调整参数，即可获得带螺纹、密封结构、装配配合的生产级 CAD 文件 —— 全部自动校验。
-
-## 当前版本：V2
-
-V2 是当前可运行分支，目标是完整保留现有体验：
-
-- 高级模式 / 向导模式参数化生成
-- 唇釉瓶四组件 CAD：瓶盖、瓶身、内塞、刷杆
-- STEP / STL / SVG 工程图输出
-- 3D 预览、装配检查、截面查看
-- VLM/CV 自动管线雏形
-- Gallery 与虚拟展馆入口
-
-V2 的发布说明见 [docs/V2_RELEASE_NOTES.md](docs/V2_RELEASE_NOTES.md)。
-
-## V3 方向
-
-V3 的目标是把 AIGC 的复杂外观生成能力接入 AiCad，并由 AiCad 重建为可用于开模沟通的工业 CAD：
+V2 的目标不是最终形态，而是为 V3 打底：
 
 ```text
-Codex / GPT Image 创意图
-→ AIGC 生成 3D 外观 shell
-→ AiCad 分析并生成 AppearanceIR
-→ CadQuery/OpenCASCADE 重建生产 CAD
-→ STEP / STL / 工程图 / 装配与可制造性检查
+V2：参数 / 图片分析 → 参数化 CAD → STEP/STL/SVG → 预览与展馆
+V3：创意图 → AIGC 3D 外观壳 → AiCad 重建生产 CAD → STEP/工程图/装配检查
 ```
 
-V3 完整方案见 [report/V3/AiCad_V3_AIGC_to_Production_CAD.md](report/V3/AiCad_V3_AIGC_to_Production_CAD.md)。
+---
 
-### 主界面
+## 相比 V1 的主要变化
 
-![主界面](docs/images/main-ui.png)
+V1 的核心是参数化唇釉瓶 CAD 生成。V2 在此基础上扩展了这些能力：
 
-*参数面板支持核心/派生参数体系。派生参数（标记"联动"）随核心参数自动计算；跨组件约束（标记"受约束"）确保装配兼容性。*
+- 新增向导模式，与高级模式并存。
+- 新增 VLM/CV 自动管线，用于从参考图提取外观、比例、装饰和参数候选。
+- 新增 Gallery 相关流程，用于预构建和展示参考图库生成结果。
+- 新增虚拟展馆入口和 Three.js 画廊走廊预览。
+- 新增 profile/spline、异形瓶盖、mesh 修复、拓扑检查等建模实验。
+- 增强工程图生成模块，拆出 `primitives` / `projection` 等绘图基础能力。
+- 增强装配、QC、自动修复、渲染材质元数据等核心模块。
+- 保留 V1 的四组件 CAD 生成、STEP/STL/SVG 输出和装配校验基础能力。
 
 ---
 
-## 功能特性
+## 当前可体验功能
 
-### 参数化四组件装配
+### 1. 参数化四组件 CAD
 
-智能参数管理，生成完整唇釉瓶装配体：
+支持唇釉瓶四组件：
 
-- **瓶盖 (Cap)**：外壳、防滑纹（竖筋/滚花）、圆顶/平顶、内腔 + 螺纹
-- **瓶身 (Bottle)**：瓶体/肩部/颈部分段、外螺纹、内腔、瓶底处理
-- **内塞 (Wiper)**：密封膜片、中心孔、加强筋、法兰
-- **刷杆 (Wand)**：涂抹器盖体 + 杆 + 刷头（鹿脚/硅胶刮/纤维）、气密环
+- 瓶身 `Bottle`
+- 瓶盖 `Cap`
+- 内塞 `Wiper`
+- 刷杆 `Wand`
 
-### 3D 装配查看器
+每个组件可通过 preset 或手动参数生成，并导出：
 
-交互式 Three.js 查看器，支持完整装配可视化：
+- STEP：用于 CAD 软件和后续生产沟通
+- STL：用于网页预览和快速检查
+- SVG：工程图输出
 
-![3D 装配视图](docs/images/3d-assembly.png)
+### 2. 高级模式与向导模式
 
-*四组件装配体线框模式 —— 可见螺纹、防滑纹和内部结构。*
+- 高级模式：完整参数面板，适合直接调参。
+- 向导模式：按产品、组件、核心参数、方案选择、精调和生成拆分流程。
 
-### 截面检查
+### 3. 自动管线
 
-内置截面工具，检查内部配合与间隙：
+V2 包含图像/VLM/CV 自动管线雏形：
 
-![3D 截面视图](docs/images/3d-section.png)
+- 参考图分类
+- 外观特征识别
+- 轮廓、比例、锥度等候选参数提取
+- Gallery-ready 参数结果输出
+- 与现有 CadQuery 生成器连接
 
-*截面展示内部结构：螺纹啮合、气密环定位、刷杆-瓶盖间隙。*
+相关入口：
 
-### 工程图
+- `scripts/auto_pipeline.py`
+- `scripts/prebuild_gallery.py`
+- `scripts/rebuild_gallery.py`
+- `src/core/vlm_extract.py`
+- `src/core/render_materials.py`
 
-自动生成 SVG 工程图，标注制造尺寸：
+### 4. Gallery 与虚拟展馆
 
-![工程图](docs/images/engineering-drawing.png)
+V2 包含 Gallery 页面与虚拟展馆入口：
 
-*正视图、A-A 剖视图和俯视图，标注所有关键尺寸。*
+- Gallery 页面：展示预构建或参考生成结果。
+- 虚拟展馆：Three.js 走廊式画廊预览，支持自由视角移动。
+- 轻量运行资产已保留在 `web/public/assets/`。
 
----
+相关入口：
 
-## 技术亮点
+- `web/src/components/gallery/GalleryPage.vue`
+- `web/src/components/showroom/ShowroomPage.vue`
+- `web/public/assets/showroom-gallery/`
+- `web/public/assets/showroom-unreal/`
 
-| 特性 | 说明 |
-|------|------|
-| **核心/派生参数** | 核心参数由用户控制；派生参数自动计算（如：内径 = 外径 - 1.6mm） |
-| **跨组件约束** | 生成一个组件会约束其他组件（如：瓶盖生成后锁定刷杆外径） |
-| **优先级仲裁** | 约束冲突按优先级解决：瓶盖(20) > 瓶身(15) > 刷杆(10) > 内塞(5) |
-| **10项质量检查** | 装配干涉检测、尺寸校验、制造可行性验证 |
-| **制造感知** | 最小拔模角 (0.3-0.5°)、最小壁厚 (0.8mm)、可配置螺距的螺纹 |
-| **优雅降级** | 非关键装饰特征可降级处理；关键几何体严格失败 |
-| **双语界面** | 中英文界面，运行时一键切换 |
+### 5. 3D 查看器与装配检查
+
+V2 保留并扩展了 3D 预览能力：
+
+- STL 加载和查看
+- 截面检查
+- 装配体位置检查
+- 组件状态管理
+- 拖拽/交互能力实验
 
 ---
 
@@ -102,98 +106,149 @@ V3 完整方案见 [report/V3/AiCad_V3_AIGC_to_Production_CAD.md](report/V3/AiCa
 
 | 层级 | 技术 |
 |------|------|
-| **CAD 引擎** | Python 3.11 + CadQuery 2.6.1 (OpenCASCADE 内核) |
-| **Web 服务器** | aiohttp (异步 HTTP, 端口 8010) |
-| **前端** | Vue 3 + TypeScript + Pinia + Element Plus |
-| **3D 查看器** | Three.js 0.160.0 + TransformControls |
-| **构建工具** | Vite 6.3 |
-| **输出格式** | STEP, STL, SVG |
+| CAD 内核 | Python 3.11 + CadQuery 2.6.1 + OpenCASCADE |
+| 后端服务 | Python HTTP server，默认端口 `8010` |
+| 前端 | Vue 3 + TypeScript + Pinia + Element Plus |
+| 3D 渲染 | Three.js 0.160 |
+| 输出 | STEP / STL / SVG / JSON |
+| 图像自动管线 | OpenCV + VLM 接口适配 + 参数映射 |
+| 展馆资产 | GLB + Three.js runtime |
 
 ---
 
 ## 快速开始
 
-### 环境要求
+### 1. Python 环境
 
-- Python 3.11+（推荐 Conda）
-- Node.js 18+
-
-### 安装与启动
+推荐使用 Conda：
 
 ```bash
-# 1. 创建 Conda 环境
 conda create -n AiCad python=3.11 -y
 conda activate AiCad
-
-# 2. 安装 Python 依赖
-pip install cadquery==2.6.1 aiohttp numpy ezdxf matplotlib
-
-# 3. 安装前端依赖
-cd web && npm install && cd ..
-
-# 4. 构建前端
-cd web && npm run build && cd ..
-
-# 5. 启动服务
-python scripts/web_server.py
+pip install cadquery==2.6.1 aiohttp numpy ezdxf matplotlib opencv-python pillow requests
 ```
 
-浏览器打开 http://localhost:8010
+### 2. 前端依赖
 
-### 使用方法
+```bash
+cd web
+npm install
+npm run build
+cd ..
+```
 
-1. 选择**产品类型**（唇釉瓶）和**组件**（瓶盖/瓶身/内塞/刷杆）
-2. 选择**风格预设**或手动调参
-3. 点击 **"生成 STEP + 3D预览 + 工程图"**
-4. 下载 STEP/STL 文件，或查看 3D 预览和工程图
-5. 生成全部 4 个组件可查看完整装配体和干涉检测结果
+### 3. 启动 Web
+
+```bash
+python scripts/web_server.py --host 127.0.0.1 --port 8010
+```
+
+打开：
+
+```text
+http://127.0.0.1:8010/
+```
+
+Windows 下也可以使用：
+
+```powershell
+.\scripts\start.ps1
+```
+
+### 4. CLI 生成测试
+
+```bash
+python scripts/generate.py --product lip_gloss --component bottle --preset bottle_standard_5ml --outroot artifacts/v2_smoke
+```
+
+生成结果会落在 `artifacts/`，该目录默认不提交到 Git。
+
+---
+
+## Blender 说明
+
+V2 的部分展馆构建、资产处理和截图流程会用到 Blender CLI。仓库不会提交本地 Blender 二进制，因为它体积过大。
+
+可选方案：
+
+- 将 Blender 加入系统 `PATH`
+- 或本地放置到 `tools/blender/`
+
+`tools/blender/` 和 `tools/downloads/` 已被 `.gitignore` 忽略。
 
 ---
 
 ## 项目结构
 
-```
+```text
 AiCad/
 ├── src/
-│   ├── core/                        # 核心引擎
-│   │   ├── modeler.py               # CadQuery 几何建模器 (1100+ 行)
-│   │   ├── param_system.py          # 参数分类框架
-│   │   ├── fit_constraints.py       # 装配约束系统
-│   │   ├── component_state.py       # 跨组件状态管理器
-│   │   ├── interpreter.py           # 参数校验与归一化
-│   │   └── assembly.py              # 装配定位与质检
-│   └── products/
-│       └── lip_gloss/
-│           ├── components/          # 瓶盖、瓶身、内塞、刷杆定义
-│           ├── constraints.py       # 配合约束规则
-│           ├── derived_params.py    # 派生规则 + 跨组件规则
-│           └── drawings/            # SVG 工程图生成器
-├── web/
-│   └── src/
-│       ├── components/              # Vue 组件 (查看器、参数、布局)
-│       ├── stores/                  # Pinia 状态管理
-│       ├── api/                     # 后端 API 客户端
-│       ├── i18n/                    # 中英文翻译
-│       └── composables/             # 可复用逻辑
+│   ├── core/
+│   │   ├── modeler.py              # CadQuery 几何建模
+│   │   ├── assembly.py             # 装配定位与检查
+│   │   ├── auto_repair.py          # 自动修复实验
+│   │   ├── mesh_cap.py             # 异形/mesh 瓶盖实验
+│   │   ├── vlm_extract.py          # VLM 图像参数提取
+│   │   └── render_materials.py     # 渲染材质元数据
+│   └── products/lip_gloss/
+│       ├── components/             # bottle/cap/wiper/wand
+│       ├── derived_params.py
+│       ├── constraints.py
+│       └── drawings/               # SVG 工程图
 ├── scripts/
-│   ├── web_server.py                # HTTP 服务入口
-│   └── generate.py                  # CLI 生成工具
-├── tests/                           # 测试套件
-└── docs/                            # 文档与截图
+│   ├── web_server.py
+│   ├── generate.py
+│   ├── auto_pipeline.py
+│   ├── prebuild_gallery.py
+│   ├── create_gallery_shell.py
+│   └── showroom_display_modules.py
+├── web/
+│   ├── src/components/
+│   │   ├── wizard/
+│   │   ├── gallery/
+│   │   ├── showroom/
+│   │   └── viewer/
+│   └── public/assets/
+├── report/
+│   ├── V2/
+│   └── V3/
+└── docs/
 ```
 
 ---
 
-## API 接口
+## V2 发布说明
 
-| 方法 | 端点 | 说明 |
-|------|------|------|
-| GET | `/api/schema` | 产品/组件/预设定义 |
-| GET | `/api/derived_rules` | 派生规则元数据 |
-| POST | `/api/generate` | 生成组件（返回 STEP/STL/SVG 链接 + 质检结果） |
-| GET | `/api/assembly` | 装配位置 + 干涉报告 |
-| GET | `/api/constraints/{comp}` | 跨组件约束 |
-| POST | `/api/generated/{comp}` | 存储已生成组件状态 |
+详见：
+
+- [docs/V2_RELEASE_NOTES.md](docs/V2_RELEASE_NOTES.md)
+- [report/V2/README.md](report/V2/README.md)
+
+V3 方案详见：
+
+- [report/V3/AiCad_V3_AIGC_to_Production_CAD.md](report/V3/AiCad_V3_AIGC_to_Production_CAD.md)
+
+---
+
+## 已验证项
+
+V2 发布前已验证：
+
+- `npm run build` 通过
+- Python 核心入口语法检查通过
+- CLI 生成可产出 STEP/STL/SVG
+- Web API `/api/schema` 与 `/api/generate` 返回 JSON，生成结果 `ok: true`
+
+---
+
+## 版本关系
+
+```text
+V1: tag v1.0 / branch master
+V2: branch v2
+dev: 历史开发分支
+V3: 下一阶段规划，尚未作为独立开发分支发布
+```
 
 ---
 

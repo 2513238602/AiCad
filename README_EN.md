@@ -1,172 +1,189 @@
 **English** | [中文](README.md)
 
-# AiCad - Parametric CAD Generator for Cosmetic Packaging
+# AiCad V2 - Cosmetic Packaging CAD Automation and Preview System
 
-> Parametric CAD system for lip gloss bottle assemblies — from parameters to manufacturing-ready STEP files in seconds.
-
----
-
-## Overview
-
-AiCad is a web-based parametric CAD generation platform designed for cosmetic packaging engineers. It generates complete lip gloss bottle assemblies (Cap, Bottle, Wiper, Wand) with manufacturing-grade precision, outputting **STEP**, **STL**, and **engineering drawings (SVG)**.
-
-**Core value**: Instead of manually modeling in SolidWorks/Fusion360, engineers adjust parameters through a visual interface and get production-ready CAD files with proper threads, seals, and assembly fit — all auto-validated.
-
-### Main Interface
-
-![Main UI](docs/images/main-ui.png)
-
-*Parameter panel with core/derived parameter system. Derived parameters (marked "联动") auto-compute from core values. Cross-component constraints (marked "受约束") ensure assembly compatibility.*
+> V2 branch: parametric production CAD, image/VLM automation experiments, Gallery, and virtual showroom preview.  
+> V1 is preserved at the `v1.0` tag and `master` branch. V2 is preserved on the `v2` branch.
 
 ---
 
-## Features
+## V2 Positioning
 
-### Parametric 4-Component Assembly
+AiCad V2 is a working prototype for cosmetic packaging CAD automation, focused on lip gloss packaging components. It extends the V1 parametric CAD generator with image/VLM-assisted automation, Gallery workflows, early freeform/profile modeling experiments, and a web-based virtual showroom.
 
-Generate complete lip gloss bottle assemblies with intelligent parameter management:
+V2 is not the final product direction. It is the foundation for V3:
 
-- **Cap**: Outer shell, grip texture (ribs/knurl), dome/flat top, inner cavity + threads
-- **Bottle**: Body/shoulder/neck sections, external threads, inner cavity, bottom treatment
-- **Wiper**: Sealing diaphragm, central orifice, reinforcement ribs, flange
-- **Wand**: Applicator cap + stem + brush head (doe-foot/spatula/fiber), seal ring
-
-### 3D Assembly Viewer
-
-Interactive Three.js viewer with full assembly visualization:
-
-![3D Assembly](docs/images/3d-assembly.png)
-
-*Four-component assembly in wireframe mode — threads, grip textures, and internal structures visible.*
-
-### Cross-Section View
-
-Inspect internal fit and clearances with the built-in section tool:
-
-![3D Section](docs/images/3d-section.png)
-
-*Cross-section reveals internal structure: thread engagement, seal ring positioning, wand-to-cap clearance.*
-
-### Engineering Drawings
-
-Auto-generated SVG engineering drawings with manufacturing dimensions:
-
-![Engineering Drawing](docs/images/engineering-drawing.png)
-
-*Front view, A-A cross-section, and top view with all critical dimensions annotated.*
+```text
+V2: parameters / image analysis -> parametric CAD -> STEP/STL/SVG -> preview and showroom
+V3: creative image -> AIGC 3D exterior shell -> AiCad production CAD reconstruction
+```
 
 ---
 
-## Technical Highlights
+## Main Changes From V1
 
-| Feature | Description |
-|---------|-------------|
-| **Core/Derived Parameters** | Core params are user-controlled; derived params auto-compute (e.g., inner diameter = outer diameter - 1.6mm) |
-| **Cross-Component Constraints** | Generating one component constrains others (e.g., cap generation locks wand outer diameter) |
-| **Priority-Based Resolution** | Constraint conflicts resolved by priority: Cap(20) > Bottle(15) > Wand(10) > Wiper(5) |
-| **10-Point QC Validation** | Assembly interference detection, dimensional checks, and manufacturing feasibility |
-| **Manufacturing Awareness** | Minimum draft angles (0.3-0.5°), wall thickness (0.8mm), thread profiles with configurable pitch |
-| **Graceful Degradation** | Non-critical decorative features degrade gracefully; critical geometry fails hard |
-| **Bilingual UI** | Full Chinese/English interface with runtime language switching |
+- Added guide mode alongside advanced mode.
+- Added VLM/CV automation pipeline for extracting appearance, proportions, and candidate CAD parameters from reference images.
+- Added Gallery workflows for prebuilt/reference generation results.
+- Added a virtual showroom entry and Three.js gallery corridor preview.
+- Added profile/spline, exotic cap, mesh repair, and topology experiments.
+- Enhanced engineering drawing generation with shared drawing primitives and projection helpers.
+- Enhanced assembly, QC, repair, and render metadata modules.
+- Preserved V1's four-component CAD generation, STEP/STL/SVG output, and assembly validation foundation.
+
+---
+
+## Current Capabilities
+
+### Parametric CAD Components
+
+Supported lip gloss packaging components:
+
+- Bottle
+- Cap
+- Wiper
+- Wand
+
+Outputs:
+
+- STEP for CAD and production communication
+- STL for web preview
+- SVG engineering drawings
+
+### Advanced Mode and Guide Mode
+
+- Advanced mode exposes the full parameter panel.
+- Guide mode splits the workflow into product, component, core parameters, choice, fine tuning, and generation.
+
+### Image/VLM Automation
+
+V2 includes an early image automation pipeline:
+
+- reference image classification
+- appearance feature recognition
+- silhouette/proportion/taper extraction
+- Gallery-ready parameter output
+- connection to the existing CadQuery generator
+
+Key files:
+
+- `scripts/auto_pipeline.py`
+- `scripts/prebuild_gallery.py`
+- `scripts/rebuild_gallery.py`
+- `src/core/vlm_extract.py`
+- `src/core/render_materials.py`
+
+### Gallery and Virtual Showroom
+
+V2 includes a Gallery page and a virtual showroom entry:
+
+- Gallery for prebuilt/reference generation results
+- Three.js corridor-style virtual showroom
+- lightweight runtime GLB assets under `web/public/assets/`
+
+Key files:
+
+- `web/src/components/gallery/GalleryPage.vue`
+- `web/src/components/showroom/ShowroomPage.vue`
+- `web/public/assets/showroom-gallery/`
+- `web/public/assets/showroom-unreal/`
 
 ---
 
 ## Tech Stack
 
 | Layer | Technology |
-|-------|-----------|
-| **CAD Engine** | Python 3.11 + CadQuery 2.6.1 (OpenCASCADE kernel) |
-| **Web Server** | aiohttp (async HTTP, port 8010) |
-| **Frontend** | Vue 3 + TypeScript + Pinia + Element Plus |
-| **3D Viewer** | Three.js 0.160.0 + TransformControls |
-| **Build Tool** | Vite 6.3 |
-| **Output Formats** | STEP, STL, SVG |
+|-------|------------|
+| CAD kernel | Python 3.11 + CadQuery 2.6.1 + OpenCASCADE |
+| Backend | Python HTTP server, default port `8010` |
+| Frontend | Vue 3 + TypeScript + Pinia + Element Plus |
+| 3D rendering | Three.js 0.160 |
+| Outputs | STEP / STL / SVG / JSON |
+| Image pipeline | OpenCV + VLM adapters + parameter mapping |
+| Showroom assets | GLB + Three.js runtime |
 
 ---
 
 ## Quick Start
 
-### Prerequisites
-
-- Python 3.11+ (Conda recommended)
-- Node.js 18+
-
-### Setup
+### Python
 
 ```bash
-# 1. Create conda environment
 conda create -n AiCad python=3.11 -y
 conda activate AiCad
-
-# 2. Install Python dependencies
-pip install cadquery==2.6.1 aiohttp numpy ezdxf matplotlib
-
-# 3. Install frontend dependencies
-cd web && npm install && cd ..
-
-# 4. Build frontend
-cd web && npm run build && cd ..
-
-# 5. Start server
-python scripts/web_server.py
+pip install cadquery==2.6.1 aiohttp numpy ezdxf matplotlib opencv-python pillow requests
 ```
 
-Open http://localhost:8010 in your browser.
+### Frontend
 
-### Usage
+```bash
+cd web
+npm install
+npm run build
+cd ..
+```
 
-1. Select **product** (Lip Gloss) and **component** (Cap/Bottle/Wiper/Wand)
-2. Choose a **preset** or adjust parameters manually
-3. Click **"Generate STEP + 3D Preview + Engineering Drawing"**
-4. Download STEP/STL files or view 3D preview and engineering drawings
-5. Generate all 4 components to see full assembly with interference checks
+### Start Web Server
+
+```bash
+python scripts/web_server.py --host 127.0.0.1 --port 8010
+```
+
+Open:
+
+```text
+http://127.0.0.1:8010/
+```
+
+On Windows:
+
+```powershell
+.\scripts\start.ps1
+```
+
+### CLI Smoke Test
+
+```bash
+python scripts/generate.py --product lip_gloss --component bottle --preset bottle_standard_5ml --outroot artifacts/v2_smoke
+```
+
+Generated files are written to `artifacts/`, which is ignored by Git.
 
 ---
 
-## Project Structure
+## Blender Note
 
-```
-AiCad/
-├── src/
-│   ├── core/                        # Core engine
-│   │   ├── modeler.py               # CadQuery geometry builder (1100+ lines)
-│   │   ├── param_system.py          # Parameter classification framework
-│   │   ├── fit_constraints.py       # Assembly constraint system
-│   │   ├── component_state.py       # Cross-component state manager
-│   │   ├── interpreter.py           # Parameter validation & normalization
-│   │   └── assembly.py              # Assembly positioning & QC
-│   └── products/
-│       └── lip_gloss/
-│           ├── components/          # Cap, Bottle, Wiper, Wand definitions
-│           ├── constraints.py       # Fit constraint rules
-│           ├── derived_params.py    # Derivation & cross-component rules
-│           └── drawings/            # SVG engineering drawing generators
-├── web/
-│   └── src/
-│       ├── components/              # Vue components (viewer, params, layout)
-│       ├── stores/                  # Pinia state management
-│       ├── api/                     # Backend API client
-│       ├── i18n/                    # Chinese/English translations
-│       └── composables/             # Reusable logic hooks
-├── scripts/
-│   ├── web_server.py                # HTTP server entry point
-│   └── generate.py                  # CLI generation tool
-├── tests/                           # Test suite
-└── docs/                            # Documentation & screenshots
-```
+Some gallery/showroom asset generation workflows use Blender CLI. The Blender binary is not committed because it is too large.
+
+Install Blender globally or place a local copy under `tools/blender/`. The folder is ignored by Git.
 
 ---
 
-## API Endpoints
+## Reports
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/schema` | Product/component/preset definitions |
-| GET | `/api/derived_rules` | Derivation rule metadata |
-| POST | `/api/generate` | Generate component (returns STEP/STL/SVG URLs + QC) |
-| GET | `/api/assembly` | Assembly positions + interference report |
-| GET | `/api/constraints/{comp}` | Cross-component constraints |
-| POST | `/api/generated/{comp}` | Store generated component state |
+- [V2 Release Notes](docs/V2_RELEASE_NOTES.md)
+- [V2 Report Index](report/V2/README.md)
+- [V3 AIGC to Production CAD Roadmap](report/V3/AiCad_V3_AIGC_to_Production_CAD.md)
+
+---
+
+## Verified Before Release
+
+- `npm run build` passed
+- Python core entry syntax check passed
+- CLI generation produced STEP/STL/SVG
+- Web API `/api/schema` and `/api/generate` returned JSON with `ok: true`
+
+---
+
+## Version Map
+
+```text
+V1: tag v1.0 / branch master
+V2: branch v2
+dev: historical development branch
+V3: roadmap only, not yet released as a branch
+```
 
 ---
 
