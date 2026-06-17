@@ -1,0 +1,21 @@
+name: AiCad
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip=26.0
+  - nodejs=20
+  - cadquery=2.6.1
+  - numpy=2.4
+  - aiohttp=3.13
+  - ezdxf=1.4
+  - matplotlib=3.10
+  - pillow=12.1
+  - requests=2.33
+  - pytest=9.0
+  - pip:
+      - opencv-python-headless==4.13.0.92
+      - trimesh==4.11.5
+      - manifold3d==3.4.1
+      - pymeshfix==0.18.0
+      - rembg==2.0.74

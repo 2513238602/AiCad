@@ -62,6 +62,16 @@ function Write-Check {
     }
 }
 
+function Resolve-Npm {
+    $cmd = Get-Command npm.cmd -ErrorAction SilentlyContinue
+    if ($cmd) { return $cmd.Source }
+    $cmd = Get-Command npm.exe -ErrorAction SilentlyContinue
+    if ($cmd) { return $cmd.Source }
+    $cmd = Get-Command npm -ErrorAction SilentlyContinue
+    if ($cmd) { return $cmd.Source }
+    return $null
+}
+
 # ============================================================
 #  Banner
 # ============================================================
@@ -278,7 +288,12 @@ try {
 }
 
 try {
-    $npmVersion = & npm --version 2>$null
+    $Npm = Resolve-Npm
+    if (-not $Npm) {
+        Write-Check "npm not available" "FAIL"
+    } else {
+        $npmVersion = & $Npm --version 2>$null
+    }
     if ($LASTEXITCODE -eq 0 -and $npmVersion) {
         Write-Check "npm $npmVersion" "PASS"
         $npmOk = $true
@@ -321,7 +336,7 @@ if ($needInstall -and $npmOk) {
     Push-Location $WebRoot
     $ErrorActionPreference = "Continue"
     try {
-        & npm install 2>&1 | Out-Null
+        & $Npm install 2>&1 | Out-Null
         if ($LASTEXITCODE -eq 0) {
             Write-Check "npm install done" "PASS"
         } else {
@@ -386,7 +401,7 @@ if ($needBuild -and $npmOk) {
     Push-Location $WebRoot
     $ErrorActionPreference = "Continue"
     try {
-        $buildOutput = & npm run build 2>&1
+        $buildOutput = & $Npm run build 2>&1
         if ($LASTEXITCODE -eq 0) {
             Write-Check "Frontend build done" "PASS"
         } else {

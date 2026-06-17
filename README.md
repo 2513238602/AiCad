@@ -118,6 +118,24 @@ V2 保留并扩展了 3D 预览能力：
 
 ## 快速开始
 
+### 0. Windows 一键复现
+
+另一台 Windows 电脑建议优先按复现文档执行：
+
+- [docs/REPRODUCE_V2_WINDOWS.md](docs/REPRODUCE_V2_WINDOWS.md)
+
+一键初始化：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/bootstrap_windows.ps1
+```
+
+验收当前 V2：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/smoke_v2.ps1
+```
+
 ### 1. Python 环境
 
 推荐使用 Conda：
@@ -132,8 +150,8 @@ pip install cadquery==2.6.1 aiohttp numpy ezdxf matplotlib opencv-python pillow 
 
 ```bash
 cd web
-npm install
-npm run build
+npm.cmd ci
+npm.cmd run build
 cd ..
 ```
 

@@ -41,9 +41,6 @@ OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # VLM API
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
-os.environ.setdefault(
-    "GLM_API_KEY", "0d44fbe7c576473c8d89b85046b1edc3.MWR2xsYm7EIVbpZW"
-)
 
 
 # ════════════════════════════════════════════════════════════════════════

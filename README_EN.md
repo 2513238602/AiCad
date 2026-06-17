@@ -106,6 +106,24 @@ Key files:
 
 ## Quick Start
 
+### 0. One-Command Windows Reproduction
+
+For a fresh Windows machine, start with:
+
+- [docs/REPRODUCE_V2_WINDOWS.md](docs/REPRODUCE_V2_WINDOWS.md)
+
+Bootstrap:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/bootstrap_windows.ps1
+```
+
+Validate V2:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/smoke_v2.ps1
+```
+
 ### Python
 
 ```bash
@@ -118,8 +136,8 @@ pip install cadquery==2.6.1 aiohttp numpy ezdxf matplotlib opencv-python pillow 
 
 ```bash
 cd web
-npm install
-npm run build
+npm.cmd ci
+npm.cmd run build
 cd ..
 ```
 

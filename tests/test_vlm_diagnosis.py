@@ -19,7 +19,9 @@ import urllib.request
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
-GLM_API_KEY = os.environ.get("GLM_API_KEY", "0d44fbe7c576473c8d89b85046b1edc3.MWR2xsYm7EIVbpZW")
+GLM_API_KEY = os.environ.get("GLM_API_KEY", "")
+if not GLM_API_KEY:
+    raise SystemExit("Set GLM_API_KEY before running this VLM diagnosis test.")
 GLM_API_URL = "https://open.bigmodel.cn/api/paas/v4/chat/completions"
 GLM_MODEL = "glm-4.6v"
 

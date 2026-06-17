@@ -1,0 +1,18 @@
+# AiCad V2 Windows Python dependencies.
+# Prefer environment.yml on a fresh Windows machine because CadQuery/OCP is
+# more reliable through Conda. This file is the pip fallback.
+
+cadquery==2.6.1
+cadquery-ocp==7.8.1.1.post1
+aiohttp==3.13.3
+numpy==2.4.2
+ezdxf==1.4.3
+matplotlib==3.10.8
+opencv-python-headless==4.13.0.92
+pillow==12.1.0
+requests==2.33.1
+trimesh==4.11.5
+manifold3d==3.4.1
+pymeshfix==0.18.0
+rembg==2.0.74
+pytest==9.0.2

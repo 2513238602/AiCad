@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 """测试智谱 GLM-4V API 参数提取能力"""
+import os
 import urllib.request, json, sys, io
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-API_KEY = "8a6afaf29bf14fa08eb5dc52e662a00d.2JAJLgkRXCkUIHRr"
+API_KEY = os.environ.get("GLM_API_KEY", "")
+if not API_KEY:
+    raise SystemExit("Set GLM_API_KEY before running this API test.")
 API_URL = "https://open.bigmodel.cn/api/paas/v4/chat/completions"
 
 PROMPT = '''你是唇釉瓶产品工程师。请根据以下描述估算参数，严格按 JSON 格式输出，不要输出任何其他内容。

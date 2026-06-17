@@ -16,9 +16,31 @@ $ProjectRoot = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Pa
 $venvPython = Join-Path $ProjectRoot ".venv\Scripts\python.exe"
 $generateScript = Join-Path $ProjectRoot "scripts\generate.py"
 
-if (-not (Test-Path $venvPython)) {
-    $venvPython = "python"
+function Resolve-Python {
+    param([string]$EnvName = "AiCad")
+
+    $conda = Get-Command conda.exe -ErrorAction SilentlyContinue
+    if (-not $conda) { $conda = Get-Command conda -ErrorAction SilentlyContinue }
+    if ($conda) {
+        try {
+            $raw = & $conda.Source env list --json 2>$null
+            if ($LASTEXITCODE -eq 0 -and $raw) {
+                $info = $raw | ConvertFrom-Json
+                foreach ($envPath in $info.envs) {
+                    if ((Split-Path $envPath -Leaf) -eq $EnvName) {
+                        $p = Join-Path $envPath "python.exe"
+                        if (Test-Path $p) { return $p }
+                    }
+                }
+            }
+        } catch { }
+    }
+
+    if (Test-Path $venvPython) { return $venvPython }
+    return "python"
 }
+
+$venvPython = Resolve-Python
 
 if (-not (Test-Path $generateScript)) {
     Write-Host "[ERROR] scripts/generate.py not found" -ForegroundColor Red
