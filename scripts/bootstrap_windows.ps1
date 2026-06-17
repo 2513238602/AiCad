@@ -56,13 +56,42 @@ function Get-CondaCommand {
     return $null
 }
 
+function Get-CondaEnvPath {
+    param([string]$Conda, [string]$Name)
+    if (-not $Conda) { return $null }
+    try {
+        $raw = & $Conda env list --json 2>$null
+        if ($LASTEXITCODE -ne 0 -or -not $raw) { return $null }
+        $info = $raw | ConvertFrom-Json
+        foreach ($envPath in $info.envs) {
+            if ((Split-Path $envPath -Leaf) -eq $Name) { return $envPath }
+        }
+    } catch { }
+    return $null
+}
+
 function Get-NpmCommand {
+    param([string]$EnvName = "")
     $cmd = Get-Command npm.cmd -ErrorAction SilentlyContinue
     if ($cmd) { return $cmd.Source }
     $cmd = Get-Command npm.exe -ErrorAction SilentlyContinue
     if ($cmd) { return $cmd.Source }
     $cmd = Get-Command npm -ErrorAction SilentlyContinue
     if ($cmd) { return $cmd.Source }
+    if ($EnvName) {
+        $Conda = Get-CondaCommand
+        $envPath = Get-CondaEnvPath -Conda $Conda -Name $EnvName
+        if ($envPath) {
+            $candidates = @(
+                (Join-Path $envPath "npm.cmd"),
+                (Join-Path $envPath "Scripts\npm.cmd"),
+                (Join-Path $envPath "Library\bin\npm.cmd")
+            )
+            foreach ($p in $candidates) {
+                if (Test-Path $p) { return $p }
+            }
+        }
+    }
     return $null
 }
 
@@ -114,7 +143,7 @@ if (-not $SkipConda) {
 
 if (-not $SkipFrontend) {
     Write-Title "Frontend dependencies"
-    $Npm = Get-NpmCommand
+    $Npm = Get-NpmCommand -EnvName $EnvName
     if (-not $Npm) {
         throw "npm was not found. Install Node.js 20+, or use the nodejs package from the Conda env."
     }
