@@ -1,209 +1,75 @@
-**English** | [中文](README.md)
+# AiCad
 
-# AiCad V2 - Cosmetic Packaging CAD Automation and Preview System
+AiCad is a research prototype for reconstructing approximately axial and quasi-axial product meshes as compact, editable STEP/B-Rep solids. The project studies when a reconstruction is geometrically faithful, visually fair, structurally valid, and semantically editable—and when it should be rejected.
 
-> V2 branch: parametric production CAD, image/VLM automation experiments, Gallery, and virtual showroom preview.  
-> V1 is preserved on the `V1` branch. This branch is `V2`, and it is the current default branch.
+> Status: controlled research prototype. The public repository contains the V2 engineering codebase; the frozen research evidence package is being prepared for a separate, sanitised release. The system is not production-ready and no general AIGC-to-CAD claim is made.
 
----
+## Problem
 
-## V2 Positioning
+Triangle meshes are useful for visualisation, but they do not directly provide compact CAD topology or meaningful design controls. AiCad investigates a narrower, testable question: can an unlabelled product mesh be reconstructed as a valid STEP solid with a small semantic interface, while keeping geometry, silhouette, fairness, validity, and editability as separate acceptance criteria?
 
-AiCad V2 is a working prototype for cosmetic packaging CAD automation, focused on lip gloss packaging components. It extends the V1 parametric CAD generator with image/VLM-assisted automation, Gallery workflows, early freeform/profile modeling experiments, and a web-based virtual showroom.
-
-V2 is not the final product direction. It is the foundation for V3:
+## Current Method
 
 ```text
-V2: parameters / image analysis -> parametric CAD -> STEP/STL/SVG -> preview and showroom
-V3: creative image -> AIGC 3D exterior shell -> AiCad production CAD reconstruction
+triangle mesh
+  -> normalisation and axis estimation
+  -> periodic cross-section representation
+  -> constrained B-spline side surface
+  -> closed STEP/B-Rep solid
+  -> six semantic edit controls
+  -> geometry + silhouette + fairness + validity checks
 ```
 
----
+The present method targets approximately axial and quasi-axial exteriors. It does not claim arbitrary-object reconstruction.
 
-## Main Changes From V1
+## Controlled Evaluation
 
-- Added guide mode alongside advanced mode.
-- Added VLM/CV automation pipeline for extracting appearance, proportions, and candidate CAD parameters from reference images.
-- Added Gallery workflows for prebuilt/reference generation results.
-- Added a virtual showroom entry and Three.js gallery corridor preview.
-- Added profile/spline, exotic cap, mesh repair, and topology experiments.
-- Enhanced engineering drawing generation with shared drawing primitives and projection helpers.
-- Enhanced assembly, QC, repair, and render metadata modules.
-- Preserved V1's four-component CAD generation, STEP/STL/SVG output, and assembly validation foundation.
+- 30 procedural CAD-truth objects across 6 morphology classes
+- 18 development objects and 12 once-used frozen test objects
+- method, thresholds, and data manifests frozen before test evaluation
+- no object-specific manual control-point adjustment
 
----
+| Frozen measure | Result |
+|---|---:|
+| Geometry + silhouette gate | 11/12 objects |
+| Geometry + silhouette + fairness gate | 10/12 objects |
+| Median worst-direction P95 surface distance | 0.068983 mm |
+| Minimum three-view silhouette IoU | 0.992184 |
+| Single-parameter edit trials | 180 |
+| Combined-parameter edit trials | 48 |
+| Valid single solids after edits | 228/228 |
 
-## Current Capabilities
+Each current output has three topological faces, 1,170 internal B-spline poles, and six user-facing semantic parameters. These quantities are reported separately: compact topology does not mean a trivial internal representation.
 
-### Parametric CAD Components
+## Known Failures and Scope
 
-Supported lip gloss packaging components:
+- One tapered-rectangle case introduces an unintended lower ledge.
+- One round case passes aggregate geometry and silhouette thresholds but fails longitudinal fairness.
+- The controlled inputs are tessellated from procedural CAD truth, not sampled from real generative-model artefacts.
+- Independent CAD/industrial-design evaluation, common-input external baselines, and physical validation are not yet complete.
 
-- Bottle
-- Cap
-- Wiper
-- Wand
+Negative cases are retained as evidence. Aggregate distance scores are not used to override fairness or visual failure.
 
-Outputs:
+## Public V2 Codebase
 
-- STEP for CAD and production communication
-- STL for web preview
-- SVG engineering drawings
+The current public codebase includes parametric cosmetic-packaging components, STEP/STL/SVG export, assembly positioning, engineering-drawing experiments, an image-assisted parameter workflow, and a Vue/Three.js preview. These components provide engineering infrastructure for the reconstruction study; they are not presented as validation of the research claims above.
 
-### Advanced Mode and Guide Mode
-
-- Advanced mode exposes the full parameter panel.
-- Guide mode splits the workflow into product, component, core parameters, choice, fine tuning, and generation.
-
-### Image/VLM Automation
-
-V2 includes an early image automation pipeline:
-
-- reference image classification
-- appearance feature recognition
-- silhouette/proportion/taper extraction
-- Gallery-ready parameter output
-- connection to the existing CadQuery generator
-
-Key files:
-
-- `scripts/auto_pipeline.py`
-- `scripts/prebuild_gallery.py`
-- `scripts/rebuild_gallery.py`
-- `src/core/vlm_extract.py`
-- `src/core/render_materials.py`
-
-### Gallery and Virtual Showroom
-
-V2 includes a Gallery page and a virtual showroom entry:
-
-- Gallery for prebuilt/reference generation results
-- Three.js corridor-style virtual showroom
-- lightweight runtime GLB assets under `web/public/assets/`
-
-Key files:
-
-- `web/src/components/gallery/GalleryPage.vue`
-- `web/src/components/showroom/ShowroomPage.vue`
-- `web/public/assets/showroom-gallery/`
-- `web/public/assets/showroom-unreal/`
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|------------|
-| CAD kernel | Python 3.11 + CadQuery 2.6.1 + OpenCASCADE |
-| Backend | Python HTTP server, default port `8010` |
-| Frontend | Vue 3 + TypeScript + Pinia + Element Plus |
-| 3D rendering | Three.js 0.160 |
-| Outputs | STEP / STL / SVG / JSON |
-| Image pipeline | OpenCV + VLM adapters + parameter mapping |
-| Showroom assets | GLB + Three.js runtime |
-
----
-
-## Quick Start
-
-### 0. One-Command Windows Reproduction
-
-For a fresh Windows machine, start with:
-
-- [docs/REPRODUCE_V2_WINDOWS.md](docs/REPRODUCE_V2_WINDOWS.md)
-
-Bootstrap:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts/bootstrap_windows.ps1
-```
-
-Validate V2:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts/smoke_v2.ps1
-```
-
-### Python
-
-```bash
-conda create -n AiCad python=3.11 -y
-conda activate AiCad
-pip install cadquery==2.6.1 aiohttp numpy ezdxf matplotlib opencv-python pillow requests
-```
-
-### Frontend
-
-```bash
-cd web
-npm.cmd ci
-npm.cmd run build
-cd ..
-```
-
-### Start Web Server
-
-```bash
-python scripts/web_server.py --host 127.0.0.1 --port 8010
-```
-
-Open:
+## Repository Structure
 
 ```text
-http://127.0.0.1:8010/
+src/       parametric CAD and engineering components
+scripts/   generation and validation entry points
+tests/     software and geometry checks
+web/       browser-based engineering preview
+docs/      technical and reproduction documentation
+report/    project reports and roadmap material
 ```
 
-On Windows:
+## Research Output
 
-```powershell
-.\scripts\start.ps1
-```
+N. Chen. “Compact Editable B-Rep Reconstruction from Unlabelled Product Meshes with Evidence-Gated Validation.” Manuscript in preparation, 2026; not submitted.
 
-### CLI Smoke Test
+## Licence
 
-```bash
-python scripts/generate.py --product lip_gloss --component bottle --preset bottle_standard_5ml --outroot artifacts/v2_smoke
-```
+No open-source licence is currently granted. The source is publicly viewable; reuse or redistribution requires permission from the author.
 
-Generated files are written to `artifacts/`, which is ignored by Git.
-
----
-
-## Blender Note
-
-Some gallery/showroom asset generation workflows use Blender CLI. The Blender binary is not committed because it is too large.
-
-Install Blender globally or place a local copy under `tools/blender/`. The folder is ignored by Git.
-
----
-
-## Reports
-
-- [V2 Release Notes](docs/V2_RELEASE_NOTES.md)
-- [V2 Report Index](report/V2/README.md)
-- [V3 AIGC to Production CAD Roadmap](report/V3/AiCad_V3_AIGC_to_Production_CAD.md)
-
----
-
-## Verified Before Release
-
-- `npm run build` passed
-- Python core entry syntax check passed
-- CLI generation produced STEP/STL/SVG
-- Web API `/api/schema` and `/api/generate` returned JSON with `ok: true`
-
----
-
-## Version Map
-
-```text
-V1: branch V1
-V2: branch V2, current default branch
-V3: roadmap only, not yet released as a branch
-```
-
----
-
-## License
-
-Private project. All rights reserved.
